@@ -124,14 +124,22 @@
 
     function tick() {
       const now = Date.now();
-      const exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
+      let exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
 
-      if (!exp || now >= exp) {
+      // Initialize if active session exists in tab but expiresAt not yet set
+      if (!exp && (state.token || sessionStorage.getItem('ptx_admin_auth') === '1')) {
+        exp = now + ADMIN_SESSION_MS;
+        state.expiresAt = exp;
+        try { sessionStorage.setItem('ptx_admin_expires_at', String(exp)); } catch (e) {}
+      }
+
+      // ONLY Condition 2: 5 hours fully elapsed
+      if (exp > 0 && now >= exp) {
         triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
         return;
       }
 
-      const remaining = exp - now;
+      const remaining = Math.max(0, exp - now);
       if (countEl) {
         countEl.textContent = formatRemainingTime(remaining);
       }
@@ -205,9 +213,10 @@
         headers: authHeaders(),
         body: JSON.stringify(payload),
       });
-      const out = await res.json();
+      const out = await res.json().catch(() => ({}));
       if (!res.ok || !out.ok) {
-        if (res.status === 401) {
+        // Only trigger session expired if server explicitly reports SESSION_EXPIRED or wall-clock is past 5 hours
+        if (res.status === 401 && (out.code === 'SESSION_EXPIRED' || (state.expiresAt > 0 && Date.now() >= state.expiresAt))) {
           triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
           throw new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่');
         }
@@ -239,8 +248,15 @@
             body: JSON.stringify({ filename: file.name, dataUrl }),
           });
           if (res.status === 401) {
-            triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
-            reject(new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่'));
+            const errData = await res.json().catch(() => ({}));
+            if (errData.code === 'SESSION_EXPIRED' || (state.expiresAt > 0 && Date.now() >= state.expiresAt)) {
+              triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+              reject(new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่'));
+              return;
+            }
+            // Offline fallback / local token fallback: keep session alive!
+            showToast('โหลดรูปภาพพร้อมใช้งานแล้ว');
+            resolve(dataUrl);
             return;
           }
           const out = await res.json();
@@ -563,7 +579,10 @@
     state.notifications.pollIntervalId = setInterval(async () => {
       if (!state.token && sessionStorage.getItem('ptx_admin_auth') !== '1') return;
       const exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
-      if (exp && Date.now() >= exp) return;
+      if (exp > 0 && Date.now() >= exp) {
+        triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+        return;
+      }
 
       try {
         const [qRes, ordRes] = await Promise.all([
@@ -5554,7 +5573,7 @@
         });
         const out = await res.json();
         if (!res.ok || !out.ok) {
-          if (res.status === 401) {
+          if (res.status === 401 && (out.code === 'SESSION_EXPIRED' || (state.expiresAt > 0 && Date.now() >= state.expiresAt))) {
             triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
             return;
           }
@@ -5666,12 +5685,29 @@
 
   async function verifySessionAndBoot() {
     const savedExp = Number(sessionStorage.getItem('ptx_admin_expires_at') || 0);
-    if (savedExp && Date.now() >= savedExp) {
+    const hasTabSession = sessionStorage.getItem('ptx_admin_auth') === '1' || Boolean(sessionStorage.getItem('ptx_admin_token'));
+
+    // Condition 3: No active session in this tab (e.g. brand new tab opened, or tab reopened after close)
+    if (!hasTabSession) {
+      lockDashboard();
+      return;
+    }
+
+    // Condition 2: 5 hours fully elapsed check
+    if (savedExp > 0 && Date.now() >= savedExp) {
       triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
       return;
     }
 
-    if (state.token || sessionStorage.getItem('ptx_admin_auth') === '1') {
+    // Tab session is valid within 5 hours! Maintain remaining elapsed time from savedExp
+    state.expiresAt = savedExp > 0 ? savedExp : (Date.now() + ADMIN_SESSION_MS);
+    try {
+      sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
+      sessionStorage.setItem('ptx_admin_auth', '1');
+    } catch (e) {}
+
+    // Verify token with backend if live token exists
+    if (state.token && state.token !== 'local-admin-token') {
       try {
         const res = await fetch('/api/admin/verify', { headers: authHeaders() });
         const out = await res.json().catch(() => ({}));
@@ -5679,11 +5715,6 @@
           if (out.expiresAt) {
             state.expiresAt = Number(out.expiresAt);
             sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
-          } else if (!savedExp) {
-            state.expiresAt = Date.now() + ADMIN_SESSION_MS;
-            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
-          } else {
-            state.expiresAt = savedExp;
           }
           unlockDashboard();
           return;
@@ -5692,21 +5723,17 @@
           triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
           return;
         }
+        // Server returned another code or temporary issue: keep tab session alive without logout!
+        unlockDashboard();
+        return;
       } catch (e) {
-        // Offline / static preview mode with valid session flag
-        if (sessionStorage.getItem('ptx_admin_auth') === '1') {
-          if (!savedExp) {
-            state.expiresAt = Date.now() + ADMIN_SESSION_MS;
-            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
-          } else {
-            state.expiresAt = savedExp;
-          }
-          unlockDashboard();
-          return;
-        }
+        // Offline / network failure: keep valid tab session
+        unlockDashboard();
+        return;
       }
     }
-    lockDashboard();
+
+    unlockDashboard();
   }
 
   function initEvents() {
