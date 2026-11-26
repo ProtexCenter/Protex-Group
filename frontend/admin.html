@@ -88,10 +88,21 @@
     <!-- Left Floating Glass Sidebar -->
     <aside class="adm-sidebar adm-glass adm-glass--strong" id="admSidebar" aria-label="เมนูจัดการเว็บไซต์">
       <div class="adm-sidebar__brand">
-        <a href="index.html" title="กลับหน้าเว็บไซต์หลัก">
-          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="adm-sidebar__logo" width="108" height="36">
-        </a>
-        <span class="adm-sidebar__badge">FULL CMS</span>
+        <div class="adm-sidebar__brand-left">
+          <a href="index.html" title="กลับหน้าเว็บไซต์หลัก">
+            <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="adm-sidebar__logo" width="108" height="36">
+          </a>
+          <span class="adm-sidebar__badge">CMS</span>
+        </div>
+        <div class="adm-bell-wrap">
+          <button type="button" class="adm-bell-btn" id="admNotificationBellBtn" aria-label="การแจ้งเตือนหลังบ้าน" title="การแจ้งเตือนข้อมูลเข้าหลังบ้าน (ใบเสนอราคา &amp; คำสั่งซื้อ)">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="adm-bell-badge" id="admBellBadge" style="display:none;">0</span>
+          </button>
+        </div>
       </div>
 
       <nav class="adm-nav" id="admSidebarNav">
@@ -102,31 +113,31 @@
 
         <button type="button" class="adm-nav__btn" data-adm-tab="plants">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><path d="M9 20v-5h6v5"/></svg>
-          <span>2. จัดการแพล้นท์หน้าหลัก</span>
+          <span>2. แพล้นท์หน้าหลัก</span>
           <span class="adm-nav__count" id="navCountPlants">5</span>
         </button>
 
         <button type="button" class="adm-nav__btn" data-adm-tab="spare-parts">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
-          <span>3. จัดการสินค้าอะไหล่</span>
+          <span>3. สินค้าอะไหล่</span>
           <span class="adm-nav__count" id="navCountParts">8</span>
         </button>
 
         <button type="button" class="adm-nav__btn" data-adm-tab="orders">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2.5 3h2.8l2.4 11.4a2 2 0 0 0 2 1.6h9.5a2 2 0 0 0 1.9-1.4L23 6H6.2"/></svg>
-          <span>4. คำสั่งซื้ออะไหล่ (Orders)</span>
+          <span>4. คำสั่งซื้ออะไหล่</span>
           <span class="adm-nav__count adm-nav__count--alert" id="navCountOrders">NEW 1</span>
         </button>
 
         <button type="button" class="adm-nav__btn" data-adm-tab="promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-          <span>5. จัดการโปรโมชั่น &amp; สื่อ</span>
+          <span>5. โปรโมชั่น &amp; สื่อ</span>
           <span class="adm-nav__count" id="navCountPromos">5</span>
         </button>
 
         <button type="button" class="adm-nav__btn" data-adm-tab="installations">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>6. จัดการผลงานติดตั้ง</span>
+          <span>6. ผลงานติดตั้ง</span>
           <span class="adm-nav__count" id="navCountInstalls">4</span>
         </button>
 
@@ -138,7 +149,7 @@
 
         <button type="button" class="adm-nav__btn" data-adm-tab="popup">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/><path d="M7 12h6"/></svg>
-          <span>8. โฆษณา Popup หน้าเว็บ</span>
+          <span>8. โฆษณา Popup</span>
           <span class="adm-nav__count" id="navCountPopup">OFF</span>
         </button>
 
@@ -186,6 +197,15 @@
             <span class="adm-session-timer__val tnum" id="admSessionCountdown">05:00:00</span>
           </div>
 
+          <!-- กระดิ่งแจ้งเตือนสำหรับหน้าจอมือถือ / แท็บเล็ต -->
+          <button type="button" class="adm-bell-btn adm-bell-btn--topbar" id="admTopBellBtn" aria-label="การแจ้งเตือนหลังบ้าน" title="การแจ้งเตือนข้อมูลเข้าหลังบ้าน">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="adm-bell-badge" id="admTopBellBadge" style="display:none;">0</span>
+          </button>
+
           <button type="button" class="adm-btn adm-btn--glass adm-btn--sm" id="admReloadAllBtn" title="ดึงข้อมูลล่าสุดจากเซิร์ฟเวอร์">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             <span>รีเฟรชข้อมูล</span>
@@ -198,6 +218,41 @@
           </button>
         </div>
       </header>
+
+      <!-- ศูนย์รวมป๊อปอัปการแจ้งเตือนหลังบ้าน (Notification Popover Panel - iOS 27 Liquid Glass) -->
+      <div class="adm-notif-popover" id="admNotificationPopover" hidden role="dialog" aria-modal="false" aria-label="ศูนย์รวมการแจ้งเตือนหลังบ้าน">
+        <div class="adm-notif-popover__header">
+          <div class="adm-notif-popover__header-left">
+            <div class="adm-notif-popover__icon">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <div>
+              <h4 class="adm-notif-popover__title">การแจ้งเตือนหลังบ้าน</h4>
+              <span class="adm-notif-popover__count" id="admNotifUnreadCount">0 รายการใหม่</span>
+            </div>
+          </div>
+          <button type="button" class="adm-notif-popover__mark-all" id="admNotifMarkAllBtn" title="ทำเครื่องหมายว่าอ่านแล้วทั้งหมด">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>อ่านแล้วทั้งหมด</span>
+          </button>
+        </div>
+
+        <!-- Quick Filter Chips -->
+        <div class="adm-notif-popover__filters">
+          <button type="button" class="adm-notif-filter is-active" data-notif-filter="all">ทั้งหมด (<span id="admNotifFilterAllCount">0</span>)</button>
+          <button type="button" class="adm-notif-filter" data-notif-filter="quotations">ใบเสนอราคา (<span id="admNotifFilterQuoteCount">0</span>)</button>
+          <button type="button" class="adm-notif-filter" data-notif-filter="orders">คำสั่งซื้อ (<span id="admNotifFilterOrderCount">0</span>)</button>
+        </div>
+
+        <!-- Notification List Items -->
+        <div class="adm-notif-popover__list" id="admNotifList">
+          <!-- Dynamic Notification Cards Rendered by JS -->
+        </div>
+
+        <div class="adm-notif-popover__footer">
+          <span class="adm-notif-popover__tip">คลิกที่รายการเพื่อเปิดดูข้อมูลและดำเนินการทันที</span>
+        </div>
+      </div>
 
       <!-- Dynamic View Container -->
       <main id="admViewContainer"></main>

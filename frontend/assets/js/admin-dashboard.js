@@ -16,6 +16,10 @@
     expiresAt: Number(sessionStorage.getItem('ptx_admin_expires_at') || 0),
     sessionTimerId: null,
     hasWarned5Min: false,
+    notifications: {
+      filter: 'all',
+      pollIntervalId: null,
+    },
     activeTab: 'overview',
     plantsSubTab: 'fully-hot',
     partsSubTab: 'catalog',
@@ -66,6 +70,12 @@
       clearInterval(state.sessionTimerId);
       state.sessionTimerId = null;
     }
+    if (state.notifications?.pollIntervalId) {
+      clearInterval(state.notifications.pollIntervalId);
+      state.notifications.pollIntervalId = null;
+    }
+    const notifPopover = document.getElementById('admNotificationPopover');
+    if (notifPopover) notifPopover.hidden = true;
 
     state.token = '';
     state.expiresAt = 0;
@@ -313,6 +323,272 @@
     renderActiveTab();
   }
 
+  /* -------------------- Backend Real-time Notifications & Polling -------------------- */
+  const READ_NOTIF_STORAGE_KEY = 'ptx_read_notification_ids';
+
+  function getReadNotifSet() {
+    try {
+      const raw = localStorage.getItem(READ_NOTIF_STORAGE_KEY);
+      if (!raw) return new Set();
+      const arr = JSON.parse(raw);
+      return new Set(Array.isArray(arr) ? arr : []);
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  function saveReadNotifSet(set) {
+    try {
+      localStorage.setItem(READ_NOTIF_STORAGE_KEY, JSON.stringify([...set]));
+    } catch (e) {}
+  }
+
+  function formatRelativeTime(isoStr) {
+    if (!isoStr) return 'เมื่อสักครู่';
+    const date = new Date(isoStr);
+    if (Number.isNaN(date.getTime())) return String(isoStr).slice(0, 10);
+    const diffSec = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (diffSec < 60) return 'เมื่อสักครู่';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin} นาทีที่แล้ว`;
+    const diffHour = Math.floor(diffMin / 60);
+    if (diffHour < 24) return `${diffHour} ชม. ที่แล้ว`;
+    const diffDay = Math.floor(diffHour / 24);
+    if (diffDay === 1) return 'เมื่อวานนี้';
+    if (diffDay < 7) return `${diffDay} วันที่แล้ว`;
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() + 543}`;
+  }
+
+  function buildNotificationsFeed() {
+    const feed = [];
+    const qList = state.data.quotations?.items || [];
+    qList.forEach((q) => {
+      const id = `quote-${q.ref || q.id || ''}`;
+      const total = Number(q.finalTotal ?? q.total ?? 0);
+      const isNewStatus = ['pending_review', 'new'].includes(q.status || 'pending_review') || q.docType === 'preliminary';
+      feed.push({
+        id,
+        type: 'quotation',
+        ref: q.ref || q.id || '',
+        customerName: q.customerName || q.customer?.name || q.company || 'ลูกค้าสนใจแพล้นท์',
+        company: q.company || q.customer?.company || '',
+        model: q.plantModel || q.model || 'แพล้นท์คอนกรีต',
+        total,
+        createdAt: q.createdAt || q.date || '',
+        isNewStatus,
+        timeAgo: formatRelativeTime(q.createdAt || q.date),
+      });
+    });
+
+    const ordList = state.data.orders?.items || [];
+    ordList.forEach((o) => {
+      const id = `order-${o.ref || o.id || ''}`;
+      const total = Number(o.total || o.summary?.total || 0);
+      const itemCount = (o.items || []).reduce((sum, item) => sum + (Number(item.qty) || 1), 0);
+      const isNewStatus = (o.status || 'pending') === 'pending';
+      feed.push({
+        id,
+        type: 'order',
+        ref: o.ref || o.id || '',
+        customerName: o.customerName || o.customer?.name || 'ลูกค้าสั่งซื้ออะไหล่',
+        itemCount,
+        total,
+        createdAt: o.createdAt || '',
+        isNewStatus,
+        timeAgo: formatRelativeTime(o.createdAt),
+      });
+    });
+
+    // Sort newest first
+    feed.sort((a, b) => {
+      const timeA = new Date(a.createdAt).getTime() || 0;
+      const timeB = new Date(b.createdAt).getTime() || 0;
+      return timeB - timeA;
+    });
+
+    return feed;
+  }
+
+  function updateNotificationsUI() {
+    const feed = buildNotificationsFeed();
+    const readSet = getReadNotifSet();
+
+    const unreadItems = feed.filter((item) => !readSet.has(item.id));
+    const unreadCount = unreadItems.length;
+
+    // Update bell badges
+    const bellBadges = [document.getElementById('admBellBadge'), document.getElementById('admTopBellBadge')];
+    const bellBtns = [document.getElementById('admNotificationBellBtn'), document.getElementById('admTopBellBtn')];
+
+    bellBadges.forEach((badge) => {
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+          badge.style.display = 'inline-flex';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    });
+
+    bellBtns.forEach((btn) => {
+      if (btn) {
+        btn.classList.toggle('has-new', unreadCount > 0);
+      }
+    });
+
+    // Update Popover header unread count
+    const unreadTxt = document.getElementById('admNotifUnreadCount');
+    if (unreadTxt) {
+      unreadTxt.textContent = unreadCount > 0 ? `${unreadCount} รายการใหม่` : 'อ่านครบทั้งหมดแล้ว';
+    }
+
+    // Update filter counts
+    const quoteCount = feed.filter((n) => n.type === 'quotation').length;
+    const orderCount = feed.filter((n) => n.type === 'order').length;
+    const elAll = document.getElementById('admNotifFilterAllCount');
+    const elQuote = document.getElementById('admNotifFilterQuoteCount');
+    const elOrder = document.getElementById('admNotifFilterOrderCount');
+    if (elAll) elAll.textContent = String(feed.length);
+    if (elQuote) elQuote.textContent = String(quoteCount);
+    if (elOrder) elOrder.textContent = String(orderCount);
+
+    // Filter feed according to active filter
+    const activeFilter = state.notifications?.filter || 'all';
+    let filteredFeed = feed;
+    if (activeFilter === 'quotations') {
+      filteredFeed = feed.filter((n) => n.type === 'quotation');
+    } else if (activeFilter === 'orders') {
+      filteredFeed = feed.filter((n) => n.type === 'order');
+    }
+
+    // Render list
+    const listEl = document.getElementById('admNotifList');
+    if (!listEl) return;
+
+    if (filteredFeed.length === 0) {
+      listEl.innerHTML = `
+        <div class="adm-notif-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <p>ไม่มีการแจ้งเตือนในหมวดหมู่นี้</p>
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = filteredFeed
+      .map((n) => {
+        const isUnread = !readSet.has(n.id);
+        if (n.type === 'quotation') {
+          return `
+            <div class="adm-notif-item ${isUnread ? 'is-unread' : ''}" data-notif-id="${n.id}" data-notif-type="quotation" data-target-ref="${esc(n.ref)}">
+              <div class="adm-notif-item__icon adm-notif-item__icon--quote">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+              </div>
+              <div class="adm-notif-item__content">
+                <div class="adm-notif-item__top">
+                  <span class="adm-notif-item__badge adm-notif-item__badge--quote">คำขอใบเสนอราคา</span>
+                  <span class="adm-notif-item__time">${esc(n.timeAgo)}</span>
+                </div>
+                <div class="adm-notif-item__title">${esc(n.customerName || n.company || 'ลูกค้าสนใจแพล้นท์')}</div>
+                <div class="adm-notif-item__sub">รุ่น: <strong>${esc(n.model)}</strong> • ยอด: <strong>${fmtTHB(n.total)}</strong></div>
+                <div class="adm-notif-item__ref">เลขที่: ${esc(n.ref)}</div>
+              </div>
+              ${isUnread ? '<span class="adm-notif-item__dot" title="ยังไม่ได้อ่าน"></span>' : ''}
+            </div>
+          `;
+        } else {
+          return `
+            <div class="adm-notif-item ${isUnread ? 'is-unread' : ''}" data-notif-id="${n.id}" data-notif-type="order" data-target-ref="${esc(n.ref)}">
+              <div class="adm-notif-item__icon adm-notif-item__icon--order">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2.5 3h2.8l2.4 11.4a2 2 0 0 0 2 1.6h9.5a2 2 0 0 0 1.9-1.4L23 6H6.2"/></svg>
+              </div>
+              <div class="adm-notif-item__content">
+                <div class="adm-notif-item__top">
+                  <span class="adm-notif-item__badge adm-notif-item__badge--order">คำสั่งซื้ออะไหล่</span>
+                  <span class="adm-notif-item__time">${esc(n.timeAgo)}</span>
+                </div>
+                <div class="adm-notif-item__title">${esc(n.customerName || 'ลูกค้าสั่งซื้ออะไหล่')}</div>
+                <div class="adm-notif-item__sub">${n.itemCount ? `${n.itemCount} ชิ้น • ` : ''}ยอดสุทธิ: <strong>${fmtTHB(n.total)}</strong></div>
+                <div class="adm-notif-item__ref">เลขที่: ${esc(n.ref)}</div>
+              </div>
+              ${isUnread ? '<span class="adm-notif-item__dot" title="ยังไม่ได้อ่าน"></span>' : ''}
+            </div>
+          `;
+        }
+      })
+      .join('');
+  }
+
+  function markNotificationRead(id) {
+    const readSet = getReadNotifSet();
+    readSet.add(id);
+    saveReadNotifSet(readSet);
+    updateNotificationsUI();
+  }
+
+  function markAllNotificationsRead() {
+    const feed = buildNotificationsFeed();
+    const readSet = getReadNotifSet();
+    feed.forEach((n) => readSet.add(n.id));
+    saveReadNotifSet(readSet);
+    updateNotificationsUI();
+    showToast('ทำเครื่องหมายว่าอ่านแล้วทั้งหมดเรียบร้อยแล้ว');
+  }
+
+  function toggleNotificationPopover(forceState) {
+    const popover = document.getElementById('admNotificationPopover');
+    if (!popover) return;
+    const isVisible = !popover.hidden;
+    const nextState = typeof forceState === 'boolean' ? forceState : !isVisible;
+
+    popover.hidden = !nextState;
+    const bellBtns = [document.getElementById('admNotificationBellBtn'), document.getElementById('admTopBellBtn')];
+    bellBtns.forEach((btn) => btn?.classList.toggle('is-active', nextState));
+
+    if (nextState) {
+      updateNotificationsUI();
+    }
+  }
+
+  function startLivePolling() {
+    if (state.notifications.pollIntervalId) {
+      clearInterval(state.notifications.pollIntervalId);
+      state.notifications.pollIntervalId = null;
+    }
+
+    state.notifications.pollIntervalId = setInterval(async () => {
+      if (!state.token && sessionStorage.getItem('ptx_admin_auth') !== '1') return;
+      const exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
+      if (exp && Date.now() >= exp) return;
+
+      try {
+        const [qRes, ordRes] = await Promise.all([
+          fetchCollection('quotations', 'quotations'),
+          fetchCollection('orders', 'orders'),
+        ]);
+
+        let hasChange = false;
+        if (qRes && Array.isArray(qRes.items)) {
+          state.data.quotations = { items: qRes.items };
+          hasChange = true;
+        }
+        if (ordRes && Array.isArray(ordRes.items)) {
+          state.data.orders = { items: ordRes.items };
+          hasChange = true;
+        }
+
+        if (hasChange) {
+          updateSidebarBadges();
+          updateNotificationsUI();
+        }
+      } catch (err) {}
+    }, 20000); // 20 seconds live polling
+  }
+
   function updateSidebarBadges() {
     const setTxt = (id, val) => {
       const el = document.getElementById(id);
@@ -340,6 +616,8 @@
       qBadge.textContent = newCount > 0 ? `NEW ${newCount}` : String(qList.length);
       qBadge.classList.toggle('adm-nav__count--alert', newCount > 0);
     }
+
+    updateNotificationsUI();
   }
 
   /* -------------------- Glass Confirm Dialog & Editor Modal -------------------- */
@@ -5357,6 +5635,7 @@
     document.getElementById('admAuthGate').hidden = true;
     document.getElementById('admAppShell').hidden = false;
     startSessionWatcher();
+    startLivePolling();
     loadAllData();
   }
 
@@ -5365,6 +5644,13 @@
       clearInterval(state.sessionTimerId);
       state.sessionTimerId = null;
     }
+    if (state.notifications?.pollIntervalId) {
+      clearInterval(state.notifications.pollIntervalId);
+      state.notifications.pollIntervalId = null;
+    }
+    const notifPopover = document.getElementById('admNotificationPopover');
+    if (notifPopover) notifPopover.hidden = true;
+
     state.token = '';
     state.expiresAt = 0;
     state.hasWarned5Min = false;
@@ -5543,6 +5829,81 @@
       document.getElementById('admConfirmModal').hidden = true;
       if (typeof confirmCallback === 'function') confirmCallback();
       confirmCallback = null;
+    });
+
+    // Notification Bell & Popover Events
+    const bellBtn = document.getElementById('admNotificationBellBtn');
+    const topBellBtn = document.getElementById('admTopBellBtn');
+    const notifPopover = document.getElementById('admNotificationPopover');
+
+    const handleBellClick = (e) => {
+      e.stopPropagation();
+      toggleNotificationPopover();
+    };
+
+    bellBtn?.addEventListener('click', handleBellClick);
+    topBellBtn?.addEventListener('click', handleBellClick);
+
+    // Mark All Notifications As Read
+    document.getElementById('admNotifMarkAllBtn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      markAllNotificationsRead();
+    });
+
+    // Notification Filter Tabs
+    document.querySelectorAll('[data-notif-filter]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const filter = btn.getAttribute('data-notif-filter') || 'all';
+        state.notifications.filter = filter;
+        document.querySelectorAll('[data-notif-filter]').forEach((b) => {
+          b.classList.toggle('is-active', b === btn);
+        });
+        updateNotificationsUI();
+      });
+    });
+
+    // Notification Feed Item Clicks (Event Delegation)
+    document.getElementById('admNotifList')?.addEventListener('click', (e) => {
+      const item = e.target.closest('.adm-notif-item');
+      if (!item) return;
+      const notifId = item.getAttribute('data-notif-id');
+      const type = item.getAttribute('data-notif-type');
+      const targetRef = item.getAttribute('data-target-ref');
+
+      if (notifId) markNotificationRead(notifId);
+      toggleNotificationPopover(false);
+
+      if (type === 'quotation') {
+        switchTab('quotations');
+        state.quotesQuery = targetRef || '';
+        renderActiveTab();
+        showToast(`กำลังเปิดใบเสนอราคา ${targetRef || ''}`);
+      } else if (type === 'order') {
+        switchTab('orders');
+        state.ordersQuery = targetRef || '';
+        renderActiveTab();
+        showToast(`กำลังเปิดคำสั่งซื้อ ${targetRef || ''}`);
+      }
+    });
+
+    // Close Popover when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!notifPopover || notifPopover.hidden) return;
+      if (
+        !notifPopover.contains(e.target) &&
+        !bellBtn?.contains(e.target) &&
+        !topBellBtn?.contains(e.target)
+      ) {
+        toggleNotificationPopover(false);
+      }
+    });
+
+    // Close Popover on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && notifPopover && !notifPopover.hidden) {
+        toggleNotificationPopover(false);
+      }
     });
   }
 
