@@ -2470,16 +2470,13 @@
 
   function buildPromoCardVisualPreviewHTML(item, slotMeta) {
     const tone = item.tone || 'crimson';
-    const highlightText = item.highlight !== undefined ? item.highlight : item.offer || '';
-    const displayMode = item.displayMode === 'image_only' ? 'image_only' : 'image_with_text';
-    const isImageOnly = displayMode === 'image_only';
     const imgSrc = resolveAdminPreviewImgUrl(item.image);
     const hasImage = Boolean(imgSrc);
     const isFeatured = slotMeta.key === 'featured_top_left';
 
     return `
       <div class="adm-bento-preview-stage ${esc(slotMeta.ratioClass)}" style="aspect-ratio: ${slotMeta.aspectRatio};">
-        <div class="adm-bento-mock adm-bento-mock--${esc(tone)} ${hasImage ? 'has-bg-image' : ''} ${isImageOnly ? 'is-image-only' : ''} ${isFeatured ? 'is-featured' : ''}">
+        <div class="adm-bento-mock adm-bento-mock--${esc(tone)} ${hasImage ? 'has-bg-image' : ''} is-image-only ${isFeatured ? 'is-featured' : ''}">
           ${
             hasImage
               ? `<img class="adm-bento-mock__img" src="${esc(imgSrc)}" alt="${esc(item.title || 'Promo Banner')}">`
@@ -2496,25 +2493,9 @@
                   </svg>
                 </div>`
           }
-          ${hasImage && !isImageOnly ? `<div class="adm-bento-mock__scrim" aria-hidden="true"></div>` : ''}
-          ${
-            isImageOnly
-              ? `<div class="adm-bento-mock__only-foot">
-                  <span class="adm-bento-mock__go">→</span>
-                </div>`
-              : `<div class="adm-bento-mock__top">
-                  ${item.badge ? `<span class="adm-bento-mock__badge">${esc(item.badge)}</span>` : '<span></span>'}
-                  ${highlightText ? `<span class="adm-bento-mock__offer">${esc(highlightText)}</span>` : ''}
-                </div>
-                <div class="adm-bento-mock__body">
-                  <h4 class="adm-bento-mock__title">${esc(item.title || 'ระบุชื่อโปรโมชั่นหลัก...')}</h4>
-                  ${item.subtitle ? `<p class="adm-bento-mock__sub">${esc(item.subtitle)}</p>` : ''}
-                </div>
-                <div class="adm-bento-mock__foot">
-                  <span class="adm-bento-mock__valid">${item.validUntil ? `ถึง ${esc(item.validUntil)}` : ''}</span>
-                  <span class="adm-bento-mock__go">→</span>
-                </div>`
-          }
+          <div class="adm-bento-mock__only-foot">
+            <span class="adm-bento-mock__go">→</span>
+          </div>
         </div>
       </div>
     `;
@@ -2532,16 +2513,15 @@
       listHTML = banners
         .map((b, idx) => {
           const slotMeta = getPromoSlotMeta(b, idx);
-          const highlightText = b.highlight !== undefined ? b.highlight : b.offer || '';
-          const modeLabel = b.displayMode === 'image_only' ? 'แสดงเฉพาะรูปแบนเนอร์ล้วน' : 'แสดงรูปคู่ข้อความทับ';
-          const imgStatusLabel = b.image ? 'อัปโหลดรูปภาพแล้ว' : 'ใช้ลายกราฟิกมาตรฐาน';
+          const imgStatusLabel = b.image ? '✓ อัปโหลดรูปภาพแล้ว' : 'ใช้ลายมาตรฐาน';
+          const linkLabel = b.link ? b.link : 'ไม่ได้ระบุลิงก์';
           return `
           <article class="adm-item-card adm-bento-admin-card">
             <div class="adm-bento-admin-card__head">
               <span class="adm-bento-slot-pill">${esc(slotMeta.shortPos)}</span>
-              <span class="adm-bento-mode-pill ${b.image ? 'is-custom-img' : ''}">${esc(imgStatusLabel)} · ${esc(modeLabel)}</span>
+              <span class="adm-bento-mode-pill ${b.image ? 'is-custom-img' : ''}">${esc(imgStatusLabel)} · รูปภาพล้วน</span>
             </div>
-            <div class="adm-bento-admin-card__preview" data-bn-edit="${esc(b.id)}" title="คลิกเพื่อแก้ไขชื่อและรูปภาพ">
+            <div class="adm-bento-admin-card__preview" data-bn-edit="${esc(b.id)}" title="คลิกเพื่อเปลี่ยนรูปภาพหรือตั้งค่า">
               ${buildPromoCardVisualPreviewHTML(b, slotMeta)}
             </div>
             <div class="adm-item-card__body adm-bento-admin-card__body">
@@ -2549,14 +2529,13 @@
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
                 <span>${esc(slotMeta.sizeBadge)}</span>
               </div>
-              <span class="adm-item-card__meta">ป้าย: ${esc(b.badge || '-')} · ไฮไลต์: <strong>${esc(highlightText || '-')}</strong> · หมดเขต: ${esc(b.validUntil || '-')}</span>
-              <h3 class="adm-item-card__title">${esc(b.title)}</h3>
-              <p class="adm-item-card__desc">${esc(b.subtitle || 'ไม่มีคำอธิบายย่อย')}</p>
+              <h3 class="adm-item-card__title" style="margin-top: 6px;">${esc(b.title || 'การ์ดโปรโมชั่น')}</h3>
+              <span class="adm-item-card__meta">ลิงก์ปลายทาง: <strong>${esc(linkLabel)}</strong></span>
             </div>
             <div class="adm-item-card__foot adm-bento-admin-card__foot">
               <button type="button" class="adm-btn adm-btn--red adm-btn--sm adm-bento-edit-btn" data-bn-edit="${esc(b.id)}">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                <span>แก้ไขชื่อและรูปภาพ</span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>เปลี่ยนรูปภาพ / ตั้งค่า</span>
               </button>
               <button type="button" class="adm-btn adm-btn--danger adm-btn--sm" data-bn-del="${esc(b.id)}">ลบ</button>
             </div>
@@ -2754,24 +2733,18 @@
       ? {
           ...existing,
           slot: existing.slot && PROMO_BENTO_SLOTS[existing.slot] ? existing.slot : defaultSlotKey,
-          highlight: existing.highlight !== undefined ? existing.highlight : existing.offer || '',
-          offer: existing.offer !== undefined ? existing.offer : existing.highlight || '',
-          displayMode: existing.displayMode === 'image_only' ? 'image_only' : 'image_with_text',
-          tone: existing.tone || 'crimson',
+          title: existing.title || '',
+          link: existing.link || '',
+          image: existing.image || '',
+          displayMode: 'image_only',
         }
       : {
           id: `bn-${Date.now().toString(36)}`,
           slot: defaultSlotKey,
-          badge: 'โปรโมชั่น',
           title: '',
-          subtitle: '',
-          offer: 'SPECIAL',
-          highlight: 'SPECIAL',
-          validUntil: '2026-12-31',
-          image: '',
-          displayMode: 'image_with_text',
-          tone: 'crimson',
           link: 'design-plant.html',
+          image: '',
+          displayMode: 'image_only',
         };
 
     const initialSlotMeta = getPromoSlotMeta(item, slotIdx);
@@ -2785,7 +2758,6 @@
       <div class="bento-clean-modal-layout">
         <!-- คอลัมน์ซ้าย (~54%): กล่องฟอร์มขาวสะอาดตา เลื่อนขึ้น-ลงอิสระ -->
         <div class="bento-clean-col-form">
-          <!-- กล่องที่ 1: รูปภาพและโหมดการแสดงผล -->
           <div class="bento-clean-card">
             <div class="bento-clean-card__head">
               <div class="bento-clean-card__title-wrap">
@@ -2793,9 +2765,19 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
                 </span>
                 <div>
-                  <h3 class="bento-clean-card__title">1. รูปภาพพื้นหลัง &amp; โหมดแสดงผล</h3>
-                  <p class="bento-clean-card__desc">อัปโหลดภาพแบนเนอร์ความละเอียดสูง ล็อกขนาดพอดีกรอบไม่ล้นทับฟอร์ม</p>
+                  <h3 class="bento-clean-card__title">อัปโหลดรูปภาพการ์ดโปรโมชั่น (Pure Image-Only)</h3>
+                  <p class="bento-clean-card__desc">ภาพแบนเนอร์จะแสดงเต็มใบแบบคมชัด 100% ไม่มีตัวหนังสือและแผ่นกรองแสงสีดำมาบดบัง</p>
                 </div>
+              </div>
+            </div>
+
+            <!-- เลือกตำแหน่งการ์ด -->
+            <div class="bento-clean-fields-grid" style="margin-bottom: 14px;">
+              <div class="bento-clean-field bento-clean-field--full">
+                <label for="fBnSlot">ตำแหน่งการ์ดใน Bento Grid</label>
+                <select id="fBnSlot" class="bento-clean-select">
+                  ${slotOptionsHTML}
+                </select>
               </div>
             </div>
 
@@ -2807,7 +2789,7 @@
                     ? `<img src="${esc(item.image)}" alt="Preview">`
                     : `<div class="bento-uploader-placeholder">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-                        <span>ใช้ลายกราฟิกแพล้นท์มาตรฐาน (ยังไม่ได้อัปโหลดรูปภาพ)</span>
+                        <span>ใช้ลายกราฟิกมาตรฐาน (ยังไม่ได้อัปโหลดรูปภาพ)</span>
                         <small>ลากไฟล์รูปภาพมาวางที่นี่ หรือคลิกปุ่มเปลี่ยนรูปภาพด้านล่าง</small>
                       </div>`
                 }
@@ -2835,93 +2817,17 @@
             <!-- Hidden input เก็บพาธ/ข้อมูลภาพสำหรับบันทึกหลังบ้าน -->
             <input type="hidden" id="fBnImg" value="${esc(item.image || '')}">
 
-            <!-- ตัวเลือกโหมดแสดงผล (สลับง่าย 2 ตัวเลือก สะอาด ไม่ลายตา) -->
-            <div class="bento-clean-field">
-              <label>โหมดการแสดงผลบนหน้าเว็บ</label>
-              <div class="bento-mode-segmented">
-                <label class="bento-mode-option ${item.displayMode !== 'image_only' ? 'is-selected' : ''}" id="fBnModeOptWithText">
-                  <input type="radio" name="fBnDisplayModeRadio" value="image_with_text" ${item.displayMode !== 'image_only' ? 'checked' : ''}>
-                  <div class="bento-mode-option__content">
-                    <strong>แสดงรูปคู่ข้อความทับ</strong>
-                    <span>มีแผ่นกรองแสงมืด (Scrim) ช่วยให้อ่านตัวหนังสือชัดเจน 100%</span>
-                  </div>
-                </label>
-                <label class="bento-mode-option ${item.displayMode === 'image_only' ? 'is-selected' : ''}" id="fBnModeOptOnly">
-                  <input type="radio" name="fBnDisplayModeRadio" value="image_only" ${item.displayMode === 'image_only' ? 'checked' : ''}>
-                  <div class="bento-mode-option__content">
-                    <strong>แสดงเฉพาะรูปแบนเนอร์ล้วน</strong>
-                    <span>ซ่อนข้อความทับทั้งหมด แสดงเฉพาะภาพกราฟิกเต็มกรอบ</span>
-                  </div>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- กล่องที่ 2: ข้อมูลข้อความบนการ์ด (Clean Minimal Form) -->
-          <div class="bento-clean-card ${item.displayMode === 'image_only' ? 'is-dimmed' : ''}" id="fBnTextCard">
-            <div class="bento-clean-card__head">
-              <div class="bento-clean-card__title-wrap">
-                <span class="bento-clean-card__icon bento-clean-card__icon--crimson">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                </span>
-                <div>
-                  <h3 class="bento-clean-card__title">2. ข้อมูลข้อความบนการ์ด</h3>
-                  <p class="bento-clean-card__desc">กำหนดชื่อโปรโมชั่น คำอธิบายย่อย ป้าย Badge และไฮไลต์มุมขวาบน</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- ป้ายแจ้งเตือนเมื่ออยู่ในโหมดแสดงเฉพาะรูปแบนเนอร์ล้วน -->
-            <div class="bento-clean-dim-notice" id="fBnDimNotice" style="${item.displayMode === 'image_only' ? '' : 'display:none;'}">
-              ℹ️ โหมดรูปภาพล้วนจะซ่อนข้อความทับบนหน้าเว็บ แต่ยังคงบันทึกข้อมูลไว้ค้นหาและอ้างอิงในระบบหลังบ้านได้
-            </div>
-
-            <div class="bento-clean-fields-grid">
+            <div class="bento-clean-fields-grid" style="margin-top: 14px;">
               <div class="bento-clean-field bento-clean-field--full">
-                <label for="fBnSlot">ตำแหน่งการ์ดใน Bento Grid</label>
-                <select id="fBnSlot" class="bento-clean-select">
-                  ${slotOptionsHTML}
-                </select>
+                <label for="fBnTitle">ชื่ออ้างอิงโปรโมชั่น (สำหรับ Admin) <span class="bento-req-star">*</span></label>
+                <input type="text" id="fBnTitle" class="bento-clean-input" value="${esc(item.title)}" placeholder="เช่น การ์ดซ้ายบน: แคมเปญ PTX-160 ส่งท้ายปี" required>
+                <small style="display:block; margin-top:5px; color:#64748B; font-size:12px;">ℹ️ ใช้สำหรับเรียกชื่อและค้นหาในหน้า Admin เท่านั้น ไม่นำไปแสดงทับบนรูปภาพหน้าเว็บ</small>
               </div>
 
               <div class="bento-clean-field bento-clean-field--full">
-                <label for="fBnTitle">ชื่อโปรโมชั่นหลัก <span class="bento-req-star">*</span></label>
-                <input type="text" id="fBnTitle" class="bento-clean-input" value="${esc(item.title)}" placeholder="เช่น จองแพล้นท์ PTX-160 รับส่วนลด 1.2 ล้านบาท" required>
-              </div>
-
-              <div class="bento-clean-field bento-clean-field--full">
-                <label for="fBnSub">คำอธิบายย่อย</label>
-                <input type="text" id="fBnSub" class="bento-clean-input" value="${esc(item.subtitle)}" placeholder="เช่น พร้อมติดตั้งและทดสอบเดินเครื่องฟรี">
-              </div>
-
-              <div class="bento-clean-field">
-                <label for="fBnBadge">ป้ายหมวดหมู่ (เช่น ส่งท้ายปี)</label>
-                <input type="text" id="fBnBadge" class="bento-clean-input" value="${esc(item.badge)}" placeholder="เช่น ส่งท้ายปี, อัปเกรด, บริการ">
-              </div>
-
-              <div class="bento-clean-field">
-                <label for="fBnOffer">ข้อความไฮไลต์ (เช่น −1.2M, 0%, FREE)</label>
-                <input type="text" id="fBnOffer" class="bento-clean-input" value="${esc(item.highlight || item.offer)}" placeholder="เช่น −1.2M, 0%, −20%, FREE, TRADE">
-              </div>
-
-              <div class="bento-clean-field">
-                <label for="fBnValid">วันหมดเขต</label>
-                <input type="text" id="fBnValid" class="bento-clean-input" value="${esc(item.validUntil)}" placeholder="เช่น 2026-12-31">
-              </div>
-
-              <div class="bento-clean-field">
-                <label for="fBnLink">ลิงก์ปลายทาง</label>
-                <input type="text" id="fBnLink" class="bento-clean-input" value="${esc(item.link)}" placeholder="เช่น design-plant.html หรือ promotions.html">
-              </div>
-
-              <div class="bento-clean-field bento-clean-field--full">
-                <label for="fBnTone">โทนสีพื้นหลังการ์ด</label>
-                <select id="fBnTone" class="bento-clean-select">
-                  <option value="crimson" ${item.tone === 'crimson' ? 'selected' : ''}>แดงคริมสัน (Crimson Featured)</option>
-                  <option value="pearl" ${item.tone === 'pearl' ? 'selected' : ''}>ขาวมุก (Pearl Light)</option>
-                  <option value="silver" ${item.tone === 'silver' ? 'selected' : ''}>เงินเมทัลลิก (Silver Light)</option>
-                  <option value="deep" ${item.tone === 'deep' ? 'selected' : ''}>ดำเข้ม (Deep Dark — ตัวหนังสือสีขาวชัดเจน)</option>
-                </select>
+                <label for="fBnLink">ลิงก์ปลายทางเมื่อคลิกการ์ด (Destination URL)</label>
+                <input type="text" id="fBnLink" class="bento-clean-input" value="${esc(item.link || '')}" placeholder="เช่น design-plant.html, spare-parts.html หรือ promotions.html (เว้นว่างได้)">
+                <small style="display:block; margin-top:5px; color:#64748B; font-size:12px;">เมื่อลูกค้าคลิกที่การ์ดโปรโมชั่น จะเปิดไปยังหน้าเว็บนี้ทันที</small>
               </div>
             </div>
           </div>
@@ -2943,9 +2849,9 @@
             </div>
 
             <div class="bento-preview-notes">
-              <p>• ภาพที่อัปโหลดจะถูกจัดกึ่งกลางพอดีกรอบ (<code>object-fit: cover</code>) ไม่บี้และไม่เบี้ยว</p>
-              <p>• ในโหมด <strong>แสดงรูปคู่ข้อความทับ</strong> มีแผ่นกรองแสงช่วยให้อ่านตัวหนังสือสีขาวชัดเจน 100%</p>
-              <p>• ในโหมด <strong>แสดงเฉพาะรูปแบนเนอร์ล้วน</strong> ระบบจะซ่อนข้อความทับและแสดงภาพแบนเนอร์เต็มกรอบ</p>
+              <p>• <strong>แสดงเฉพาะรูปภาพล้วน 100%</strong>: ปราศจากตัวหนังสือและแผ่นกรองแสงสีดำทึบ</p>
+              <p>• ภาพที่อัปโหลดจะถูกจัดกึ่งกลางพอดีกรอบ (<code>object-fit: cover</code>) สวยงาม คมชัด ไม่บี้ ไม่เบี้ยว</p>
+              <p>• แสดงปุ่มลูกศรแก้วมุมขวาล่างเพื่อให้ผู้เยี่ยมชมทราบว่าสามารถคลิกไปยังลิงก์ปลายทางได้</p>
             </div>
           </div>
         </aside>
@@ -2956,19 +2862,11 @@
       isNew ? 'เพิ่มการ์ดโปรโมชั่น Bento Grid' : `แก้ไขการ์ดโปรโมชั่น: ${item.title || initialSlotMeta.shortPos}`,
       html,
       async (bodyEl) => {
-        const highlightVal = bodyEl.querySelector('#fBnOffer').value.trim();
-        const selectedModeRadio = bodyEl.querySelector('input[name="fBnDisplayModeRadio"]:checked');
         item.slot = bodyEl.querySelector('#fBnSlot').value.trim() || defaultSlotKey;
-        item.badge = bodyEl.querySelector('#fBnBadge').value.trim();
-        item.offer = highlightVal;
-        item.highlight = highlightVal;
         item.title = bodyEl.querySelector('#fBnTitle').value.trim() || 'โปรโมชั่นพิเศษ';
-        item.subtitle = bodyEl.querySelector('#fBnSub').value.trim();
-        item.validUntil = bodyEl.querySelector('#fBnValid').value.trim();
         item.link = bodyEl.querySelector('#fBnLink').value.trim() || 'promotions.html';
         item.image = bodyEl.querySelector('#fBnImg').value.trim();
-        item.displayMode = selectedModeRadio && selectedModeRadio.value === 'image_only' ? 'image_only' : 'image_with_text';
-        item.tone = bodyEl.querySelector('#fBnTone').value || 'crimson';
+        item.displayMode = 'image_only';
 
         if (isNew) state.data.promotions.banners.push(item);
         else {
@@ -2983,14 +2881,10 @@
         const modalDialog = document.querySelector('#admEditorModal .adm-modal__dialog');
         if (modalDialog) modalDialog.classList.add('adm-modal__dialog--wide');
         const saveBtn = document.getElementById('admEditorSaveBtn');
-        if (saveBtn) saveBtn.textContent = 'บันทึกข้อมูลโปรโมชั่น';
+        if (saveBtn) saveBtn.textContent = 'บันทึกรูปภาพโปรโมชั่น';
 
         const slotEl = bodyEl.querySelector('#fBnSlot');
         const titleEl = bodyEl.querySelector('#fBnTitle');
-        const subEl = bodyEl.querySelector('#fBnSub');
-        const badgeEl = bodyEl.querySelector('#fBnBadge');
-        const offerEl = bodyEl.querySelector('#fBnOffer');
-        const validEl = bodyEl.querySelector('#fBnValid');
         const linkEl = bodyEl.querySelector('#fBnLink');
         const imgInput = bodyEl.querySelector('#fBnImg');
         const fileInput = bodyEl.querySelector('#fBnFileInput');
@@ -2998,14 +2892,8 @@
         const dropzone = bodyEl.querySelector('#fBnDropzone');
         const dropPreview = bodyEl.querySelector('#fBnDropPreview');
         const dimBadge = bodyEl.querySelector('#fBnActualDimBadge');
-        const toneEl = bodyEl.querySelector('#fBnTone');
         const liveRatioEl = bodyEl.querySelector('#fBnLiveRatioBadge');
         const liveMount = bodyEl.querySelector('#fBnLiveCardMount');
-        const textCard = bodyEl.querySelector('#fBnTextCard');
-        const dimNotice = bodyEl.querySelector('#fBnDimNotice');
-        const modeRadios = bodyEl.querySelectorAll('input[name="fBnDisplayModeRadio"]');
-        const modeOptWithText = bodyEl.querySelector('#fBnModeOptWithText');
-        const modeOptOnly = bodyEl.querySelector('#fBnModeOptOnly');
 
         let friendlyFileName = '';
         if (item.image) {
@@ -3016,26 +2904,14 @@
           }
         }
 
-        function getSelectedMode() {
-          const checked = bodyEl.querySelector('input[name="fBnDisplayModeRadio"]:checked');
-          return checked && checked.value === 'image_only' ? 'image_only' : 'image_with_text';
-        }
-
         function getDraftItem() {
-          const hVal = offerEl.value.trim();
           return {
             ...item,
             slot: slotEl.value || defaultSlotKey,
-            title: titleEl.value.trim(),
-            subtitle: subEl.value.trim(),
-            badge: badgeEl.value.trim(),
-            offer: hVal,
-            highlight: hVal,
-            validUntil: validEl.value.trim(),
-            link: linkEl.value.trim(),
+            title: titleEl.value.trim() || 'โปรโมชั่นพิเศษ',
+            link: linkEl.value.trim() || 'promotions.html',
             image: imgInput.value.trim(),
-            displayMode: getSelectedMode(),
-            tone: toneEl.value || 'crimson',
+            displayMode: 'image_only',
           };
         }
 
@@ -3043,7 +2919,7 @@
           const clean = String(srcUrl || '').trim();
           if (!clean) {
             dimBadge.className = 'bento-img-status-bar';
-            dimBadge.innerHTML = `<span>สถานะภาพ: <strong>ใช้ลายกราฟิกแพล้นท์มาตรฐาน</strong></span> · <span>ขนาดแนะนำ: <strong>${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</strong></span>`;
+            dimBadge.innerHTML = `<span>สถานะภาพ: <strong>ใช้ลายกราฟิกมาตรฐาน</strong></span> · <span>ขนาดแนะนำ: <strong>${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</strong></span>`;
             return;
           }
 
@@ -3078,7 +2954,6 @@
         function syncLivePreview(recheckImage = false, customLabel = '') {
           const draft = getDraftItem();
           const meta = getPromoSlotMeta(draft, slotIdx);
-          const isImgOnly = draft.displayMode === 'image_only';
 
           if (liveRatioEl) liveRatioEl.textContent = `อัตราส่วน ${meta.aspectRatio.replace(/\\s+/g, '')} (${meta.recWidth}×${meta.recHeight} px)`;
           if (liveMount) liveMount.innerHTML = buildPromoCardVisualPreviewHTML(draft, meta);
@@ -3088,16 +2963,10 @@
               ? `<img src="${esc(draft.image)}" alt="Preview">`
               : `<div class="bento-uploader-placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-                  <span>ใช้ลายกราฟิกแพล้นท์มาตรฐาน (ยังไม่ได้อัปโหลดรูปภาพ)</span>
+                  <span>ใช้ลายกราฟิกมาตรฐาน (ยังไม่ได้อัปโหลดรูปภาพ)</span>
                   <small>ลากไฟล์รูปภาพมาวางที่นี่ หรือคลิกปุ่มเปลี่ยนรูปภาพด้านล่าง</small>
                 </div>`;
           }
-
-          if (textCard) textCard.classList.toggle('is-dimmed', isImgOnly);
-          if (dimNotice) dimNotice.style.display = isImgOnly ? 'block' : 'none';
-
-          if (modeOptWithText) modeOptWithText.classList.toggle('is-selected', !isImgOnly);
-          if (modeOptOnly) modeOptOnly.classList.toggle('is-selected', isImgOnly);
 
           if (recheckImage) {
             measureImageDimensions(draft.image, meta, customLabel);
@@ -3122,16 +2991,10 @@
           }
         }
 
-        [titleEl, subEl, badgeEl, offerEl, validEl, linkEl].forEach((el) => {
+        [titleEl, linkEl].forEach((el) => {
           el?.addEventListener('input', () => syncLivePreview(false));
         });
-        [slotEl, toneEl].forEach((el) => {
-          el?.addEventListener('change', () => syncLivePreview(true));
-        });
-
-        modeRadios.forEach((radio) => {
-          radio.addEventListener('change', () => syncLivePreview(false));
-        });
+        slotEl?.addEventListener('change', () => syncLivePreview(true));
 
         fileInput?.addEventListener('change', () => {
           const f = fileInput.files?.[0];
@@ -3143,7 +3006,7 @@
           friendlyFileName = '';
           if (fileInput) fileInput.value = '';
           syncLivePreview(true);
-          showToast('รีเซ็ตเป็นลายกราฟิกแพล้นท์มาตรฐานแล้ว');
+          showToast('รีเซ็ตเป็นลายกราฟิกมาตรฐานแล้ว');
         });
 
         if (dropzone) {

@@ -10,7 +10,7 @@
       "offer": "−1.2M",
       "validUntil": "2026-12-31",
       "image": "",
-      "displayMode": "image_with_text",
+      "displayMode": "image_only",
       "tone": "crimson",
       "link": "design-plant.html"
     },
@@ -24,7 +24,7 @@
       "offer": "0%",
       "validUntil": "2027-03-31",
       "image": "",
-      "displayMode": "image_with_text",
+      "displayMode": "image_only",
       "tone": "pearl",
       "link": "index.html#hot-re"
     },
@@ -38,7 +38,7 @@
       "offer": "−20%",
       "validUntil": "2027-01-31",
       "image": "",
-      "displayMode": "image_with_text",
+      "displayMode": "image_only",
       "tone": "silver",
       "link": "spare-parts.html"
     },
@@ -52,7 +52,7 @@
       "offer": "FREE",
       "validUntil": "2027-02-28",
       "image": "",
-      "displayMode": "image_with_text",
+      "displayMode": "image_only",
       "tone": "deep",
       "link": "spare-parts.html"
     },
@@ -66,7 +66,7 @@
       "offer": "TRADE",
       "validUntil": "2027-06-30",
       "image": "",
-      "displayMode": "image_with_text",
+      "displayMode": "image_only",
       "tone": "pearl",
       "link": "promotions.html"
     }

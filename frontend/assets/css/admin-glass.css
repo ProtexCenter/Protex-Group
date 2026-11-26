@@ -3114,6 +3114,7 @@ select.adm-ord-status-select:focus {
 }
 
 .adm-bento-mock.has-bg-image {
+  background: transparent !important;
   color: #FFFFFF;
 }
 
@@ -3136,16 +3137,16 @@ select.adm-ord-status-select:focus {
 }
 
 .adm-bento-mock__scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 12, 18, 0.45) 0%,
-    rgba(10, 12, 18, 0.25) 42%,
-    rgba(10, 12, 18, 0.8) 100%
-  );
-  pointer-events: none;
+  display: none !important;
+}
+
+.adm-bento-mock.is-image-only {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 12px !important;
 }
 
 .adm-bento-mock__svg {
