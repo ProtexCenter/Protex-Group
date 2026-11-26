@@ -190,7 +190,10 @@
 
   async function fetchCollection(name, fallbackKey) {
     try {
-      const res = await fetch(`/api/${name}?_t=${Date.now()}`, { cache: 'no-store' });
+      const res = await fetch(`/api/${name}?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: authHeaders(),
+      });
       if (res.ok) return await res.json();
     } catch (e) {}
     try {
@@ -576,7 +579,7 @@
       state.notifications.pollIntervalId = null;
     }
 
-    state.notifications.pollIntervalId = setInterval(async () => {
+    const syncLiveOrdersAndQuotes = async () => {
       if (!state.token && sessionStorage.getItem('ptx_admin_auth') !== '1') return;
       const exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
       if (exp > 0 && Date.now() >= exp) {
@@ -592,20 +595,34 @@
 
         let hasChange = false;
         if (qRes && Array.isArray(qRes.items)) {
+          const prevLen = (state.data.quotations?.items || []).length;
           state.data.quotations = { items: qRes.items };
-          hasChange = true;
+          if (qRes.items.length !== prevLen) hasChange = true;
         }
         if (ordRes && Array.isArray(ordRes.items)) {
+          const prevLen = (state.data.orders?.items || []).length;
           state.data.orders = { items: ordRes.items };
-          hasChange = true;
+          if (ordRes.items.length !== prevLen) hasChange = true;
         }
 
         if (hasChange) {
           updateSidebarBadges();
           updateNotificationsUI();
+          if (['quotations', 'orders', 'overview'].includes(state.activeTab)) {
+            renderActiveTab();
+          }
         }
       } catch (err) {}
-    }, 20000); // 20 seconds live polling
+    };
+
+    // Cross-tab immediate sync via storage events
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'ptx_cms_override_quotations' || e.key === 'ptx_cms_override_orders') {
+        syncLiveOrdersAndQuotes();
+      }
+    });
+
+    state.notifications.pollIntervalId = setInterval(syncLiveOrdersAndQuotes, 10000); // 10 seconds live polling
   }
 
   function updateSidebarBadges() {

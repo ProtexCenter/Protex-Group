@@ -804,7 +804,7 @@
   /* -------------------- Load Knowledge Base JSON -------------------- */
   async function loadKnowledgeBase() {
     try {
-      const apiRes = await fetch('/api/chatbot-knowledge');
+      const apiRes = await fetch(`/api/chatbot-knowledge?_t=${Date.now()}`, { cache: 'no-store' });
       if (apiRes.ok) {
         knowledgeData = await apiRes.json();
         return knowledgeData;
@@ -812,7 +812,7 @@
     } catch (e) {}
 
     try {
-      const localRes = await fetch('../backend/data/chatbot-knowledge.json');
+      const localRes = await fetch(`../backend/data/chatbot-knowledge.json?_t=${Date.now()}`, { cache: 'no-store' });
       if (localRes.ok) {
         knowledgeData = await localRes.json();
         return knowledgeData;

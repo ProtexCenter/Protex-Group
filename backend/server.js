@@ -219,6 +219,15 @@ const activeTokens = new Map(); // token -> expiresAt (timestamp)
 app.disable('x-powered-by');
 app.use(express.json({ limit: '20mb' }));
 
+/* Global API No-Cache Security & Real-Time Sync Policy */
+app.use('/api', (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  res.set('Surrogate-Control', 'no-store');
+  next();
+});
+
 const TMP_DATA_DIR = path.join('/tmp', 'protex-cms-data');
 
 async function readJSON(name) {
@@ -471,7 +480,9 @@ app.post('/api/admin/upload', requireAdmin, asyncRoute(async (req, res) => {
 
 /* ---------------------------- Admin Full Collection Sync & Save ---------------------------- */
 app.put('/api/admin/collection/:collection', requireAdmin, asyncRoute(async (req, res) => {
-  const { collection } = req.params;
+  let { collection } = req.params;
+  if (collection === 'popups') collection = 'popup';
+  if (collection === 'projects') collection = 'locations';
   if (!COLLECTIONS.includes(collection)) {
     return res.status(404).json({ ok: false, message: 'ไม่พบคอลเลกชันที่ระบุ' });
   }
@@ -1718,11 +1729,21 @@ app.post('/api/inquiry', asyncRoute(async (req, res) => {
   res.json({ ok: true, ref, message: 'ส่งข้อมูลเรียบร้อย ทีมวิศวกรจะติดต่อกลับโดยเร็วที่สุด' });
 }));
 
-/* ---------------------------- Public Collections (Live No-Cache) ---------------------------- */
+/* ---------------------------- Public & Protected Collections (Live No-Cache) ---------------------------- */
 app.get('/api/:collection', asyncRoute(async (req, res) => {
-  const { collection } = req.params;
+  let { collection } = req.params;
+  if (collection === 'popups') collection = 'popup';
+  if (collection === 'projects') collection = 'locations';
   if (!COLLECTIONS.includes(collection)) return res.status(404).json({ ok: false, message: 'Unknown collection' });
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+
+  // Orders and Quotations are private to internal admin
+  if (collection === 'orders' || collection === 'quotations') {
+    return requireAdmin(req, res, async () => {
+      const data = await readJSON(collection);
+      res.json(data);
+    });
+  }
+
   const data = await readJSON(collection);
   if (collection === 'site-settings' && data && typeof data === 'object') {
     const publicSettings = { ...data };
