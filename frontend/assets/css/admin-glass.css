@@ -2529,10 +2529,37 @@ body {
 .adm-modal__foot {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  padding-top: 12px;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
+  box-sizing: border-box;
+}
+
+.adm-modal__foot-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.adm-modal__foot-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  flex-shrink: 0;
+}
+
+.adm-modal__foot-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 
 /* ------------------------------ Glass Toast Notification ------------------------------ */
@@ -3883,7 +3910,7 @@ select.adm-ord-status-select:focus {
   display: grid;
   grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.98fr);
   gap: 22px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .bento-clean-col-form {
@@ -3891,12 +3918,14 @@ select.adm-ord-status-select:focus {
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+  height: 100%;
 }
 
 .bento-clean-col-preview {
   position: sticky;
   top: 76px;
   min-width: 0;
+  height: 100%;
 }
 
 .bento-clean-card {
@@ -3908,6 +3937,8 @@ select.adm-ord-status-select:focus {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
+  box-sizing: border-box;
   transition: opacity 0.25s ease, border-color 0.25s ease;
 }
 
@@ -4067,13 +4098,19 @@ select.adm-ord-status-select:focus {
 }
 
 .bento-btn--primary {
-  background: #0F172A;
-  color: #FFFFFF;
-  border-color: #0F172A;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0F172A;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .bento-btn--primary:hover {
-  background: #1E293B;
+  background: #FFFFFF;
+  color: #DC2626;
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 4px 14px -2px rgba(220, 38, 38, 0.16);
   transform: translateY(-1px);
 }
 
@@ -4268,6 +4305,8 @@ select.adm-ord-status-select:focus {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .bento-preview-card__head {
@@ -4329,12 +4368,54 @@ select.adm-ord-status-select:focus {
   bottom: 0;
   z-index: 30;
   margin: 16px -24px -24px;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid #E2E8F0;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 0 0 28px 28px;
   box-shadow: 0 -8px 24px -10px rgba(15, 23, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Bento Destination URL Shortcut Chips */
+.bento-url-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.bento-url-shortcuts__label {
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.bento-url-chip {
+  appearance: none;
+  background: rgba(241, 245, 249, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  color: #334155;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.bento-url-chip:hover {
+  background: #FFFFFF;
+  color: #DC2626;
+  border-color: rgba(220, 38, 38, 0.4);
+  box-shadow: 0 2px 6px -2px rgba(220, 38, 38, 0.2);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 960px) {

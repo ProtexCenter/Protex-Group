@@ -3184,7 +3184,7 @@
             </div>
 
             <!-- กล่องอัปโหลดรูปภาพ ล็อกความสูง 168px ขอบไม่ล้นเด็ดขาด -->
-            <div class="bento-uploader-frame" id="fBnDropzone" title="ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์รูปภาพ">
+            <div class="bento-uploader-frame" id="fBnDropzone">
               <div class="bento-uploader-preview" id="fBnDropPreview">
                 ${
                   item.image
@@ -3213,7 +3213,7 @@
 
             <!-- แถบข้อมูลสั้น 1 บรรทัด บอกขนาดภาพแนะนำและขนาดจริง (ห้ามโชว์โค้ด base64) -->
             <div class="bento-img-status-bar" id="fBnActualDimBadge" aria-live="polite">
-              กำลังตรวจสอบขนาดไฟล์ภาพ...
+              กำลังตรวจสอบขนาดไฟล์รูปภาพ...
             </div>
 
             <!-- Hidden input เก็บพาธ/ข้อมูลภาพสำหรับบันทึกหลังบ้าน -->
@@ -3229,6 +3229,13 @@
               <div class="bento-clean-field bento-clean-field--full">
                 <label for="fBnLink">ลิงก์ปลายทางเมื่อคลิกการ์ด (Destination URL)</label>
                 <input type="text" id="fBnLink" class="bento-clean-input" value="${esc(item.link || '')}" placeholder="เช่น design-plant.html, spare-parts.html หรือ promotions.html (เว้นว่างได้)">
+                <div class="bento-url-shortcuts">
+                  <span class="bento-url-shortcuts__label">ทางลัดหน้าเว็บยอดนิยม:</span>
+                  <button type="button" class="bento-url-chip" data-fill-url="design-plant.html">design-plant.html</button>
+                  <button type="button" class="bento-url-chip" data-fill-url="spare-parts.html">spare-parts.html</button>
+                  <button type="button" class="bento-url-chip" data-fill-url="promotions.html">promotions.html</button>
+                  <button type="button" class="bento-url-chip" data-fill-url="service-plants.html">service-plants.html</button>
+                </div>
                 <small style="display:block; margin-top:5px; color:#64748B; font-size:12px;">เมื่อลูกค้าคลิกที่การ์ดโปรโมชั่น จะเปิดไปยังหน้าเว็บนี้ทันที</small>
               </div>
             </div>
@@ -3321,7 +3328,7 @@
           const clean = String(srcUrl || '').trim();
           if (!clean) {
             dimBadge.className = 'bento-img-status-bar';
-            dimBadge.innerHTML = `<span>สถานะภาพ: <strong>ใช้ลายกราฟิกมาตรฐาน</strong></span> · <span>ขนาดแนะนำ: <strong>${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</strong></span>`;
+            dimBadge.innerHTML = `<span>สถานะรูปภาพ: <strong>ใช้ลายกราฟิกมาตรฐาน</strong></span> · <span>ขนาดแนะนำ: <strong>${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</strong></span>`;
             return;
           }
 
@@ -3340,15 +3347,15 @@
             const h = probe.naturalHeight || 0;
             if (w < 600) {
               dimBadge.className = 'bento-img-status-bar is-warn';
-              dimBadge.innerHTML = `<span>⚠️ <strong>${esc(displayName)} (${w} × ${h} px)</strong></span> · <span>คำเตือน: ความกว้างน้อยกว่า 600 px (แนะนำ ${slotMeta.recWidth} × ${slotMeta.recHeight} px)</span>`;
+              dimBadge.innerHTML = `<span>สถานะรูปภาพ: ⚠️ <strong>${esc(displayName)} (${w} × ${h} px)</strong></span> · <span>คำเตือน: ความกว้างน้อยกว่า 600 px (แนะนำ ${slotMeta.recWidth} × ${slotMeta.recHeight} px)</span>`;
             } else {
               dimBadge.className = 'bento-img-status-bar is-ok';
-              dimBadge.innerHTML = `<span>✓ <strong>${esc(displayName)} (${w} × ${h} px)</strong></span> · <span>แนะนำ ${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</span>`;
+              dimBadge.innerHTML = `<span>สถานะรูปภาพ: ✓ <strong>${esc(displayName)} (${w} × ${h} px)</strong></span> · <span>แนะนำ ${slotMeta.recWidth} × ${slotMeta.recHeight} px (${slotMeta.aspectRatio.replace(/\\s+/g, '')})</span>`;
             }
           };
           probe.onerror = () => {
             dimBadge.className = 'bento-img-status-bar is-warn';
-            dimBadge.innerHTML = `<span>⚠️ ไม่สามารถโหลดตัวอย่างภาพจากที่ระบุได้ กรุณาอัปโหลดไฟล์ใหม่</span>`;
+            dimBadge.innerHTML = `<span>สถานะรูปภาพ: ⚠️ ไม่สามารถโหลดตัวอย่างภาพจากที่ระบุได้ กรุณาอัปโหลดไฟล์ใหม่</span>`;
           };
           probe.src = clean;
         }
@@ -3433,6 +3440,17 @@
             if (f) handleUploadFile(f);
           });
         }
+
+        bodyEl.querySelectorAll('.bento-url-chip').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            const url = chip.getAttribute('data-fill-url');
+            if (url && linkEl) {
+              linkEl.value = url;
+              linkEl.dispatchEvent(new Event('input', { bubbles: true }));
+              showToast(`เลือกปลายทาง: ${url}`);
+            }
+          });
+        });
 
         syncLivePreview(true);
       }

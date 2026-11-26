@@ -272,9 +272,15 @@
       </div>
       <form id="admEditorForm" novalidate>
         <div id="admEditorBody" style="display:grid;gap:14px;"></div>
-        <div class="adm-modal__foot" style="margin-top:18px;">
-          <button type="button" class="adm-btn adm-btn--glass" id="admEditorCancelBtn">ยกเลิก</button>
-          <button type="submit" class="adm-btn adm-btn--red" id="admEditorSaveBtn">บันทึกข้อมูล</button>
+        <div class="adm-modal__foot" id="admEditorModalFoot">
+          <div class="adm-modal__foot-note" id="admEditorFootNote">
+            <span class="adm-modal__foot-dot"></span>
+            <span>พร้อมบันทึกการเปลี่ยนแปลงสำหรับหน้าเว็บจริง</span>
+          </div>
+          <div class="adm-modal__foot-actions">
+            <button type="button" class="adm-btn adm-btn--glass" id="admEditorCancelBtn">ยกเลิก</button>
+            <button type="submit" class="adm-btn adm-btn--red" id="admEditorSaveBtn">บันทึกข้อมูล</button>
+          </div>
         </div>
       </form>
     </div>
