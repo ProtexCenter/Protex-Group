@@ -1,0 +1,322 @@
+{
+  "banners": [
+    {
+      "id": "year-end",
+      "slot": "featured_top_left",
+      "badge": "ส่งท้ายปี",
+      "title": "จองแพล้นท์ PTX-160 รับส่วนลด 1.2 ล้านบาท",
+      "subtitle": "พร้อมติดตั้งและทดสอบเดินเครื่องฟรี",
+      "highlight": "−1.2M",
+      "offer": "−1.2M",
+      "validUntil": "2026-12-31",
+      "image": "",
+      "displayMode": "image_with_text",
+      "tone": "crimson",
+      "link": "design-plant.html"
+    },
+    {
+      "id": "rap-upgrade",
+      "slot": "compact_top_right",
+      "badge": "อัปเกรด",
+      "title": "เปลี่ยนแพล้นท์เดิมเป็นระบบรีไซเคิล",
+      "subtitle": "ผ่อน 0% นาน 24 เดือน สำหรับชุด RAP",
+      "highlight": "0%",
+      "offer": "0%",
+      "validUntil": "2027-03-31",
+      "image": "",
+      "displayMode": "image_with_text",
+      "tone": "pearl",
+      "link": "index.html#hot-re"
+    },
+    {
+      "id": "pm-package",
+      "slot": "compact_mid_right",
+      "badge": "บริการ",
+      "title": "แพ็กเกจ PM รายปี",
+      "subtitle": "ตรวจเช็ก 4 ครั้ง/ปี พร้อมรายงานสุขภาพเครื่อง",
+      "highlight": "−20%",
+      "offer": "−20%",
+      "validUntil": "2027-01-31",
+      "image": "",
+      "displayMode": "image_with_text",
+      "tone": "silver",
+      "link": "spare-parts.html"
+    },
+    {
+      "id": "baghouse",
+      "slot": "wide_bottom_left",
+      "badge": "สิ่งแวดล้อม",
+      "title": "ถุงกรอง Baghouse ชุดใหม่",
+      "subtitle": "ซื้อครบชุด แถมค่าติดตั้ง",
+      "highlight": "FREE",
+      "offer": "FREE",
+      "validUntil": "2027-02-28",
+      "image": "",
+      "displayMode": "image_with_text",
+      "tone": "deep",
+      "link": "spare-parts.html"
+    },
+    {
+      "id": "trade-in",
+      "slot": "wide_bottom_right",
+      "badge": "เทิร์นแพล้นท์",
+      "title": "นำแพล้นท์เก่ามาแลกรุ่นใหม่",
+      "subtitle": "ประเมินราคาโดยวิศวกรถึงหน้างาน",
+      "highlight": "TRADE",
+      "offer": "TRADE",
+      "validUntil": "2027-06-30",
+      "image": "",
+      "displayMode": "image_with_text",
+      "tone": "pearl",
+      "link": "promotions.html"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "road-ahead",
+      "type": "campaign",
+      "featured": true,
+      "tag": "แคมเปญหลัก",
+      "title": "The Road Ahead 2027",
+      "excerpt": "เปิดตัวแพล้นท์ PTX Titan รุ่นใหม่ ประหยัดเชื้อเพลิงขึ้น 12% พร้อมสิทธิพิเศษสำหรับลูกค้า 50 รายแรก",
+      "date": "2026-11-15",
+      "readTime": "4 นาที",
+      "image": "",
+      "tone": "crimson",
+      "link": "design-plant.html"
+    },
+    {
+      "id": "rap-guide",
+      "type": "article",
+      "tag": "บทความ",
+      "title": "RAP 50% ทำได้จริงไหม? คู่มือแพล้นท์รีไซเคิลฉบับวิศวกร",
+      "excerpt": "ไขข้อสงสัยเรื่องคุณภาพส่วนผสม การควบคุมอุณหภูมิ และจุดคุ้มทุน",
+      "date": "2026-11-02",
+      "readTime": "7 นาที",
+      "image": "",
+      "tone": "pearl",
+      "link": "index.html#hot-re"
+    },
+    {
+      "id": "fuel-save",
+      "type": "article",
+      "tag": "บทความ",
+      "title": "5 วิธีลดต้นทุนเชื้อเพลิงในแพล้นท์ยางมะตอย",
+      "excerpt": "ตั้งค่าหัวเผา ความชื้นหิน และการบำรุงรักษาที่ส่งผลต่อบิลพลังงาน",
+      "date": "2026-10-21",
+      "readTime": "5 นาที",
+      "image": "",
+      "tone": "silver",
+      "link": "spare-parts.html"
+    },
+    {
+      "id": "deal-silo",
+      "type": "deal",
+      "tag": "ดีลพิเศษ",
+      "title": "ไซโลเก็บร้อน 80 ตัน",
+      "excerpt": "เมื่อสั่งพร้อมแพล้นท์ใหม่ทุกรุ่น",
+      "price": 2900000,
+      "dealPrice": 2390000,
+      "date": "2026-11-10",
+      "image": "",
+      "tone": "deep",
+      "link": "design-plant.html"
+    },
+    {
+      "id": "deal-plc",
+      "type": "deal",
+      "tag": "ดีลพิเศษ",
+      "title": "อัปเกรด PLC + SCADA",
+      "excerpt": "สำหรับแพล้นท์ที่ใช้งานมากกว่า 5 ปี",
+      "price": 2250000,
+      "dealPrice": 1790000,
+      "date": "2026-11-10",
+      "image": "",
+      "tone": "crimson",
+      "link": "design-plant.html"
+    },
+    {
+      "id": "deal-burner",
+      "type": "deal",
+      "tag": "ดีลพิเศษ",
+      "title": "หัวเผาเชื้อเพลิงคู่",
+      "excerpt": "รวมค่าติดตั้งและจูนนิ่งหน้างาน",
+      "price": 1680000,
+      "dealPrice": 1450000,
+      "date": "2026-11-10",
+      "image": "",
+      "tone": "silver",
+      "link": "design-plant.html"
+    }
+  ],
+  "videos": [
+    {
+      "id": "v1",
+      "platform": "youtube",
+      "title": "PTX-240 Titan — Factory Acceptance Test",
+      "duration": "3:42",
+      "embedId": "",
+      "url": "",
+      "thumbnail": "",
+      "tone": "crimson"
+    },
+    {
+      "id": "v2",
+      "platform": "tiktok",
+      "title": "60 วินาที ติดตั้งไซโลสูง 22 เมตร",
+      "duration": "0:58",
+      "embedId": "",
+      "url": "",
+      "thumbnail": "",
+      "tone": "deep"
+    },
+    {
+      "id": "v3",
+      "platform": "reels",
+      "title": "เบื้องหลังทีมช่าง 24/7 ที่ไซต์งานลำปาง",
+      "duration": "0:45",
+      "embedId": "",
+      "url": "",
+      "thumbnail": "",
+      "tone": "pearl"
+    },
+    {
+      "id": "v4",
+      "platform": "mp4",
+      "title": "Hot RE In Plant — ระบบรีไซเคิลทำงานอย่างไร",
+      "duration": "2:15",
+      "embedId": "",
+      "url": "assets/videos/hot-re-explainer.mp4",
+      "thumbnail": "",
+      "tone": "silver"
+    },
+    {
+      "id": "v5",
+      "platform": "youtube",
+      "title": "รีวิวจากลูกค้า: กรมทางหลวงชนบท",
+      "duration": "5:10",
+      "embedId": "",
+      "url": "",
+      "thumbnail": "",
+      "tone": "pearl"
+    },
+    {
+      "id": "v6",
+      "platform": "tiktok",
+      "title": "เปลี่ยนสีโครงแพล้นท์ได้ตามแบรนด์คุณ",
+      "duration": "0:32",
+      "embedId": "",
+      "url": "",
+      "thumbnail": "",
+      "tone": "crimson"
+    }
+  ],
+  "partsMarquee": [
+    {
+      "id": "p1",
+      "title": "ถุงกรอง Nomex",
+      "detail": "ชุด 300 ใบ ทนร้อน 200 °C",
+      "discount": "−25%",
+      "icon": "filter",
+      "image": "",
+      "tone": "crimson"
+    },
+    {
+      "id": "p2",
+      "title": "หัวฉีดหัวเผา",
+      "detail": "รองรับน้ำมันเตา / LPG",
+      "discount": "−18%",
+      "icon": "flame",
+      "image": "",
+      "tone": "pearl"
+    },
+    {
+      "id": "p3",
+      "title": "ลูกปืนเพลาดรัม",
+      "detail": "SKF / FAG ของแท้",
+      "discount": "−15%",
+      "icon": "bearing",
+      "image": "",
+      "tone": "silver"
+    },
+    {
+      "id": "p4",
+      "title": "สายพานลำเลียง EP400",
+      "detail": "ตัดตามขนาด ส่งใน 48 ชม.",
+      "discount": "−20%",
+      "icon": "belt",
+      "image": "",
+      "tone": "deep"
+    },
+    {
+      "id": "p5",
+      "title": "ตะแกรงคัดขนาด",
+      "detail": "เหล็กแมงกานีสสูง",
+      "discount": "−12%",
+      "icon": "grid",
+      "image": "",
+      "tone": "pearl"
+    },
+    {
+      "id": "p6",
+      "title": "ใบพายมิกเซอร์",
+      "detail": "Ni-hard ทนการสึกกร่อน",
+      "discount": "−22%",
+      "icon": "gear",
+      "image": "",
+      "tone": "crimson"
+    },
+    {
+      "id": "p7",
+      "title": "ปั๊มยางมะตอย",
+      "detail": "Gear pump หุ้มแจ็คเก็ตร้อน",
+      "discount": "−10%",
+      "icon": "pump",
+      "image": "",
+      "tone": "silver"
+    },
+    {
+      "id": "p8",
+      "title": "Load Cell ชั่งตวง",
+      "detail": "Class C3 พร้อมสอบเทียบ",
+      "discount": "−15%",
+      "icon": "scale",
+      "image": "",
+      "tone": "deep"
+    }
+  ],
+  "social": [
+    {
+      "platform": "facebook",
+      "label": "Facebook",
+      "handle": "PROTEXGroup2002",
+      "url": "https://www.facebook.com/PROTEXGroup2002",
+      "icon": "assets/images/image_bc7cf8.png",
+      "action": "ติดตามเพจ"
+    },
+    {
+      "platform": "line",
+      "label": "LINE Official",
+      "handle": "ID: protex00",
+      "url": "https://line.me/ti/p/~protex00",
+      "icon": "assets/images/image_bc7cd8.png",
+      "action": "ทักแชตปรึกษา"
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "handle": "@protexgroup",
+      "url": "https://www.tiktok.com/@protexgroup",
+      "icon": "assets/images/image-Photoroom.png",
+      "action": "ชมคลิปผลงาน"
+    },
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "handle": "@protex.group",
+      "url": "https://www.instagram.com/protex.group/",
+      "icon": "assets/images/image_bc7cb5.png",
+      "action": "ดูแกลเลอรี"
+    }
+  ]
+}

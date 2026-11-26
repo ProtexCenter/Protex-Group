@@ -1,0 +1,11 @@
+{
+  "name": "protex-group",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Workspace wrapper — lets you run npm install / npm start from the project root.",
+  "scripts": {
+    "postinstall": "npm --prefix backend install",
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev"
+  }
+}

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="th" data-page="contact">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ติดต่อสอบถาม &amp; แผนที่สำนักงานใหญ่ — PROTEX GROUP</title>
+  <meta name="description"
+    content="ติดต่อสอบถามทีมวิศวกร Protex Group ขอใบเสนอราคาแพล้นท์ยางมะตอย อะไหล่แท้ และบริการหลังการขาย 24 ชั่วโมง พร้อมแผนที่นำทางสำนักงานใหญ่">
+  <meta name="theme-color" content="#F6F7F9">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/protex-logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo/protex-logo.png">
+  <link rel="preload" as="image" href="assets/logo/protex-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/glass-system.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/css/protex-chatbot.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var replay = /[?&]intro=1\b/.test(location.search);
+        if (replay) sessionStorage.removeItem('ptx_intro_seen');
+        if (!sessionStorage.getItem('ptx_intro_seen')) d.classList.add('intro-active');
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body class="page--contact">
+  <a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="orb orb--4"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__veil"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="header-pill glass">
+        <a href="index.html" class="brand" id="headerBrand" aria-label="PROTEX GROUP หน้าหลัก">
+          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo" width="96" height="34"
+            loading="eager" decoding="async">
+        </a>
+
+        <nav class="main-nav" id="mainNav" aria-label="เมนูหลัก">
+          <span class="nav-indicator nav-notch" id="navIndicator" data-nav-notch aria-hidden="true"><span
+              class="nav-notch__bar"></span></span>
+          <a href="index.html" data-nav="home">หน้าหลัก</a>
+          <a href="design-plant.html" data-nav="design">ออกแบบแพล้นท์</a>
+          <a href="spare-parts.html" data-nav="parts">อะไหล่</a>
+          <a href="promotions.html" data-nav="promotions">โปรโมชั่น</a>
+          <a href="contact.html" data-nav="contact" aria-current="page">ติดต่อสอบถาม</a>
+          <a href="service-plants.html" data-nav="service-plants">ผลงานติดตั้ง</a>
+          <a href="after-sales.html" data-nav="after-sales">บริการหลังการขาย</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search" id="searchBox" role="search">
+            <button type="button" class="search__btn" id="searchBtn" aria-label="ค้นหาแพล้นท์ อะไหล่ และโปรโมชั่น"
+              aria-expanded="false" aria-controls="searchPanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+            <input type="search" class="search__input" id="searchInput" placeholder="ค้นหาแพล้นท์, อะไหล่, โปรโมชั่น…"
+              autocomplete="off" aria-label="คำค้นหา">
+            <button type="button" class="search__clear" id="searchClear" aria-label="ล้างคำค้นหา">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false"
+            aria-controls="mobileSheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h11" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel glass glass--strong" id="searchPanel"></div>
+
+      <div class="mobile-sheet glass glass--strong" id="mobileSheet">
+        <nav aria-label="เมนูหลักมือถือ">
+          <a href="index.html"><span>หน้าหลัก</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="design-plant.html"><span>ออกแบบแพล้นท์</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="spare-parts.html"><span>อะไหล่</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="promotions.html"><span>โปรโมชั่น</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="contact.html" aria-current="page"><span>ติดต่อสอบถาม</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="service-plants.html"><span>ผลงานติดตั้ง</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="after-sales.html"><span>บริการหลังการขาย</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <div class="page-hero__grid">
+        <div>
+          <h1 class="display display--flagship">
+            <span class="display__line display__line--dark">CONTACT</span>
+            <span class="display__line display__line--accent">
+              <span class="display__gradient">ENGINEERING</span>
+            </span>
+          </h1>
+          <p class="display-th display-th--accent">ติดต่อสอบถาม ขอใบเสนอราคา และนัดหมายวิศวกรเข้าดูหน้างาน</p>
+        </div>
+        <div>
+          <p class="lead">ไม่ว่าจะเป็นการวางผังแพล้นท์ใหม่ อัปเกรดชุดรีไซเคิล RAP สั่งอะไหล่ด่วน
+            หรือปรึกษาสเปกโครงการกรมทางหลวง ทีมวิศวกรอาวุโสของ Protex Group พร้อมดูแลคุณโดยตรง</p>
+          <div class="page-hero__meta">
+            <span class="chip chip--red">สายด่วนวิศวกร 24/7</span>
+            <span class="chip">ตอบกลับใบเสนอราคาภายใน 2 ชม.</span>
+            <span class="chip">สำรวจพื้นที่ติดตั้งฟรีทั่วประเทศ</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SECTION 1: QUICK CHANNELS & INQUIRY FORM
+         ================================================================ -->
+    <section class="section--tight container" aria-labelledby="contactChannelsHeading">
+      <div class="contact-layout">
+        <div class="contact-info">
+          <article class="contact-hq glass reveal">
+            <div class="contact-hq__top">
+              <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-panel__logo" width="96" height="34"
+                loading="lazy" decoding="async">
+              <span class="chip chip--red" id="hqStatusBadge">เปิดทำการ · 24/7 Support</span>
+            </div>
+            <h2 class="h2" id="contactChannelsHeading">บริษัท โปรเท็กซ์ กรุ๊ป จำกัด (สำนักงานใหญ่)</h2>
+            <p class="muted" id="hqAddressText">88/9 หมู่ 12 ถนนบางนา-ตราด กม.15 ตำบลบางพลีใหญ่ อำเภอบางพลี
+              จังหวัดสมุทรปราการ 10540</p>
+
+            <div class="contact-hq__meta">
+              <div class="contact-hq__meta-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+                <span id="hqHoursText">จันทร์ – เสาร์ 08:00 – 17:30 น. (สายด่วนวิศวกร 24/7)</span>
+              </div>
+              <div class="contact-hq__meta-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>พิกัด GPS: <strong id="hqCoordsText">13.5991, 100.6968</strong> (บางพลี · สมุทรปราการ)</span>
+              </div>
+            </div>
+
+            <div class="contact-hq__actions">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=13.5991,100.6968" target="_blank"
+                rel="noopener noreferrer" class="btn btn--red" id="hqNavBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                </svg>
+                <span>เปิดนำทางด้วย Google Maps</span>
+              </a>
+              <button type="button" class="btn btn--glass"
+                data-copy="88/9 หมู่ 12 ถนนบางนา-ตราด กม.15 ตำบลบางพลีใหญ่ อำเภอบางพลี จังหวัดสมุทรปราการ 10540">
+                <span>คัดลอกที่อยู่</span>
+              </button>
+            </div>
+          </article>
+
+          <div class="contact-cards reveal">
+            <article class="contact-card glass glass-interactive">
+              <div class="contact-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div class="contact-card__body">
+                <span class="contact-card__label">สำนักงานใหญ่ &amp; ฝ่ายขาย</span>
+                <strong class="contact-card__value">085&#8209;392&#8209;4448</strong>
+                <div class="contact-card__btns">
+                  <a href="tel:0853924448" class="btn btn--sm btn--red">โทรออกทันที</a>
+                  <button type="button" class="btn btn--sm btn--glass" data-copy="0853924448">คัดลอก</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="contact-card glass glass-interactive">
+              <div class="contact-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                </svg>
+              </div>
+              <div class="contact-card__body">
+                <span class="contact-card__label">Service หลังการขาย</span>
+                <strong class="contact-card__value">085&#8209;392&#8209;4448</strong>
+                <div class="contact-card__btns">
+                  <a href="tel:0853924448" class="btn btn--sm btn--red">ติดต่อ Service</a>
+                  <button type="button" class="btn btn--sm btn--glass" data-copy="0853924448">คัดลอก</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="contact-card glass glass-interactive">
+              <div class="contact-card__icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M19.6 10.6c0-3.8-3.8-6.9-8.5-6.9S2.6 6.8 2.6 10.6c0 3.4 3 6.3 7.1 6.8.3.1.7.2.8.5.1.2.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.3-3.1 7.2-5.4c1.3-1.4 1.2-2.8 1.2-4.1Z" />
+                </svg>
+              </div>
+              <div class="contact-card__body">
+                <span class="contact-card__label">LINE Official Account</span>
+                <strong class="contact-card__value">protex000</strong>
+                <div class="contact-card__btns">
+                  <a href="https://line.me/ti/p/~protex000" target="_blank" rel="noopener noreferrer" class="btn btn--sm btn--red">แอดไลน์</a>
+                  <button type="button" class="btn btn--sm btn--glass" data-copy="protex000">คัดลอกไอดี</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="contact-card glass glass-interactive">
+              <div class="contact-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-10 6L2 7" />
+                </svg>
+              </div>
+              <div class="contact-card__body">
+                <span class="contact-card__label">อีเมลฝ่ายขายและวิศวกรรม</span>
+                <strong class="contact-card__value">protexgroupa@gmail.com</strong>
+                <div class="contact-card__btns">
+                  <a href="mailto:protexgroupa@gmail.com" class="btn btn--sm btn--red">ส่งอีเมล</a>
+                  <button type="button" class="btn btn--sm btn--glass"
+                    data-copy="protexgroupa@gmail.com">คัดลอก</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Inquiry Form -->
+        <article class="inquiry-panel glass reveal">
+          <div class="inquiry-panel__head">
+            <span class="chip chip--red">Direct Engineering Inquiry</span>
+            <h2 class="h2">ส่งข้อความสอบถาม / ขอใบเสนอราคา</h2>
+            <p class="muted">กรอกข้อมูลโครงการหรือคำถามของคุณ
+              ทีมวิศวกรเฉพาะทางจะติดต่อกลับพร้อมข้อมูลเทคนิคโดยเร็วที่สุด</p>
+          </div>
+
+          <form class="inquiry-form" id="inquiryForm" novalidate>
+            <div class="inquiry-form__grid">
+              <div class="field">
+                <label for="inqName">ชื่อ – นามสกุล *</label>
+                <input class="input" id="inqName" name="name" type="text" placeholder="เช่น คุณสมชาย ใจดี"
+                  autocomplete="name" required>
+                <span class="field__error" data-err="name"></span>
+              </div>
+              <div class="field">
+                <label for="inqCompany">บริษัท / หน่วยงาน</label>
+                <input class="input" id="inqCompany" name="company" type="text"
+                  placeholder="เช่น ศิลาไทย คอนสตรัคชั่น จำกัด" autocomplete="organization">
+              </div>
+              <div class="field">
+                <label for="inqPhone">เบอร์โทรศัพท์ *</label>
+                <input class="input" id="inqPhone" name="phone" type="tel" placeholder="08X-XXX-XXXX" autocomplete="tel"
+                  required>
+                <span class="field__error" data-err="phone"></span>
+              </div>
+              <div class="field">
+                <label for="inqEmail">อีเมล</label>
+                <input class="input" id="inqEmail" name="email" type="email" placeholder="name@company.co.th"
+                  autocomplete="email">
+                <span class="field__error" data-err="email"></span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="inqTopic">หัวข้อที่สนใจ *</label>
+              <select class="input" id="inqTopic" name="topic">
+                <option value="new-plant">ขอใบเสนอราคาแพล้นท์ยางมะตอยใหม่ (MODEL PT-1510RAP / Batch Mix)</option>
+                <option value="rap-upgrade">ออกแบบและติดตั้งแพล้นท์รีไซเคิล (Hot Re In Plant / RAP Upgrade)</option>
+                <option value="spare-parts">สั่งซื้ออะไหล่แท้ / เทียบพาร์ทด่วน</option>
+                <option value="after-sales">นัดหมายตรวจเช็ก PM / แจ้งซ่อมวิศวกร 24/7</option>
+                <option value="service-plant">ติดต่อซื้อแอสฟัลต์จากแพล้นท์บริการใกล้ไซต์งาน</option>
+                <option value="other">สอบถามข้อมูลทั่วไป / นัดชมโรงงาน</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="inqMessage">รายละเอียดโครงการ / ข้อความสอบถาม *</label>
+              <textarea class="input" id="inqMessage" name="message" rows="4"
+                placeholder="ระบุกำลังการผลิตที่ต้องการ จังหวัดที่จะติดตั้ง หรือรายละเอียดที่ต้องการให้ทีมวิศวกรเตรียมข้อมูล…"
+                required></textarea>
+              <span class="field__error" data-err="message"></span>
+            </div>
+
+            <div class="inquiry-form__foot">
+              <button type="submit" class="btn btn--red" id="inqSubmitBtn">
+                <span>ส่งข้อความถึงทีมวิศวกร</span>
+                <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+              </button>
+              <a href="design-plant.html" class="btn btn--glass">จำลองสีและคำนวณราคาเอง</a>
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SECTION 2: OFFICE LOCATION MAP (Interactive Glass Map)
+         ================================================================ -->
+    <section class="section container" id="office-map" aria-labelledby="officeMapHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="h1" id="officeMapHeading">แผนที่สำนักงานใหญ่</h2>
+          <p class="display-th display-th--accent">คลิกที่หมุดสีแดงเพื่อนำทางโดย Google Maps</p>
+        </div>
+      </header>
+
+      <div class="map-frame glass reveal">
+        <div class="map-canvas" id="contactMapCanvas" role="region" aria-label="แผนที่สำนักงานใหญ่และสาขา Protex Group">
+        </div>
+        <div class="map-floating-card glass glass--strong" id="contactMapCard">
+          <span class="chip chip--red" id="contactMapCardTag">HEADQUARTERS</span>
+          <h3 id="contactMapCardTitle">บริษัท โปรเท็กซ์ กรุ๊ป จำกัด (สำนักงานใหญ่)</h3>
+          <p id="contactMapCardAddress">88/9 หมู่ 12 ถ.บางนา-ตราด กม.15 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</p>
+          <div class="map-floating-card__actions">
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=13.5991,100.6968" target="_blank"
+              rel="noopener noreferrer" class="btn btn--sm btn--red" id="contactMapCardNav">เปิดนำทาง Google Maps</a>
+            <a href="tel:0853924448" class="btn btn--sm btn--glass"
+              id="contactMapCardTel">โทร&nbsp;085&#8209;392&#8209;4448</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-glass glass--red">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand--footer" aria-label="PROTEX GROUP">
+            <div class="footer-brand__badge">
+              <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo brand__logo--footer"
+                width="108" height="38" loading="lazy" decoding="async">
+            </div>
+          </a>
+          <p class="footer-statement">วิศวกรรมแพล้นท์ยางมะตอยครบวงจร</p>
+          <p>ออกแบบ ผลิต ติดตั้ง และดูแลหลังการขายโดยทีมวิศวกรมืออาชีพทั่วประเทศ</p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Navigation</h3>
+          <ul class="footer-nav-list footer-nav-list--2col">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="design-plant.html">ออกแบบแพล้นท์</a></li>
+            <li><a href="spare-parts.html">อะไหล่</a></li>
+            <li><a href="promotions.html">โปรโมชั่น</a></li>
+            <li><a href="contact.html">ติดต่อสอบถาม</a></li>
+            <li><a href="service-plants.html">ผลงานติดตั้ง</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Plant Series</h3>
+          <ul class="footer-nav-list">
+            <li><a href="index.html#fully-hot">Fully Hot In Plant (PT-1510RAP)</a></li>
+            <li><a href="index.html#hot-re">Hot Re In Plant (RAP Recycle)</a></li>
+            <li><a href="design-plant.html#accessoriesSection">อุปกรณ์เสริม &amp; ระบบ PLC</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย 24/7</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <ul class="footer-nav-list">
+            <li><a href="tel:0853924448">โทร&nbsp;085&#8209;392&#8209;4448</a></li>
+            <li><a href="mailto:protexgroupa@gmail.com">protexgroupa@gmail.com</a></li>
+            <li><a href="contact.html#office-map">บางพลี · สมุทรปราการ</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/PROTEXGroup2002" target="_blank" rel="noopener noreferrer"
+              aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M13.5 21v-7.5h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 4v2.2H8v3h2.5V21h3Z" />
+              </svg></a>
+            <a href="https://line.me/ti/p/~protex000" target="_blank" rel="noopener noreferrer" aria-label="LINE"><svg
+                viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19.6 10.6c0-3.8-3.8-6.9-8.5-6.9S2.6 6.8 2.6 10.6c0 3.4 3 6.3 7.1 6.8.3.1.7.2.8.5.1.2.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.3-3.1 7.2-5.4c1.3-1.4 1.2-2.8 1.2-4.1Z" />
+              </svg></a>
+            <a href="https://www.tiktok.com/@protexgroup" target="_blank" rel="noopener noreferrer"
+              aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16.6 5.8A4.3 4.3 0 0 1 15 2h-3.1v13.2a2.6 2.6 0 1 1-1.8-2.5V9.5a5.7 5.7 0 1 0 4.9 5.6V8.8a7.4 7.4 0 0 0 4.3 1.4V7.1c-.9 0-1.9-.5-2.7-1.3Z" />
+              </svg></a>
+            <a href="https://www.instagram.com/protex.group/" target="_blank" rel="noopener noreferrer"
+              aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PROTEX GROUP. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="assets/js/promo-popup.js" defer></script>
+  <script src="assets/js/protex-chatbot.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="th" data-page="design">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ออกแบบแพล้นท์ &amp; คำนวณราคา — PROTEX GROUP</title>
+  <meta name="description" content="Interactive Plant Configurator ปรับแต่งสีเฉพาะโครงหลักของแพล้นท์ยางมะตอย เลือกอุปกรณ์เสริม และคำนวณราคาประเมินแบบเรียลไทม์">
+  <meta name="theme-color" content="#F6F7F9">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/protex-logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo/protex-logo.png">
+  <link rel="preload" as="image" href="assets/logo/protex-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Outfit:wght@700;800;900&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/glass-system.css?v=20261126c">
+  <link rel="stylesheet" href="css/animations.css?v=20261126c">
+  <link rel="stylesheet" href="css/style.css?v=20261126c">
+  <link rel="stylesheet" href="assets/css/protex-chatbot.css?v=20261126c">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var replay = /[?&]intro=1\b/.test(location.search);
+        if (replay) sessionStorage.removeItem('ptx_intro_seen');
+        if (!sessionStorage.getItem('ptx_intro_seen')) d.classList.add('intro-active');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="page--design">
+  <a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="orb orb--4"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__veil"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="header-pill glass">
+        <a href="index.html" class="brand" id="headerBrand" aria-label="PROTEX GROUP หน้าหลัก">
+          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo" width="96" height="34" loading="eager" decoding="async">
+        </a>
+
+        <nav class="main-nav" id="mainNav" aria-label="เมนูหลัก">
+          <span class="nav-indicator nav-notch" id="navIndicator" data-nav-notch aria-hidden="true"><span
+              class="nav-notch__bar"></span></span>
+          <a href="index.html" data-nav="home">หน้าหลัก</a>
+          <a href="design-plant.html" data-nav="design" aria-current="page">ออกแบบแพล้นท์</a>
+          <a href="spare-parts.html" data-nav="parts">อะไหล่</a>
+          <a href="promotions.html" data-nav="promotions">โปรโมชั่น</a>
+          <a href="contact.html" data-nav="contact">ติดต่อสอบถาม</a>
+          <a href="service-plants.html" data-nav="service-plants">ผลงานติดตั้ง</a>
+          <a href="after-sales.html" data-nav="after-sales">บริการหลังการขาย</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search" id="searchBox" role="search">
+            <button type="button" class="search__btn" id="searchBtn" aria-label="ค้นหาแพล้นท์ อะไหล่ และโปรโมชั่น" aria-expanded="false" aria-controls="searchPanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            </button>
+            <input type="search" class="search__input" id="searchInput" placeholder="ค้นหาแพล้นท์, อะไหล่, โปรโมชั่น…" autocomplete="off" aria-label="คำค้นหา">
+            <button type="button" class="search__clear" id="searchClear" aria-label="ล้างคำค้นหา">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="mobileSheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h11"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel glass glass--strong" id="searchPanel"></div>
+
+      <div class="mobile-sheet glass glass--strong" id="mobileSheet">
+        <nav aria-label="เมนูหลักมือถือ">
+          <a href="index.html"><span>หน้าหลัก</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="design-plant.html" aria-current="page"><span>ออกแบบแพล้นท์</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="spare-parts.html"><span>อะไหล่</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="promotions.html"><span>โปรโมชั่น</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="contact.html"><span>ติดต่อสอบถาม</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="service-plants.html"><span>ผลงานติดตั้ง</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="after-sales.html"><span>บริการหลังการขาย</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Compact Page Hero -->
+    <section class="page-hero page-hero--compact container">
+      <div class="page-hero__grid">
+        <div>
+          <h1 class="display">PLANT <span class="outline">STUDIO</span></h1>
+          <p class="display-th">ออกแบบสีโครงหลัก เลือกอุปกรณ์เสริม และคำนวณราคาสุทธิแบบเรียลไทม์ในกรอบเดียว</p>
+        </div>
+        <div>
+          <div class="page-hero__meta">
+            <span class="chip"><span class="dot"></span>Main Structure Mask Layer</span>
+            <span class="chip">RAL Industrial Color Standard</span>
+            <span class="chip">Live Price Engine</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         UNIFIED BENTO CONFIGURATOR STUDIO (Compact Single-Screen Cockpit)
+         ================================================================ -->
+    <section class="studio-wrap container" aria-label="สตูดิโอออกแบบแพล้นท์และคำนวณราคา">
+      <!-- PART 1: 1-Row Horizontal Compact Model Selector Bar -->
+      <div class="studio-models-bar" id="modelOptions" role="radiogroup" aria-label="เลือกรุ่นแพล้นท์หลัก"></div>
+
+      <!-- PART 2: Symmetrical 2-Column Bento Cockpit (Left Stage + Color Dock / Right Equipment + Live Price Deck) -->
+      <div class="studio-cockpit" id="accessoriesSection">
+        <!-- LEFT COLUMN (~57%): Multi-Layer Visualizer + Integrated Single-Row Color Dock -->
+        <div class="config-stage studio-stage glass" id="configStage">
+          <div class="stage-canvas studio-stage__canvas">
+            <div class="stage-top">
+              <div class="stage-top__chips">
+                <span class="chip chip--red" id="stageModelChip">MODEL PT-1510RAP</span>
+                <span class="chip" id="stageCapChip">110-130 T/H</span>
+              </div>
+              <div class="stage-top__actions">
+                <button type="button" class="btn btn--sm btn--glass compare-btn" id="compareBtn" aria-label="กดค้างเพื่อดูสีฐานก่อนทำสี">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M5 8l-3 4 3 4m14-8 3 4-3 4"/></svg>
+                  <span>กดค้างดูสีฐาน</span>
+                </button>
+                <button type="button" class="btn btn--sm btn--glass" id="resetConfigBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                  <span>รีเซ็ตค่าเริ่มต้น</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Multi-Layer Plant Structure Visualizer -->
+            <div class="stage-layers" id="stageLayers">
+              <img class="layer layer--base" id="baseLayer" src="assets/images/configurator/fully-hot-base.svg" alt="ภาพจำลองแพล้นท์ยางมะตอยสำหรับปรับแต่งสีโครงหลัก" width="1600" height="1000">
+              <div class="layer layer--tint" id="tintLayer" aria-hidden="true"></div>
+              <div class="layer layer--sheen" id="sheenLayer" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <!-- Integrated Single-Row Color Dock at Bottom of Stage Card -->
+          <div class="studio-color-dock" aria-label="แถบเลือกสีเฉพาะโครงสร้างหลัก">
+            <div class="studio-color-dock__info" aria-live="polite">
+              <span class="studio-color-dock__dot" id="colorDot" aria-hidden="true"></span>
+              <div class="studio-color-dock__text">
+                <strong class="studio-color-dock__name" id="colorName">สีโครงสร้างหลัก: แดงคริมสัน</strong>
+                <span class="studio-color-dock__code" id="colorCode">RAL 3020 · รวมในมาตรฐาน</span>
+              </div>
+            </div>
+            <div class="studio-color-dock__swatches" id="colorSwatches" role="radiogroup" aria-label="เลือกสีโครงสร้างหลัก 8 เฉดสี"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN (~43%): Unified Equipment Checklist & Single Live Price Engine Deck -->
+        <aside class="studio-deck glass glass--strong" id="liveCalcPanel" aria-label="แผงเลือกอุปกรณ์เสริมและคำนวณราคาสุทธิ">
+          <!-- 1. Fixed Top Header & Single-Line Horizontal Category Filters -->
+          <div class="studio-deck__head">
+            <div class="studio-deck__title-row">
+              <div class="studio-deck__title-left">
+                <h2 class="studio-deck__title" id="accHeading">อุปกรณ์เสริม</h2>
+                <span class="studio-deck__count-pill" id="calcAddonBadge">เลือกแล้ว 0</span>
+              </div>
+              <button type="button" class="studio-deck__clear-btn" id="clearAddonsBtn" disabled>ล้างทั้งหมด</button>
+            </div>
+            <div class="studio-deck__filters" id="accFilters" role="toolbar" aria-label="กรองหมวดหมู่อุปกรณ์เสริม"></div>
+          </div>
+
+          <!-- 2. Independent Scroll List of Sleek Compact Checklist Rows -->
+          <div class="studio-deck__list" id="accGrid" aria-live="polite">
+            <div class="skeleton" style="min-height:58px;"></div>
+            <div class="skeleton" style="min-height:58px;"></div>
+            <div class="skeleton" style="min-height:58px;"></div>
+            <div class="skeleton" style="min-height:58px;"></div>
+          </div>
+
+          <!-- 3. Docked Bottom Live Price Engine (The Only Price Summary on the Page) -->
+          <div class="studio-deck__price-dock" id="calcTotalBox">
+            <!-- Popover Drawer for Selected Items Breakdown (Expands Upward Without Lengthening Page) -->
+            <div class="studio-receipt-popover glass glass--strong" id="studioReceiptPopover" hidden>
+              <div class="studio-receipt-popover__head">
+                <strong>สรุปรายการที่เลือกทั้งหมด</strong>
+                <button type="button" class="studio-receipt-popover__close" id="closeReceiptPopoverBtn" aria-label="ปิดรายการสรุป">✕</button>
+              </div>
+              <ul class="studio-receipt-popover__list" id="calcReceiptList"></ul>
+            </div>
+
+            <!-- Visual Ratio Bar + 1-Line Summary -->
+            <div class="studio-ratio">
+              <div class="studio-ratio__meta">
+                <span id="calcSummaryLine">แพล้นท์ ฿36.90M · อุปกรณ์เสริม +฿0</span>
+                <button type="button" class="studio-ratio__drawer-btn" id="toggleReceiptPopoverBtn" aria-expanded="false" aria-controls="studioReceiptPopover">
+                  <span id="drawerBtnText">ดูรายการที่เลือก (0)</span>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 15 6-6 6 6"/></svg>
+                </button>
+              </div>
+              <div class="studio-ratio__track" aria-hidden="true">
+                <div class="studio-ratio__base" id="calcBarBase" style="width:100%;"></div>
+                <div class="studio-ratio__addon" id="calcBarAddon" style="width:0%;"></div>
+              </div>
+            </div>
+
+            <!-- Grand Total Row with Smooth 60fps Rolling Counter & Floating Delta Pop-up -->
+            <div class="studio-total-row">
+              <div class="studio-total-row__left">
+                <div class="studio-total-row__label-wrap">
+                  <span class="studio-total-row__label">ราคารวมประเมินสุทธิ (THB)</span>
+                  <span class="studio-total-row__delta" id="calcDeltaAnchor" aria-hidden="true"></span>
+                </div>
+                <output class="studio-total-row__val tnum" id="calcTotalOutput" for="modelOptions colorSwatches accGrid">฿36,900,000</output>
+                <span class="studio-total-row__vat" id="calcVatNote">ราคายังไม่รวม VAT 7% ค่าขนส่ง และงานฐานราก</span>
+              </div>
+            </div>
+
+            <!-- Primary CTA Button -->
+            <button type="button" class="btn btn--red studio-deck__cta" data-open-quote>
+              <span>ขอใบเสนอราคาสเปกนี้</span>
+              <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================
+       SPLIT-VIEW OFFICIAL QUOTATION STUDIO MODAL (Form Left + Live A4 Document Right)
+       ================================================================ -->
+  <div class="modal modal--quote" id="quoteModal" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle" hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__dialog qt-studio-dialog glass glass--strong">
+      <!-- Top Sticky Glass Modal Header -->
+      <header class="qt-studio-head">
+        <div class="qt-studio-head__left">
+          <span class="qt-studio-head__squircle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </span>
+          <div>
+            <h2 class="qt-studio-head__title" id="quoteModalTitle">
+              <span>ขอใบเสนอราคาเบื้องต้น (คำนวณจากสินค้าหน้าเว็บ)</span>
+              <span class="qt-studio-head__pill" id="qtDraftRefBadge">QT-20261125-001</span>
+            </h2>
+            <p class="qt-studio-head__sub">คำขอนี้จะถูกส่งไปยังทีมงาน PROTEX GROUP เพื่อตรวจสอบความถูกต้องก่อน เมื่อตรวจสอบเรียบร้อยแล้ว บริษัทจะส่งใบเสนอราคาฉบับทางการกลับไปยังอีเมล (Gmail) ที่ท่านระบุไว้</p>
+          </div>
+        </div>
+        <div class="qt-studio-head__right">
+          <button type="button" class="btn btn--sm btn--glass" id="qtPrintPreviewBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>พิมพ์ / PDF (A4 แนวตั้ง)</span>
+          </button>
+          <button type="button" class="icon-btn modal__close" data-modal-close aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- 2-Column Split Body (Left ~44% Form / Right ~56% Live A4 Document Preview) -->
+      <div class="qt-studio-grid">
+        <!-- LEFT COLUMN (~44%): Interactive Form & Success View -->
+        <div class="qt-studio-left">
+          <div id="quoteFormWrap" class="qt-clean-form-stack">
+            <section class="qt-clean-group">
+              <div class="qt-clean-group__head">
+                <span class="qt-clean-group__num">1</span>
+                <h3 class="qt-clean-group__title">ข้อมูลผู้ขอใบเสนอราคา</h3>
+              </div>
+
+              <form class="qt-clean-grid" id="quoteForm" novalidate>
+                <div class="qt-clean-field">
+                  <label for="qName">ชื่อผู้ติดต่อ <span class="qt-clean-req">*</span></label>
+                  <input class="qt-clean-input" id="qName" name="name" type="text" placeholder="เช่น คุณสมชาย วงศ์ไพศาล" required autocomplete="name">
+                  <span class="field__error" data-qerr="name"></span>
+                </div>
+
+                <div class="qt-clean-field">
+                  <label for="qPhone">เบอร์โทรศัพท์ (TEL.) <span class="qt-clean-req">*</span></label>
+                  <input class="qt-clean-input" id="qPhone" name="phone" type="tel" placeholder="เช่น 081-234-5678" required autocomplete="tel">
+                  <span class="field__error" data-qerr="phone"></span>
+                </div>
+
+                <div class="qt-clean-field">
+                  <label for="qCompany">เสนอให้ (บริษัท / หน่วยงาน)</label>
+                  <input class="qt-clean-input" id="qCompany" name="company" type="text" placeholder="เช่น บจก. ศิลาไทย คอนสตรัคชั่น" autocomplete="organization">
+                  <span class="field__error" data-qerr="company"></span>
+                </div>
+
+                <div class="qt-clean-field">
+                  <label for="qAttn">เรียน (ATTN.)</label>
+                  <input class="qt-clean-input" id="qAttn" name="attn" type="text" placeholder="กรรมการผู้จัดการ">
+                </div>
+
+                <div class="qt-clean-field">
+                  <label for="qFax">แฟกซ์ (FAX.)</label>
+                  <input class="qt-clean-input" id="qFax" name="fax" type="text" placeholder="เช่น 02-123-4567 (ถ้ามี)">
+                </div>
+
+                <div class="qt-clean-field">
+                  <label for="qEmail">อีเมลผู้รับใบเสนอราคา <span class="qt-clean-req">*</span></label>
+                  <input class="qt-clean-input" id="qEmail" name="email" type="email" placeholder="เช่น purchasing@company.co.th" required autocomplete="email">
+                  <span class="qt-clean-hint">สำหรับส่งเมลเท่านั้น — ไม่โชว์บนใบเสนอราคา</span>
+                  <span class="field__error" data-qerr="email"></span>
+                </div>
+
+                <div class="qt-clean-field qt-clean-field--full">
+                  <label for="qNote">สถานที่ติดตั้ง (จังหวัด) / ความต้องการเพิ่มเติม</label>
+                  <textarea class="qt-clean-textarea" id="qNote" name="note" rows="3" placeholder="เช่น ติดตั้งที่จังหวัดสระบุรี ต้องการเดินเครื่องภายในไตรมาส 2"></textarea>
+                </div>
+
+                <div class="qt-mail-notice qt-clean-field--full">
+                  <span>คำขอนี้จะถูกส่งไปยังทีมงาน <strong>PROTEX GROUP</strong> เพื่อตรวจสอบความถูกต้องก่อน เมื่อตรวจสอบเรียบร้อยแล้ว บริษัทจะส่งใบเสนอราคาฉบับทางการกลับไปยังอีเมล (Gmail) ที่ท่านระบุไว้</span>
+                </div>
+
+                <button type="submit" class="btn btn--lg btn--red qt-submit-btn" id="quoteSubmitBtn">
+                  <span>ส่งคำขอให้บริษัทตรวจสอบใบเสนอราคา</span>
+                  <svg class="btn__arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                </button>
+              </form>
+            </section>
+          </div>
+
+          <!-- Success State -->
+          <div class="quote-success qt-success-card" id="quoteSuccessBox" hidden>
+            <span class="quote-success__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            <h3 class="h2">ส่งคำขอตรวจสอบใบเสนอราคาสำเร็จ</h3>
+            <p class="muted">เลขที่อ้างอิงคำขอใบเสนอราคาเบื้องต้นของคุณคือ</p>
+            <div class="chip chip--red quote-success__ref" id="quoteRefCode">QT-20261125-001</div>
+            <p class="qt-success-mail" id="quoteEmailStatusMsg">ส่งคำขอเรียบร้อยแล้ว อยู่ระหว่างรอทีมงานตรวจสอบและจะส่งใบเสนอราคาฉบับทางการกลับไปยังอีเมลที่ท่านแจ้งไว้ หากต้องการติดต่อด่วน โทร. 085-392-4448 หรือ LINE: protex000</p>
+            <p class="muted" id="quoteConfirmTotal"></p>
+            <div class="qt-success-actions">
+              <button type="button" class="btn btn--glass" id="qtSuccessPrintBtn">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>พิมพ์ใบเสนอราคาเบื้องต้น (A4)</span>
+              </button>
+              <button type="button" class="btn btn--red quote-success__done" data-modal-close>เสร็จสิ้น</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN (~56%): Live Official ISO A4 Portrait (210 x 297 mm) Preview -->
+        <div class="qt-studio-right">
+          <div class="qt-preview-toolbar">
+            <span class="qt-preview-toolbar__tag">
+              <span class="dot"></span>
+              <span>ขนาดกระดาษ A4 แนวตั้ง (210 × 297 mm)</span>
+              <span class="qt-preview-toolbar__pages" data-a4-page-count></span>
+            </span>
+            <div class="qt-preview-toolbar__actions">
+              <button type="button" class="btn btn--sm btn--glass" id="qtFullPreviewBtn">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                <span id="qtFullPreviewBtnText">ขยายดูเต็มหน้าจอ (Full A4)</span>
+              </button>
+              <button type="button" class="btn btn--sm btn--red" id="qtToolbarPrintBtn">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>พิมพ์ / PDF (A4)</span>
+              </button>
+            </div>
+          </div>
+
+          <article class="qt-a4-doc qt-a4-doc--official" id="qtLiveA4Doc" aria-label="ตัวอย่างเอกสารใบเสนอราคา A4 แนวตั้ง PROTEX GROUP">
+            <!-- Populated dynamically in real-time by quotation-template.js + configurator.js -->
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       FLOATING RED LIQUID GLASS FOOTER
+       ================================================================ -->
+      <footer class="site-footer">
+    <div class="footer-glass glass--red">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand--footer" aria-label="PROTEX GROUP">
+            <div class="footer-brand__badge">
+              <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo brand__logo--footer"
+                width="108" height="38" loading="lazy" decoding="async">
+            </div>
+          </a>
+          <p class="footer-statement">วิศวกรรมแพล้นท์ยางมะตอยครบวงจร</p>
+          <p>ออกแบบ ผลิต ติดตั้ง และดูแลหลังการขายโดยทีมวิศวกรมืออาชีพทั่วประเทศ</p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Navigation</h3>
+          <ul class="footer-nav-list footer-nav-list--2col">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="design-plant.html">ออกแบบแพล้นท์</a></li>
+            <li><a href="spare-parts.html">อะไหล่</a></li>
+            <li><a href="promotions.html">โปรโมชั่น</a></li>
+            <li><a href="contact.html">ติดต่อสอบถาม</a></li>
+            <li><a href="service-plants.html">ผลงานติดตั้ง</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Plant Series</h3>
+          <ul class="footer-nav-list">
+            <li><a href="index.html#fully-hot">Fully Hot In Plant (PT-1510RAP)</a></li>
+            <li><a href="index.html#hot-re">Hot Re In Plant (RAP Recycle)</a></li>
+            <li><a href="design-plant.html#accessoriesSection">อุปกรณ์เสริม &amp; ระบบ PLC</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย 24/7</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+6620000000">โทร&nbsp;02&#8209;000&#8209;0000</a></li>
+            <li><a href="mailto:sales@protexgroup.co.th">sales@protexgroup.co.th</a></li>
+            <li><a href="contact.html#office-map">บางพลี · สมุทรปราการ</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/PROTEXGroup2002" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M13.5 21v-7.5h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 4v2.2H8v3h2.5V21h3Z" />
+              </svg></a>
+            <a href="https://line.me/ti/p/~protex00" target="_blank" rel="noopener noreferrer" aria-label="LINE"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19.6 10.6c0-3.8-3.8-6.9-8.5-6.9S2.6 6.8 2.6 10.6c0 3.4 3 6.3 7.1 6.8.3.1.7.2.8.5.1.2.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.3-3.1 7.2-5.4c1.3-1.4 1.2-2.8 1.2-4.1Z" />
+              </svg></a>
+            <a href="https://www.tiktok.com/@protexgroup" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16.6 5.8A4.3 4.3 0 0 1 15 2h-3.1v13.2a2.6 2.6 0 1 1-1.8-2.5V9.5a5.7 5.7 0 1 0 4.9 5.6V8.8a7.4 7.4 0 0 0 4.3 1.4V7.1c-.9 0-1.9-.5-2.7-1.3Z" />
+              </svg></a>
+            <a href="https://www.instagram.com/protex.group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PROTEX GROUP. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="js/main.js?v=20261126d" defer></script>
+  <script src="assets/js/quotation-template.js?v=20261126d" defer></script>
+  <script src="js/configurator.js?v=20261126d" defer></script>
+  <script src="assets/js/promo-popup.js?v=20261126d" defer></script>
+  <script src="assets/js/protex-chatbot.js?v=20261126d" defer></script>
+</body>
+</html>

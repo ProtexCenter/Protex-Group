@@ -1,0 +1,147 @@
+{
+  "botProfile": {
+    "name": "PROTEX AI Ranger",
+    "role": "ผู้ช่วยวิศวกรรมอัจฉริยะประจำ PROTEX GROUP",
+    "status": "ออนไลน์ · พร้อมให้คำปรึกษา",
+    "version": "1.0.0",
+    "greeting": "สวัสดีครับ! ผม **PROTEX AI Ranger** หุ่นยนต์ผู้ช่วยวิศวกรรมประจำ **PROTEX GROUP** พร้อมให้ข้อมูลสเปกแพล้นท์ยางมะตอย ระบบรีไซเคิล RAP ผลงานติดตั้งจริง อะไหล่แท้ และช่องทางติดต่อทีมวิศวกรครับ สนใจข้อมูลส่วนไหนเลือกปุ่มด่วนหรือพิมพ์ถามได้เลยครับ"
+  },
+  "quickChips": [
+    {
+      "id": "chip-plants",
+      "label": "รุ่นแพล้นท์ยางมะตอย",
+      "query": "รุ่นแพล้นท์ยางมะตอย"
+    },
+    {
+      "id": "chip-rap",
+      "label": "แพล้นท์รีไซเคิล RAP",
+      "query": "แพล้นท์รีไซเคิล RAP"
+    },
+    {
+      "id": "chip-installations",
+      "label": "ดูผลงานติดตั้งจริง",
+      "query": "ดูผลงานติดตั้งจริง"
+    },
+    {
+      "id": "chip-contact",
+      "label": "ติดต่อฝ่ายขาย / Service",
+      "query": "ติดต่อฝ่ายขาย / Service"
+    }
+  ],
+  "fullHotPlants": [
+    {
+      "model": "MODEL PT-1510RAP",
+      "category": "Fully Hot In Plant",
+      "capacity": "110-130 T/H",
+      "mixerSize": "1,650 kg",
+      "totalPower": "369 kW",
+      "rapCapability": "รองรับ RAP สูงสุด 40%",
+      "highlight": "รุ่นยอดนิยมสำหรับโครงการทางหลวงมาตรฐาน ประหยัดเชื้อเพลิง คืนทุนไว",
+      "url": "index.html#fully-hot"
+    },
+    {
+      "model": "MODEL PT-2010RAP",
+      "category": "Fully Hot In Plant",
+      "capacity": "180-200 T/H",
+      "mixerSize": "2,500 kg",
+      "totalPower": "485 kW",
+      "rapCapability": "รองรับ RAP สูงสุด 40%",
+      "highlight": "กำลังการผลิตสูงสำหรับงานโครงสร้างพื้นฐานระดับภูมิภาคและมอเตอร์เวย์",
+      "url": "index.html#fully-hot"
+    },
+    {
+      "model": "MODEL PT-3015RAP",
+      "category": "Fully Hot In Plant (Flagship Heavy Duty)",
+      "capacity": "300-320 T/H",
+      "mixerSize": "4,000 kg",
+      "totalPower": "980 kW",
+      "rapCapability": "รองรับ RAP สูงสุด 50%",
+      "highlight": "รุ่นเรือธงขนาดใหญ่พิเศษ Mixer 4,000 kg สำหรับเมกะโปรเจกต์ที่ต้องการกำลังผลิตสูงสุด",
+      "url": "index.html#fully-hot"
+    }
+  ],
+  "recyclePlants": [
+    {
+      "model": "MODEL RAP50",
+      "category": "Hot Re In Plant",
+      "capacity": "50-60 t/h",
+      "totalPower": "185 kW",
+      "rapRatio": "สัดส่วนรีไซเคิล 50-80%",
+      "highlight": "ชุดแพล้นท์รีไซเคิลยางมะตอยร้อนขนาดกลาง ลดต้นทุนวัตถุดิบใหม่ได้สูงสุด",
+      "url": "index.html#hot-re"
+    },
+    {
+      "model": "MODEL RAP80",
+      "category": "Hot Re In Plant",
+      "capacity": "70-80 t/h",
+      "totalPower": "215 kW",
+      "rapRatio": "สัดส่วนรีไซเคิล 50-80%",
+      "highlight": "ชุดแพล้นท์รีไซเคิลกำลังผลิตสูง เหมาะสำหรับอัปเกรดควบคู่แพล้นท์หลักขนาดใหญ่",
+      "url": "index.html#hot-re"
+    }
+  ],
+  "installations": [
+    {
+      "company": "บจก.มรกตชุมพรก่อสร้าง",
+      "province": "จ.ชุมพร",
+      "region": "ภาคใต้",
+      "model": "PT-2010RAP",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=บจก.มรกตชุมพรก่อสร้าง+จ.ชุมพร"
+    },
+    {
+      "company": "หจก.ช.ธานีพัฒนา",
+      "province": "จ.อุทัยธานี",
+      "region": "ภาคกลาง",
+      "model": "PT-2000",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=หจก.ช.ธานีพัฒนา+จ.อุทัยธานี"
+    },
+    {
+      "company": "หจก.ส.ศิระก่อสร้าง",
+      "province": "จ.กำแพงเพชร",
+      "region": "ภาคเหนือ",
+      "model": "PT-1500",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=หจก.ส.ศิระก่อสร้าง+จ.กำแพงเพชร"
+    },
+    {
+      "company": "หจก.สุรินทร์อมรวัฒน์ก่อสร้าง",
+      "province": "จ.สุรินทร์",
+      "region": "ภาคตะวันออกเฉียงเหนือ",
+      "model": "PT-2000",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=หจก.สุรินทร์อมรวัฒน์ก่อสร้าง+จ.สุรินทร์"
+    }
+  ],
+  "contact": {
+    "companyName": "บริษัท โปรเท็กซ์ กรุ๊ป จำกัด (PROTEX GROUP)",
+    "phone": "085-392-4448",
+    "phoneClean": "0853924448",
+    "servicePhone": "085-392-4448",
+    "lineId": "protex000",
+    "lineUrl": "https://line.me/ti/p/~protex000",
+    "email": "protexgroupa@gmail.com",
+    "address": "88/9 หมู่ 12 ถนนบางนา-ตราด กม.15 ตำบลบางพลีใหญ่ อำเภอบางพลี จังหวัดสมุทรปราการ 10540",
+    "hours": "จันทร์ – เสาร์ 08:00 – 17:30 น. (Service หลังการขายพร้อมดูแล 24/7)",
+    "contactPageUrl": "contact.html"
+  },
+  "customIntents": [
+    {
+      "id": "design-configurator",
+      "keywords": ["ออกแบบ", "จำลองสี", "สีแพล้นท์", "คำนวณราคา", "ใบเสนอราคา", "ราคาแพล้นท์", "configurator", "อุปกรณ์เสริม"],
+      "reply": "คุณสามารถทดลองจำลองสีโครงสร้างแพล้นท์ตามสีประจำองค์กร เลือกอุปกรณ์เสริม และคำนวณงบประมาณเบื้องต้นได้ทันทีที่หน้า **[ออกแบบแพล้นท์ (3D Color & Quote)](design-plant.html)** หรือโทรปรึกษาฝ่ายขายโดยตรงที่ **085-392-4448** ครับ"
+    },
+    {
+      "id": "spare-parts",
+      "keywords": ["อะไหล่", "พาร์ท", "หัวเผา", "ถุงกรอง", "โหลดเซลล์", "ใบกวน", "spare", "parts", "ซ่อม"],
+      "reply": "PROTEX GROUP มีคลังอะไหล่แท้พร้อมจัดส่งด่วนทั่วประเทศ (ชุดใบกวน Mixer, ถุงกรอง Baghouse Nomex, หัวเผา Burner, Load Cell และชุด PLC) ดูรายการอะไหล่ได้ที่หน้า **[อะไหล่แท้ PROTEX](spare-parts.html)** หรือติดต่อฝ่าย Service โทร **085-392-4448** ครับ"
+    },
+    {
+      "id": "after-sales",
+      "keywords": ["หลังการขาย", "ประกัน", "รับประกัน", "pm", "ซ่อมบำรุง", "วิศวกร", "ตั้งค่า", "สอบเทียบ", "calibration"],
+      "reply": "ทีมวิศวกร **Service หลังการขาย** ของ PROTEX GROUP พร้อมดูแลตรวจเช็ก PM, สอบเทียบระบบชั่งน้ำหนัก, อัปเกรดระบบควบคุม PLC/SCADA และแก้ไขปัญหาหน้างานทั่วประเทศ ดูรายละเอียดที่หน้า **[บริการหลังการขาย](after-sales.html)** หรือโทร **085-392-4448** ได้เลยครับ"
+    },
+    {
+      "id": "promotions",
+      "keywords": ["โปรโมชั่น", "ส่วนลด", "แคมเปญ", "ผ่อน", "สิทธิพิเศษ", "promotion"],
+      "reply": "ติดตามแคมเปญพิเศษ โปรโมชั่นอัปเกรดแพล้นท์รีไซเคิล RAP และส่วนลดอะไหล่ประจำเดือนได้ที่หน้า **[โปรโมชั่น & แคมเปญ](promotions.html)** ครับ"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "frequency": "once_per_session",
+  "autoPlayMs": 4500,
+  "slides": [
+    {
+      "id": "slide-1",
+      "image": "assets/images/โรงงาน PROTEX ยามอาทิตย์อัสดง.png",
+      "link": "promotions.html"
+    },
+    {
+      "id": "slide-2",
+      "image": "assets/images/แพล้นท์ยางมะตอย 2 (โปร่งใส).png",
+      "link": "design-plant.html"
+    },
+    {
+      "id": "slide-3",
+      "image": "assets/images/แพล้นท์ยางมะตอย (โปร่งใส).png",
+      "link": "service-plants.html"
+    }
+  ],
+  "updatedAt": "2026-11-25T11:22:00.000Z"
+}

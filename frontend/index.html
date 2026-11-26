@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="th" data-page="home">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROTEX GROUP — แพล้นท์ยางมะตอยเต็มระบบ &amp; แพล้นท์รีไซเคิล</title>
+  <meta name="description"
+    content="Protex Group ผู้นำด้านการออกแบบ ผลิต และติดตั้งแพล้นท์ยางมะตอยเต็มระบบ (Fully Hot In Plant) และแพล้นท์รีไซเคิล (Hot Re In Plant) พร้อมทีมวิศวกรดูแล 24/7">
+  <meta name="theme-color" content="#F6F7F9">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/protex-logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo/protex-logo.png">
+  <link rel="preload" as="image" href="assets/logo/protex-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/glass-system.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/css/protex-chatbot.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var replay = /[?&]intro=1\b/.test(location.search);
+        if (replay) sessionStorage.removeItem('ptx_intro_seen');
+        if (!sessionStorage.getItem('ptx_intro_seen')) d.classList.add('intro-active');
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body class="page--home">
+  <a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="orb orb--4"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__veil"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="header-pill glass">
+        <a href="index.html" class="brand" id="headerBrand" aria-label="PROTEX GROUP หน้าหลัก">
+          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo" width="96" height="34"
+            loading="eager" decoding="async">
+        </a>
+
+        <nav class="main-nav" id="mainNav" aria-label="เมนูหลัก">
+          <span class="nav-indicator nav-notch" id="navIndicator" data-nav-notch aria-hidden="true"><span
+              class="nav-notch__bar"></span></span>
+          <a href="index.html" data-nav="home" aria-current="page">หน้าหลัก</a>
+          <a href="design-plant.html" data-nav="design">ออกแบบแพล้นท์</a>
+          <a href="spare-parts.html" data-nav="parts">อะไหล่</a>
+          <a href="promotions.html" data-nav="promotions">โปรโมชั่น</a>
+          <a href="contact.html" data-nav="contact">ติดต่อสอบถาม</a>
+          <a href="service-plants.html" data-nav="service-plants">ผลงานติดตั้ง</a>
+          <a href="after-sales.html" data-nav="after-sales">บริการหลังการขาย</a>
+        </nav>
+
+        <div class="header-actions">
+          <!-- Interactive Expanding Search -->
+          <div class="search" id="searchBox" role="search">
+            <button type="button" class="search__btn" id="searchBtn" aria-label="ค้นหาแพล้นท์ อะไหล่ และโปรโมชั่น"
+              aria-expanded="false" aria-controls="searchPanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+            <input type="search" class="search__input" id="searchInput" placeholder="ค้นหาแพล้นท์, อะไหล่, โปรโมชั่น…"
+              autocomplete="off" aria-label="คำค้นหา">
+            <button type="button" class="search__clear" id="searchClear" aria-label="ล้างคำค้นหา">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false"
+            aria-controls="mobileSheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h11" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel glass glass--strong" id="searchPanel"></div>
+
+      <div class="mobile-sheet glass glass--strong" id="mobileSheet">
+        <nav aria-label="เมนูหลักมือถือ">
+          <a href="index.html" aria-current="page"><span>หน้าหลัก</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="design-plant.html"><span>ออกแบบแพล้นท์</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="spare-parts.html"><span>อะไหล่</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="promotions.html"><span>โปรโมชั่น</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="contact.html"><span>ติดต่อสอบถาม</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="service-plants.html"><span>ผลงานติดตั้ง</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="after-sales.html"><span>บริการหลังการขาย</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-label="โชว์เคสแพล้นท์ยางมะตอย Protex Group">
+      <div class="hero-frame glass has-video" id="heroFrame">
+        <div class="hero-viewport">
+          <div class="hero-media">
+            <video class="hero-video" id="heroVideo" src="assets/videos/protex-hero.mp4" muted loop playsinline
+              preload="auto"></video>
+            <div class="hero-scrim" aria-hidden="true"></div>
+          </div>
+
+          <div class="hero-copy">
+            <h1>ASPHALT PLANT <span>ENGINEERING.</span></h1>
+            <p>ออกแบบ ผลิต และติดตั้งแพล้นท์ยางมะตอยเต็มระบบและแพล้นท์รีไซเคิล ควบคุมความแม่นยำทุกล็อต
+              พร้อมทีมวิศวกรดูแลทั่วประเทศตลอด 24 ชั่วโมง</p>
+            <div class="hero-actions">
+              <a href="design-plant.html" class="btn btn--lg btn--red">
+                <span>ออกแบบแพล้นท์ของคุณ</span>
+                <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+              </a>
+              <a href="#fully-hot" class="btn btn--lg btn--glass">ดูรุ่นแพล้นท์ 3D 4K</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="fully-hot" aria-labelledby="fullyHotHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="display display--flagship" id="fullyHotHeading">
+            <span class="display__line display__line--dark">FULLY HOT</span>
+            <span class="display__line display__line--accent">
+              <span class="display__gradient">IN PLANT</span>
+            </span>
+          </h2>
+          <p class="display-th display-th--accent">แพล้นท์ยางมะตอยเต็มระบบ</p>
+        </div>
+        <div class="section-head__aside">
+          <p class="lead" id="fullyHotSummary">ระบบผลิตแอสฟัลต์คอนกรีตแบบ Batch Mix ครบวงจร ตั้งแต่ป้อนหินเย็น อบแห้ง
+            คัดขนาด ชั่งตวง ผสม จนถึงไซโลจัดเก็บ ควบคุมทุกขั้นตอนด้วย PLC แม่นยำระดับ ±0.5%</p>
+          <a href="design-plant.html" class="btn btn--glass">
+            <span>ปรับแต่งสีโครงหลักและคำนวณราคา</span>
+            <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <div class="showcase-slider-wrap reveal" id="fhSliderWrap">
+        <button type="button" class="slider-btn slider-btn--prev glass glass-interactive" id="fhPrevBtn"
+          aria-label="ดูแพล้นท์รุ่นก่อนหน้า">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button type="button" class="slider-btn slider-btn--next glass glass-interactive" id="fhNextBtn"
+          aria-label="ดูแพล้นท์รุ่นถัดไป">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+
+        <div class="showcase-viewport" id="fhSliderViewport">
+          <div class="showcase-track" id="fhSliderTrack">
+            <!-- Slide 0: MODEL PT-1510RAP -->
+            <div class="showcase showcase-slide" id="fhSlide-0" data-index="0" data-model="ptx-160">
+              <div class="stage-card glass">
+                <div class="stage-view stage-view--photo" data-tilt>
+                  <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-corner-logo" width="130"
+                    height="34" loading="eager" decoding="async">
+                  <img id="fhImage" src="assets/images/image_plant1.jpg"
+                    alt="ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-1510RAP" width="2048" height="1536" loading="eager"
+                    decoding="async">
+                </div>
+              </div>
+
+              <article class="plant-panel plant-panel--industrial glass" aria-live="polite">
+                <div class="plant-panel__gears" aria-hidden="true">
+                  <svg class="gear gear--lg" viewBox="0 0 200 200">
+                    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                      d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                      transform="translate(0 -8.5)" />
+                  </svg>
+                  <svg class="gear gear--sm" viewBox="0 0 200 200">
+                    <g transform="rotate(22.5 100 100)">
+                      <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                        d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                        transform="translate(0 -8.5)" />
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="plant-panel__head">
+                  <div class="plant-panel__brand-bar">
+                    <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-panel__logo" width="92"
+                      height="33" loading="lazy" decoding="async">
+                    <span class="plant-panel__series">INDUSTRIAL BATCH MIX SERIES</span>
+                  </div>
+                  <h3 id="fhName">MODEL PT-1510RAP</h3>
+                  <p class="plant-panel__desc" id="fhDesc">แพล้นท์ยางมะตอยระบบ Batch Mix พร้อมชุดรีไซเคิล RAP
+                    ประสิทธิภาพสูง
+                    รองรับสัดส่วน RAP สูงสุด 80% ควบคุมความแม่นยำด้วยระบบ PLC &amp; SCADA อุตสาหกรรมเต็มรูปแบบ</p>
+                </div>
+
+                <div class="capacity capacity--hero">
+                  <div class="capacity__meta">
+                    <span class="capacity__eyebrow">TOTAL CAPACITY</span>
+                    <div class="capacity__row">
+                      <span class="capacity__num" id="fhCap">110-130</span>
+                      <span class="capacity__unit" id="fhCapUnit">T/H</span>
+                    </div>
+                  </div>
+                  <div class="capacity__bar" aria-hidden="true"><span></span></div>
+                </div>
+
+                <dl class="spec-list spec-bento" id="fhSpecs">
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 14 16 10" />
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total Capacity</dt>
+                      <dd>110-130 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 2 9l10 6 10-6-10-6Z" />
+                        <path d="m2 15 10 6 10-6" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Virgin (Maximum)</dt>
+                      <dd>110-120 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 2.1l4 4-4 4" />
+                        <path d="M3 12.2v-2a4 4 0 0 1 4-4h14" />
+                        <path d="M7 21.9l-4-4 4-4" />
+                        <path d="M21 11.8v2a4 4 0 0 1-4 4H3" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of RAP</dt>
+                      <dd>50-60 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Mixer</dt>
+                      <dd>1600 kg</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="5" x2="5" y2="19" />
+                        <circle cx="6.5" cy="6.5" r="2.5" />
+                        <circle cx="17.5" cy="17.5" r="2.5" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>RAP Ratio</dt>
+                      <dd>10-80%</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total power</dt>
+                      <dd>490 kW</dd>
+                    </div>
+                  </div>
+                </dl>
+                <div class="plant-panel__actions">
+                  <a href="design-plant.html?model=ptx-160" class="btn btn--red" id="fhConfigLink">
+                    <span>ออกแบบรุ่นนี้</span>
+                    <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14m-6-6 6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <div class="showcase showcase-slide" id="fhSlide-1" data-index="1" data-model="ptx-2010rap">
+              <div class="stage-card glass">
+                <div class="stage-view stage-view--photo" data-tilt>
+                  <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-corner-logo" width="130"
+                    height="34" loading="lazy" decoding="async">
+                  <img src="assets/images/image_79d043.jpg" alt="ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-2010RAP"
+                    width="2048" height="1536" loading="lazy" decoding="async">
+                </div>
+              </div>
+
+              <article class="plant-panel plant-panel--industrial glass" aria-live="polite">
+                <div class="plant-panel__gears" aria-hidden="true">
+                  <svg class="gear gear--lg" viewBox="0 0 200 200">
+                    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                      d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                      transform="translate(0 -8.5)" />
+                  </svg>
+                  <svg class="gear gear--sm" viewBox="0 0 200 200">
+                    <g transform="rotate(22.5 100 100)">
+                      <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                        d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                        transform="translate(0 -8.5)" />
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="plant-panel__head">
+                  <div class="plant-panel__brand-bar">
+                    <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-panel__logo" width="92"
+                      height="33" loading="lazy" decoding="async">
+                    <span class="plant-panel__series">ADVANCED HIGH-OUTPUT SERIES</span>
+                  </div>
+                  <h3>MODEL PT-2010RAP</h3>
+                  <p class="plant-panel__desc">แพล้นท์ผสมยางมะตอย Batch Mix กำลังผลิตสูง 180-200 ตัน/ชม. มิกเซอร์ 2,500
+                    กก. ควบคุมความแม่นยำด้วยระบบ SCADA Real-time พร้อมชุดรีไซเคิล RAP ประสิทธิภาพสูง</p>
+                </div>
+
+                <div class="capacity capacity--hero">
+                  <div class="capacity__meta">
+                    <span class="capacity__eyebrow">TOTAL CAPACITY</span>
+                    <div class="capacity__row">
+                      <span class="capacity__num">180-200</span>
+                      <span class="capacity__unit">T/H</span>
+                    </div>
+                  </div>
+                  <div class="capacity__bar" aria-hidden="true"><span></span></div>
+                </div>
+
+                <dl class="spec-list spec-bento">
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 14 16 10" />
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total Capacity</dt>
+                      <dd>180-200 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 2 9l10 6 10-6-10-6Z" />
+                        <path d="m2 15 10 6 10-6" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Virgin (Maximum)</dt>
+                      <dd>140-160 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 2.1l4 4-4 4" />
+                        <path d="M3 12.2v-2a4 4 0 0 1 4-4h14" />
+                        <path d="M7 21.9l-4-4 4-4" />
+                        <path d="M21 11.8v2a4 4 0 0 1-4 4H3" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of RAP</dt>
+                      <dd>70-80 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Mixer</dt>
+                      <dd>2500 kg</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="5" x2="5" y2="19" />
+                        <circle cx="6.5" cy="6.5" r="2.5" />
+                        <circle cx="17.5" cy="17.5" r="2.5" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>RAP Ratio</dt>
+                      <dd>10-80%</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total power</dt>
+                      <dd>780 kW</dd>
+                    </div>
+                  </div>
+                </dl>
+                <div class="plant-panel__actions">
+                  <a href="design-plant.html?model=ptx-2010rap" class="btn btn--red">
+                    <span>ออกแบบรุ่นนี้</span>
+                    <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14m-6-6 6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Slide 2: MODEL PT-3015RAP -->
+            <div class="showcase showcase-slide" id="fhSlide-2" data-index="2" data-model="ptx-3015rap">
+              <div class="stage-card glass">
+                <div class="stage-view stage-view--photo" data-tilt>
+                  <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-corner-logo" width="130"
+                    height="34" loading="lazy" decoding="async">
+                  <img src="assets/images/โรงงาน PROTEX ยามอาทิตย์อัสดง.png"
+                    alt="ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-3015RAP" width="2048" height="1536" loading="lazy"
+                    decoding="async">
+                </div>
+              </div>
+
+              <article class="plant-panel plant-panel--industrial glass" aria-live="polite">
+                <div class="plant-panel__gears" aria-hidden="true">
+                  <svg class="gear gear--lg" viewBox="0 0 200 200">
+                    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                      d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                      transform="translate(0 -8.5)" />
+                  </svg>
+                  <svg class="gear gear--sm" viewBox="0 0 200 200">
+                    <g transform="rotate(22.5 100 100)">
+                      <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                        d="M90 12 H110 L117 44.6 A58 58 0 0 1 133.4 51.4 L161.2 33.2 L175.3 47.3 L157.1 75.1 A58 58 0 0 1 163.9 91.5 L196.5 98.5 V118.5 L163.9 125.5 A58 58 0 0 1 157.1 141.9 L175.3 169.7 L161.2 183.8 L133.4 165.6 A58 58 0 0 1 117 172.4 L110 205 H90 L83 172.4 A58 58 0 0 1 66.6 165.6 L38.8 183.8 L24.7 169.7 L42.9 141.9 A58 58 0 0 1 36.1 125.5 L3.5 118.5 V98.5 L36.1 91.5 A58 58 0 0 1 42.9 75.1 L24.7 47.3 L38.8 33.2 L66.6 51.4 A58 58 0 0 1 83 44.6 Z M100 135 A26.5 26.5 0 1 0 100 82 A26.5 26.5 0 1 0 100 135 Z"
+                        transform="translate(0 -8.5)" />
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="plant-panel__head">
+                  <div class="plant-panel__brand-bar">
+                    <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-panel__logo" width="92"
+                      height="33" loading="lazy" decoding="async">
+                    <span class="plant-panel__series">FLAGSHIP MEGA BATCH SERIES</span>
+                  </div>
+                  <h3>MODEL PT-3015RAP</h3>
+                  <p class="plant-panel__desc">แพล้นท์ยางมะตอยเรือธงกำลังผลิตสูงสุด ผสมต่อเนื่องด้วยมิกเซอร์ขนาด 4,000
+                    กก. ฉนวนกันความร้อน Rockwool หนาพิเศษ และระบบมอนิเตอร์ IoT Real-time 24 ชม.</p>
+                </div>
+
+                <div class="capacity capacity--hero">
+                  <div class="capacity__meta">
+                    <span class="capacity__eyebrow">TOTAL CAPACITY</span>
+                    <div class="capacity__row">
+                      <span class="capacity__num">300-320</span>
+                      <span class="capacity__unit">T/H</span>
+                    </div>
+                  </div>
+                  <div class="capacity__bar" aria-hidden="true"><span></span></div>
+                </div>
+
+                <dl class="spec-list spec-bento">
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 14 16 10" />
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total Capacity</dt>
+                      <dd>300-320 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 2 9l10 6 10-6-10-6Z" />
+                        <path d="m2 15 10 6 10-6" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Virgin (Maximum)</dt>
+                      <dd>230-240 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 2.1l4 4-4 4" />
+                        <path d="M3 12.2v-2a4 4 0 0 1 4-4h14" />
+                        <path d="M7 21.9l-4-4 4-4" />
+                        <path d="M21 11.8v2a4 4 0 0 1-4 4H3" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of RAP</dt>
+                      <dd>100-120 T/H</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Capacity of Mixer</dt>
+                      <dd>4000 kg</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="5" x2="5" y2="19" />
+                        <circle cx="6.5" cy="6.5" r="2.5" />
+                        <circle cx="17.5" cy="17.5" r="2.5" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>RAP Ratio</dt>
+                      <dd>10-80%</dd>
+                    </div>
+                  </div>
+                  <div class="spec-tile">
+                    <span class="spec-tile__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                      </svg>
+                    </span>
+                    <div class="spec-tile__body">
+                      <dt>Total power</dt>
+                      <dd>980 kW</dd>
+                    </div>
+                  </div>
+                </dl>
+                <div class="plant-panel__actions">
+                  <a href="design-plant.html?model=ptx-3015rap" class="btn btn--red">
+                    <span>ออกแบบรุ่นนี้</span>
+                    <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14m-6-6 6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="model-rail reveal" id="fhModelRail" role="tablist" aria-label="เลือกรุ่น Fully Hot In Plant"></div>
+
+      <div class="slider-dots reveal" id="fhSliderDots" role="tablist" aria-label="สลับสไลด์แพล้นท์">
+        <button type="button" class="slider-dot is-active" data-index="0" aria-label="MODEL PT-1510RAP"></button>
+        <button type="button" class="slider-dot" data-index="1" aria-label="MODEL PT-2010RAP"></button>
+        <button type="button" class="slider-dot" data-index="2" aria-label="MODEL PT-3015RAP"></button>
+      </div>
+
+      <div class="process glass reveal" id="fhProcessBox">
+        <div class="process-pulse-line" id="fhProcessPulseLine" aria-hidden="true"></div>
+        <ol id="fhProcess">
+          <li>
+            <div class="step-content">
+              <strong>Cold Feed</strong>
+              <span>ป้อนหินเย็น 4–6 ช่อง ชั่งตวงสายพานต่อเนื่อง</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Dryer Drum</strong>
+              <span>อบแห้งที่ 160–180 °C เตาเผา High-Efficiency</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Screening</strong>
+              <span>คัดขนาด 4–5 ชั้น ตะแกรงสั่นสะเทือนแบบเฉียง</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Weigh &amp; Mix</strong>
+              <span>ชั่งตวงแยกอิสระ ผสม Twin-shaft 1,600 กก.</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Hot Storage</strong>
+              <span>ไซโลเก็บร้อน 60–100 T พร้อมฉนวนกันความร้อน</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section container" id="hot-re" aria-labelledby="hotReHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="display display--flagship" id="hotReHeading">
+            <span class="display__line display__line--dark">HOT RE</span>
+            <span class="display__line display__line--accent">
+              <span class="display__gradient">IN PLANT</span>
+            </span>
+          </h2>
+          <p class="display-th display-th--accent">แพล้นท์รีไซเคิล</p>
+        </div>
+        <div class="section-head__aside">
+          <p class="lead" id="hotReSummary">แพล้นท์ที่ออกแบบมาเพื่อนำผิวทางเก่า (RAP) กลับมาใช้ใหม่ ด้วย Parallel Drum
+            ที่อุ่น RAP แยกจากหินใหม่ ลดการใช้ยางมะตอยและหินใหม่ได้อย่างมีนัยสำคัญ โดยไม่ลดคุณภาพส่วนผสม</p>
+        </div>
+      </header>
+
+      <div class="re-layout reveal">
+        <article class="re-panel glass" aria-live="polite">
+          <div>
+            <span class="chip chip--soft">Parallel RAP Drum Technology</span>
+            <h3 class="h2" id="reName">MODEL RAP50</h3>
+            <p class="muted" id="reDesc">Parallel Drum อุ่น RAP แยกอิสระ รักษาคุณภาพยางมะตอยเก่า พร้อมหัวเผา A-TECH
+              South Korea ควบคุมอุณหภูมิ RAP แบบ Closed-loop</p>
+          </div>
+
+          <div class="re-highlights" id="reHighlights">
+            <div><strong>50%</strong><span>สัดส่วน RAP สูงสุดต่อแบตช์</span></div>
+            <div><strong>30%</strong><span>ลดต้นทุนวัตถุดิบโดยเฉลี่ย</span></div>
+            <div><strong>25%</strong><span>ลดการปล่อย CO₂ ต่อตันส่วนผสม</span></div>
+          </div>
+
+          <div class="re-models" id="reModelList" role="tablist" aria-label="เลือกรุ่น Hot Re In Plant">
+            <button type="button" class="re-model" role="tab" data-id="model-rap50" aria-selected="true">
+              <div>
+                <strong>MODEL RAP50 (50-60 t/h)</strong>
+                <span>Recycle Asphalt 50-60 t/h · เริ่มต้น ฿44,500,000</span>
+              </div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+            <button type="button" class="re-model" role="tab" data-id="model-rap80" aria-selected="false">
+              <div>
+                <strong>MODEL RAP80 (70-80 t/h)</strong>
+                <span>Recycle Asphalt 70-80 t/h · เริ่มต้น ฿52,500,000</span>
+              </div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+
+          <dl class="spec-list spec-bento" id="reSpecs">
+            <div class="spec-tile spec-tile--featured">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 14 16 10" />
+                  <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Recycle Asphalt Output</dt>
+                <dd>50-60 t/h</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 2c-4 4-6 7.5-6 11a6 6 0 0 0 12 0c0-3.5-2-7-6-11Z" />
+                  <path d="M12 18a3 3 0 0 0 3-3c0-1.5-1-3-3-4.5-2 1.5-3 3-3 4.5a3 3 0 0 0 3 3Z" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Fuel Type</dt>
+                <dd>Diesel / Heavy oil</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Total Power</dt>
+                <dd>185 kW</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="m2 5 4 14h12l4-14Z" />
+                  <path d="M6 10h12" />
+                  <path d="M9 19v3h6v-3" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Cold Aggregates</dt>
+                <dd>8 m³</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <ellipse cx="12" cy="6" rx="9" ry="3" />
+                  <path d="M3 6v12c0 1.66 4 3 9 3s9-1.34 9-3V6" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Drying Drum</dt>
+                <dd>Φ1.5x8.0 m.</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3Z" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Burner RAP</dt>
+                <dd>A-TECH South Korea</dd>
+              </div>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-tile__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M6 22V7a6 6 0 0 1 12 0v15" />
+                  <path d="M4 22h16" />
+                  <line x1="6" y1="12" x2="18" y2="12" />
+                </svg>
+              </span>
+              <div class="spec-tile__body">
+                <dt>Storage Silo</dt>
+                <dd>6 m³</dd>
+              </div>
+            </div>
+          </dl>
+
+          <div class="plant-panel__actions">
+            <a href="design-plant.html?model=model-rap50" class="btn btn--red" id="reConfigLink">
+              <span>ออกแบบแพล้นท์รีไซเคิล</span>
+              <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <div class="stage-card glass re-stage">
+          <div class="stage-view stage-view--photo" id="reStage" data-tilt>
+            <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="plant-corner-logo" width="130" height="34"
+              loading="eager" decoding="async">
+            <img id="reImage" src="assets/images/image_877e29.jpg" alt="ภาพถ่ายจริงแพล้นท์รีไซเคิล MODEL RAP50"
+              width="1024" height="1024" loading="eager" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="promotions" aria-labelledby="promoHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="h1" id="promoHeading">ข้อเสนอและโปรโมชั่นล่าสุด</h2>
+          <p class="display-th">อัปเดตแคมเปญพิเศษสำหรับแพล้นท์ใหม่ อะไหล่ และบริการอัปเกรด</p>
+        </div>
+      </header>
+
+      <div class="promo-grid reveal" id="homePromoGrid" aria-live="polite">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </section>
+
+    <section class="section container" id="service" aria-labelledby="serviceHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="h1" id="serviceHeading">ดูแลหลังการขายอย่างต่อเนื่อง</h2>
+          <p class="display-th">ทีมวิศวกรประจำการ 24/7 อะไหล่แท้พร้อมส่ง และการบำรุงรักษาเชิงป้องกัน</p>
+        </div>
+        <div class="section-head__aside">
+          <p class="lead">เพราะทุกชั่วโมงที่แพล้นท์หยุดคือความเสียหายของหน้างาน
+            เราจึงออกแบบระบบบริการให้ตอบสนองไวที่สุดตั้งแต่วินาทีที่ได้รับแจ้ง</p>
+        </div>
+      </header>
+
+      <div class="stats-band glass reveal">
+        <div class="stat">
+          <div class="stat__value tnum"><span data-count="24">24</span><em>/7</em></div>
+          <p class="stat__label">ทีมวิศวกรรับสายและวิเคราะห์อาการผ่านระบบรีโมตตลอด 24 ชั่วโมง</p>
+        </div>
+        <div class="stat">
+          <div class="stat__value tnum">&lt;<span data-count="4">4</span><em>ชม.</em></div>
+          <p class="stat__label">เวลาตอบสนองและออกเดินทางสู่ไซต์งานเมื่อเกิดเหตุฉุกเฉิน</p>
+        </div>
+        <div class="stat">
+          <div class="stat__value tnum"><span data-count="98.7" data-decimals="1">98.7</span><em>%</em></div>
+          <p class="stat__label">อัตราความพร้อมเดินเครื่องเฉลี่ยของแพล้นท์ภายใต้สัญญา PM</p>
+        </div>
+        <div class="stat">
+          <div class="stat__value tnum"><span data-count="140">140</span><em>+</em></div>
+          <p class="stat__label">แพล้นท์ที่ติดตั้งและดูแลต่อเนื่องทั่วประเทศและภูมิภาค</p>
+        </div>
+      </div>
+
+      <div class="service-grid">
+        <aside class="timeline glass reveal" aria-label="ขั้นตอนการดูแลตลอดอายุการใช้งาน">
+          <h3 class="h3">มาตรฐานการดูแลตลอดอายุแพล้นท์</h3>
+          <ol>
+            <li>
+              <span class="timeline__node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83" />
+                </svg>
+              </span>
+              <div>
+                <span class="timeline__when">ภายใน 15 นาที</span>
+                <strong>Remote SCADA Diagnostics</strong>
+                <p>วิศวกรเชื่อมต่อชุด PLC เพื่อตรวจสอบ Log อุณหภูมิ หัวเผา และโหลดเซลล์ทันที</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+                  <path d="M15 18H9m10 0h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+                  <circle cx="17" cy="18" r="2" />
+                  <circle cx="7" cy="18" r="2" />
+                </svg>
+              </span>
+              <div>
+                <span class="timeline__when">ภายใน 4 – 24 ชั่วโมง</span>
+                <strong>Mobile Service &amp; Express Parts</strong>
+                <p>รถบริการเคลื่อนที่พร้อมอะไหล่หลักออกเดินทางจากคลังกลางสู่หน้างาน</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M9 11l3 3L22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+              </span>
+              <div>
+                <span class="timeline__when">ทุก 3 เดือน</span>
+                <strong>Preventive Maintenance &amp; Calibration</strong>
+                <p>ตรวจเช็กกว่า 60 รายการ สอบเทียบโหลดเซลล์และปรับจูนหัวเผาเพื่อประหยัดเชื้อเพลิง</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </span>
+              <div>
+                <span class="timeline__when">รายปี</span>
+                <strong>Major Overhaul &amp; Operator Training</strong>
+                <p>ฟื้นฟูสภาพก่อนฤดูงานเร่งด่วน พร้อมอบรมทีมผู้ควบคุมเครื่องประจำไซต์</p>
+              </div>
+            </li>
+          </ol>
+        </aside>
+
+        <div class="cases">
+          <article class="case-card glass glass-interactive reveal">
+            <div class="case-card__media ph ph--crimson">
+              <img src="assets/images/renders/plant-fully-hot.svg" alt="">
+              <span class="ph__label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" />
+                </svg>
+                Emergency Response
+              </span>
+            </div>
+            <div class="case-card__body">
+              <span class="chip chip--soft">มอเตอร์เวย์สายตะวันออก · ชลบุรี</span>
+              <h4>เปลี่ยนชุดถุงกรอง Nomex 300 ใบ และซ่อมหัวเผาจบในกะเดียว</h4>
+              <p>เดินเครื่องต่อเนื่องทันกำหนดเทผิวทางรอบกลางคืน โดยไม่เสียคิวรถบรรทุกแม้แต่เที่ยวเดียว</p>
+              <div class="case-card__kpis">
+                <div><strong>11 ชม.</strong><span>ตั้งแต่แจ้งจนเดินเครื่อง</span></div>
+                <div><strong>0 ตัน</strong><span>ส่วนผสมเสียหาย</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card glass glass-interactive reveal">
+            <div class="case-card__media ph ph--silver">
+              <img src="assets/images/renders/plant-hot-re.svg" alt="">
+              <span class="ph__label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16m0 5v-5h5" />
+                </svg>
+                RAP Retrofit
+              </span>
+            </div>
+            <div class="case-card__body">
+              <span class="chip chip--soft">ทางหลวงภาคเหนือ · ลำปาง</span>
+              <h4>อัปเกรดแพล้นท์เดิมให้เติม RAP ได้ 35% พร้อมตู้ควบคุม SCADA ใหม่</h4>
+              <p>ติดตั้งบนโครงสร้างเดิมโดยไม่ต้องรื้อฐานราก คืนทุนค่าอัปเกรดภายในโครงการเดียว</p>
+              <div class="case-card__kpis">
+                <div><strong>−26%</strong><span>ค่ายางมะตอยใหม่</span></div>
+                <div><strong>14 วัน</strong><span>ระยะเวลาติดตั้ง</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="hub" aria-labelledby="hubHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <h2 class="h1" id="hubHeading">ข้อมูลองค์กรและแกลเลอรี</h2>
+          <p class="display-th">โรงงานผลิต มาตรฐานวิศวกรรม และผลงานการติดตั้งทั่วประเทศ</p>
+        </div>
+        <div class="section-head__aside">
+          <p class="lead">แต่ละช่องออกแบบให้เจ้าของเว็บสามารถนำภาพถ่ายจริงของโรงงาน ไซต์งาน
+            และใบรับรองมาวางแทนที่ได้ทันที</p>
+        </div>
+      </header>
+
+      <div class="bento">
+        <article class="tile tile--lg glass glass-interactive reveal">
+          <div class="tile__media ph">
+            <img class="tile__plant" src="assets/images/renders/plant-fully-hot.svg"
+              alt="โรงงานผลิตและประกอบแพล้นท์ Protex Group">
+            <span class="ph__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="3" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="m21 15-5-5L5 21" />
+              </svg>
+              REPLACE WITH 4K FACTORY PHOTO
+            </span>
+          </div>
+          <div class="tile__body">
+            <span class="chip chip--soft">Manufacturing Facility</span>
+            <h3>โรงงานผลิตและทดสอบเดินเครื่อง (FAT) บนพื้นที่กว่า 45 ไร่</h3>
+            <p>ตัดพับเหล็กด้วย CNC Laser เชื่อมประกอบโดยช่างที่ผ่านการรับรอง และทดสอบระบบจริงก่อนส่งมอบทุกชุด</p>
+          </div>
+        </article>
+
+        <article class="tile tile--stat glass glass-interactive reveal">
+          <span class="chip">Environmental Standard</span>
+          <div class="tile__num tnum">&lt;20<em>mg/Nm³</em></div>
+          <div class="tile__body">
+            <h3>ค่าฝุ่นต่ำกว่าเกณฑ์กรมโรงงาน</h3>
+            <p>ด้วยชุดกรอง Pulse-jet Baghouse ถุงกรอง Nomex ทนความร้อนสูง</p>
+          </div>
+        </article>
+
+        <article class="tile glass glass-interactive reveal">
+          <div class="tile__media ph ph--deep">
+            <span class="ph__label">SCADA Control Room</span>
+          </div>
+          <div class="tile__body">
+            <h3>ห้องควบคุมอัตโนมัติ</h3>
+            <p>ดูรายงานการผลิตรายแบตช์ย้อนหลังและเช็กสถานะผ่านมือถือได้ทันที</p>
+          </div>
+        </article>
+
+        <article class="tile tile--wide glass glass-interactive reveal">
+          <div class="tile__body">
+            <div class="tile__row">
+              <div>
+                <span class="chip chip--soft">Quality &amp; Compliance</span>
+                <h3>มาตรฐานวิศวกรรมและการรับรอง</h3>
+              </div>
+            </div>
+            <p>โครงสร้างและระบบชั่งตวงออกแบบตามมาตรฐานสากล รองรับการตรวจรับงานโครงการภาครัฐและเอกชนทุกประเภท</p>
+            <div class="cert-list">
+              <span class="chip">ISO 9001:2015</span>
+              <span class="chip">ISO 14001</span>
+              <span class="chip">มาตรฐานกรมทางหลวง</span>
+              <span class="chip">มาตรฐานกรมทางหลวงชนบท</span>
+              <span class="chip">CE Electrical Standard</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile glass glass-interactive reveal">
+          <div class="tile__media ph ph--silver">
+            <img class="tile__plant" src="assets/images/renders/plant-hot-re.svg" alt="คลังอะไหล่แท้ Protex">
+            <span class="ph__label">Parts Warehouse</span>
+          </div>
+          <div class="tile__body">
+            <h3>คลังอะไหล่แท้พร้อมส่ง</h3>
+            <p>สต็อกอะไหล่สิ้นเปลืองและชิ้นส่วนหลักครบทุกรุ่น</p>
+            <a href="spare-parts.html" class="tile-link">
+              <span>ไปที่หน้าอะไหล่</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="tile tile--red glass--red glass-interactive reveal">
+          <div class="tile__body">
+            <span class="chip chip--red">Interactive Configurator</span>
+            <div>
+              <h3>ลองเปลี่ยนสีโครงหลักและเลือกอุปกรณ์เสริมเอง</h3>
+              <p>เห็นราคาประเมินแบบเรียลไทม์พร้อมส่งคำขอใบเสนอราคาได้ทันที</p>
+            </div>
+            <a href="design-plant.html" class="btn btn--white">
+              <span>เปิดหน้าออกแบบแพล้นท์</span>
+              <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-glass glass--red">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand--footer" aria-label="PROTEX GROUP">
+            <div class="footer-brand__badge">
+              <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo brand__logo--footer"
+                width="108" height="38" loading="lazy" decoding="async">
+            </div>
+          </a>
+          <p class="footer-statement">วิศวกรรมแพล้นท์ยางมะตอยครบวงจร</p>
+          <p>ออกแบบ ผลิต ติดตั้ง และดูแลหลังการขายโดยทีมวิศวกรมืออาชีพทั่วประเทศ</p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Navigation</h3>
+          <ul class="footer-nav-list footer-nav-list--2col">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="design-plant.html">ออกแบบแพล้นท์</a></li>
+            <li><a href="spare-parts.html">อะไหล่</a></li>
+            <li><a href="promotions.html">โปรโมชั่น</a></li>
+            <li><a href="contact.html">ติดต่อสอบถาม</a></li>
+            <li><a href="service-plants.html">ผลงานติดตั้ง</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Plant Series</h3>
+          <ul class="footer-nav-list">
+            <li><a href="index.html#fully-hot">Fully Hot In Plant (PT-1510RAP)</a></li>
+            <li><a href="index.html#hot-re">Hot Re In Plant (RAP Recycle)</a></li>
+            <li><a href="design-plant.html#accessoriesSection">อุปกรณ์เสริม &amp; ระบบ PLC</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย 24/7</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+6620000000">โทร&nbsp;02&#8209;000&#8209;0000</a></li>
+            <li><a href="mailto:sales@protexgroup.co.th">sales@protexgroup.co.th</a></li>
+            <li><a href="contact.html#office-map">บางพลี · สมุทรปราการ</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/PROTEXGroup2002" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M13.5 21v-7.5h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 4v2.2H8v3h2.5V21h3Z" />
+              </svg></a>
+            <a href="https://line.me/ti/p/~protex00" target="_blank" rel="noopener noreferrer" aria-label="LINE"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19.6 10.6c0-3.8-3.8-6.9-8.5-6.9S2.6 6.8 2.6 10.6c0 3.4 3 6.3 7.1 6.8.3.1.7.2.8.5.1.2.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.3-3.1 7.2-5.4c1.3-1.4 1.2-2.8 1.2-4.1Z" />
+              </svg></a>
+            <a href="https://www.tiktok.com/@protexgroup" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16.6 5.8A4.3 4.3 0 0 1 15 2h-3.1v13.2a2.6 2.6 0 1 1-1.8-2.5V9.5a5.7 5.7 0 1 0 4.9 5.6V8.8a7.4 7.4 0 0 0 4.3 1.4V7.1c-.9 0-1.9-.5-2.7-1.3Z" />
+              </svg></a>
+            <a href="https://www.instagram.com/protex.group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PROTEX GROUP. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal modal--wide" id="plantModal" role="dialog" aria-modal="true" aria-labelledby="plantModalTitle"
+    hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__dialog glass glass--strong">
+      <button type="button" class="icon-btn modal__close" data-modal-close aria-label="ปิดหน้าต่าง">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="showcase">
+        <div class="stage-view">
+          <img id="plantModalImg" src="assets/images/renders/plant-fully-hot.svg" alt="" width="1600" height="1000">
+        </div>
+        <div class="plant-modal__info">
+          <span class="chip chip--soft" id="plantModalSeries">INDUSTRIAL BATCH MIX SERIES</span>
+          <h3 class="modal-title" id="plantModalTitle">MODEL PT-1510RAP</h3>
+          <p class="muted" id="plantModalDesc"></p>
+          <dl class="spec-list" id="plantModalSpecs"></dl>
+          <div class="plant-modal__actions">
+            <a href="design-plant.html" class="btn btn--red" id="plantModalConfig">ออกแบบและคำนวณราคารุ่นนี้</a>
+            <button type="button" class="btn btn--glass" data-modal-close>ปิด</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/main.js" defer></script>
+  <script src="assets/js/promo-popup.js" defer></script>
+  <script src="assets/js/protex-chatbot.js" defer></script>
+</body>
+
+</html>

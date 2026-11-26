@@ -1,0 +1,17 @@
+{
+  "name": "protex-group-backend",
+  "version": "1.0.0",
+  "description": "Protex Group — Luxury industrial asphalt plant showcase (Express API + static frontend)",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

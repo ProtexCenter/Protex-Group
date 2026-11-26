@@ -1,0 +1,28 @@
+{
+  "currency": "THB",
+  "vatNote": "ราคายังไม่รวม VAT 7% ค่าขนส่ง และงานฐานราก",
+  "structureColors": [
+    { "id": "crimson", "name": "Crimson Red", "nameTh": "แดงคริมสัน", "hex": "#C8102E", "code": "RAL 3020", "surcharge": 0 },
+    { "id": "signal-blue", "name": "Signal Blue", "nameTh": "น้ำเงินสัญญาณ", "hex": "#1F4FA0", "code": "RAL 5005", "surcharge": 0 },
+    { "id": "traffic-yellow", "name": "Traffic Yellow", "nameTh": "เหลืองจราจร", "hex": "#F2B705", "code": "RAL 1023", "surcharge": 0 },
+    { "id": "pearl-white", "name": "Pearl White", "nameTh": "ขาวมุก", "hex": "#F4F3EF", "code": "RAL 1013", "surcharge": 0 },
+    { "id": "jet-black", "name": "Jet Black", "nameTh": "ดำเจ็ท", "hex": "#2A2B30", "code": "RAL 9005", "surcharge": 0 },
+    { "id": "metallic-silver", "name": "Metallic Silver", "nameTh": "เงินเมทัลลิก", "hex": "#AEB4BC", "code": "RAL 9006", "surcharge": 185000, "metallic": true },
+    { "id": "industrial-orange", "name": "Industrial Orange", "nameTh": "ส้มอุตสาหกรรม", "hex": "#E8641B", "code": "RAL 2009", "surcharge": 0 },
+    { "id": "racing-green", "name": "Racing Green", "nameTh": "เขียวเรซซิ่ง", "hex": "#1F6B4A", "code": "RAL 6005", "surcharge": 0 }
+  ],
+  "items": [
+    { "id": "baghouse", "name": "ระบบดักฝุ่น Baghouse Filter", "nameEn": "Pulse-jet Baghouse · 99.9%", "category": "สิ่งแวดล้อม", "icon": "filter", "price": 3850000, "unit": "ชุด", "maxQty": 1, "description": "ถุงกรอง Nomex ทนร้อน 200 °C ปล่อยฝุ่นต่ำกว่า 20 mg/Nm³ ผ่านเกณฑ์กรมโรงงาน" },
+    { "id": "bitumen-tank", "name": "ถังเก็บยางมะตอยเสริม", "nameEn": "Bitumen Tank 50,000 L", "category": "จัดเก็บ", "icon": "tank", "price": 1450000, "unit": "ถัง", "maxQty": 4, "description": "ถังหุ้มฉนวน 100 มม. ให้ความร้อนด้วย Hot-oil พร้อมเกจวัดระดับแบบดิจิทัล" },
+    { "id": "plc", "name": "ระบบควบคุมอัตโนมัติ PLC + SCADA", "nameEn": "Siemens PLC · SCADA", "category": "ควบคุม", "icon": "cpu", "price": 2250000, "unit": "ชุด", "maxQty": 1, "description": "จัดเก็บสูตรส่วนผสมไม่จำกัด รายงานการผลิตรายแบตช์ และเชื่อมต่อดูสถานะผ่านมือถือ" },
+    { "id": "rap", "name": "ระบบ RAP Recycling Unit", "nameEn": "Cold RAP Feed + Crusher", "category": "รีไซเคิล", "icon": "recycle", "price": 6800000, "unit": "ชุด", "maxQty": 1, "description": "ชุดป้อน RAP เย็นพร้อมเครื่องบดและตะแกรง เติม RAP ได้ 15–25% ในแพล้นท์มาตรฐาน" },
+    { "id": "silo", "name": "ไซโลเก็บแอสฟัลต์ร้อน", "nameEn": "Hot Storage Silo 80 t", "category": "จัดเก็บ", "icon": "silo", "price": 2900000, "unit": "ไซโล", "maxQty": 3, "description": "เก็บส่วนผสมร้อนได้นาน 24 ชม. พร้อมประตูจ่ายแบบไฮดรอลิก" },
+    { "id": "burner", "name": "หัวเผาเชื้อเพลิงคู่", "nameEn": "Dual-fuel Burner", "category": "พลังงาน", "icon": "flame", "price": 1680000, "unit": "ชุด", "maxQty": 1, "description": "สลับใช้น้ำมันเตาและ LPG/NG ได้ทันที ปรับอัตราส่วนอากาศอัตโนมัติ ประหยัดเชื้อเพลิง 8–12%" },
+    { "id": "filler", "name": "ระบบไซโลและสกรู Filler", "nameEn": "Filler Silo & Screw", "category": "ป้อนวัตถุดิบ", "icon": "silo", "price": 980000, "unit": "ชุด", "maxQty": 2, "description": "ไซโล Filler 40 ตัน พร้อมสกรูลำเลียงและระบบชั่งน้ำหนักแยก" },
+    { "id": "cold-bin", "name": "ถัง Cold Feed เพิ่ม", "nameEn": "Extra Cold Feed Bin", "category": "ป้อนวัตถุดิบ", "icon": "bin", "price": 420000, "unit": "ช่อง", "maxQty": 4, "description": "ถังป้อนหินเย็นขนาด 12 ม³ พร้อมสายพาน VFD ควบคุมอัตราป้อน" },
+    { "id": "weighbridge", "name": "ตาชั่งรถบรรทุก", "nameEn": "Truck Weighbridge 80 t", "category": "ควบคุม", "icon": "scale", "price": 1250000, "unit": "ชุด", "maxQty": 1, "description": "ตาชั่งดิจิทัล 18 ม. เชื่อมต่อระบบออกตั๋วจ่ายของอัตโนมัติ" },
+    { "id": "additive", "name": "ระบบเติม Fiber / Additive", "nameEn": "Fiber & Additive Dosing", "category": "ป้อนวัตถุดิบ", "icon": "spark", "price": 760000, "unit": "ชุด", "maxQty": 1, "description": "รองรับส่วนผสม SMA และ PMA ชั่งตวงแม่นยำ ±1%" },
+    { "id": "cabin", "name": "ห้องควบคุมเก็บเสียง", "nameEn": "Insulated Control Cabin", "category": "ควบคุม", "icon": "cabin", "price": 1100000, "unit": "ห้อง", "maxQty": 1, "description": "ห้องควบคุมปรับอากาศ กระจกนิรภัยรอบทิศ เก็บเสียงต่ำกว่า 60 dB" },
+    { "id": "warranty", "name": "ขยายการรับประกัน +2 ปี", "nameEn": "Extended Warranty", "category": "บริการ", "icon": "shield", "price": 890000, "unit": "แพ็กเกจ", "maxQty": 1, "description": "ครอบคลุมอะไหล่และค่าแรง พร้อม PM ทุกไตรมาสโดยวิศวกร Protex" }
+  ]
+}

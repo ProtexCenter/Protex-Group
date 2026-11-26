@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="th" data-page="admin">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROTEX Admin Dashboard (Full CMS) — iOS 27 Liquid Glass</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F4F6FA">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/protex-logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo/protex-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin-glass.css?v=20261126d">
+</head>
+
+<body>
+  <!-- Living Atmospheric Mesh Backdrop (iOS 27 Refracting Light Orbs) -->
+  <div class="adm-ambient" aria-hidden="true">
+    <div class="adm-orb adm-orb--1"></div>
+    <div class="adm-orb adm-orb--2"></div>
+    <div class="adm-orb adm-orb--3"></div>
+    <div class="adm-orb adm-orb--4"></div>
+  </div>
+
+  <!-- Toast Notification Stack -->
+  <div class="adm-toast-stack" id="admToastStack" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       FULL-SCREEN SECURITY GATEWAY (Blocks Direct Access Until Password Verified)
+       ========================================================================= -->
+  <div class="adm-auth-gate" id="admAuthGate" role="dialog" aria-modal="true" aria-labelledby="admGateTitle">
+    <div class="adm-auth-card adm-glass adm-glass--strong">
+      <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="adm-auth-card__logo" width="128" height="42">
+      <span class="adm-sidebar__badge">PROTEX ADMIN SECURITY GATEWAY</span>
+      <h1 class="adm-auth-card__title" id="admGateTitle">เข้าสู่ระบบผู้ดูแลเว็บไซต์</h1>
+      <p class="adm-auth-card__sub">ระบบจัดการเนื้อหาเต็มรูปแบบ (Full CMS) สไตล์ iOS 27 Liquid Glass กรุณายืนยันรหัสผ่านผู้ดูแลระบบ</p>
+
+      <form class="adm-auth-form" id="admGateForm" novalidate>
+        <div class="adm-pass-wrap">
+          <input
+            type="password"
+            id="admGatePass"
+            class="adm-input"
+            placeholder="กรอกรหัสผ่านแอดมิน…"
+            autocomplete="current-password"
+            required
+            style="padding-right:46px;font-weight:700;"
+          >
+          <button type="button" class="adm-pass-toggle" id="admGatePassToggle" aria-label="เปิดหรือปิดการแสดงรหัสผ่าน">
+            <svg id="admGateEyeOpen" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg id="admGateEyeClosed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden>
+              <path d="M3 3l18 18M10.5 10.7a2.5 2.5 0 0 0 3.4 3.4M2 12s3.5-6.5 10-6.5c2 0 3.8.5 5.3 1.4M22 12s-3.5 6.5-10 6.5c-2.2 0-4.2-.6-5.8-1.6"/>
+            </svg>
+          </button>
+        </div>
+        <div id="admGateError" style="color:#DC2626;font-size:0.82rem;font-weight:700;min-height:18px;"></div>
+        <button type="submit" class="adm-btn adm-btn--red" style="width:100%;padding:12px 20px;font-size:0.94rem;">
+          <span>เข้าสู่ระบบผู้ดูแล</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+        <a href="index.html" class="adm-btn adm-btn--glass" style="width:100%;">กลับสู่หน้าหลักเว็บไซต์</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN ADMIN DASHBOARD SHELL (8 CMS MODULES)
+       ========================================================================= -->
+  <div class="adm-shell" id="admAppShell" hidden>
+    <!-- Left Floating Glass Sidebar -->
+    <aside class="adm-sidebar adm-glass adm-glass--strong" id="admSidebar" aria-label="เมนูจัดการเว็บไซต์">
+      <div class="adm-sidebar__brand">
+        <a href="index.html" title="กลับหน้าเว็บไซต์หลัก">
+          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="adm-sidebar__logo" width="108" height="36">
+        </a>
+        <span class="adm-sidebar__badge">FULL CMS</span>
+      </div>
+
+      <nav class="adm-nav" id="admSidebarNav">
+        <button type="button" class="adm-nav__btn is-active" data-adm-tab="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span>1. ภาพรวมระบบ</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="plants">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><path d="M9 20v-5h6v5"/></svg>
+          <span>2. จัดการแพล้นท์หน้าหลัก</span>
+          <span class="adm-nav__count" id="navCountPlants">5</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="spare-parts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span>3. จัดการสินค้าอะไหล่</span>
+          <span class="adm-nav__count" id="navCountParts">8</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="orders">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2.5 3h2.8l2.4 11.4a2 2 0 0 0 2 1.6h9.5a2 2 0 0 0 1.9-1.4L23 6H6.2"/></svg>
+          <span>4. คำสั่งซื้ออะไหล่ (Orders)</span>
+          <span class="adm-nav__count adm-nav__count--alert" id="navCountOrders">NEW 1</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="promotions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          <span>5. จัดการโปรโมชั่น &amp; สื่อ</span>
+          <span class="adm-nav__count" id="navCountPromos">5</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="installations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>6. จัดการผลงานติดตั้ง</span>
+          <span class="adm-nav__count" id="navCountInstalls">4</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="accessories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          <span>7. อะไหล่ออกแบบแพล้นท์</span>
+          <span class="adm-nav__count" id="navCountAcc">12</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/><path d="M7 12h6"/></svg>
+          <span>8. โฆษณา Popup หน้าเว็บ</span>
+          <span class="adm-nav__count" id="navCountPopup">OFF</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="quotations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          <span>9. รายการใบเสนอราคา</span>
+          <span class="adm-nav__count adm-nav__count--alert" id="navCountQuotes">NEW 1</span>
+        </button>
+
+        <button type="button" class="adm-nav__btn" data-adm-tab="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>10. ข้อมูลเว็บ &amp; AI Chatbot</span>
+        </button>
+      </nav>
+
+      <div class="adm-sidebar__foot">
+        <a href="index.html" target="_blank" rel="noopener noreferrer" class="adm-btn adm-btn--glass" style="width:100%;">
+          <span>ดูหน้าเว็บจริง ↗</span>
+        </a>
+        <button type="button" class="adm-btn adm-btn--danger" id="admSidebarLogoutBtn" style="width:100%;">
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right Main Workspace -->
+    <div class="adm-main">
+      <!-- Top Glass Header -->
+      <header class="adm-topbar adm-glass adm-glass--strong">
+        <div class="adm-topbar__left">
+          <button type="button" class="adm-mobile-toggle" id="admMobileMenuBtn" aria-label="เปิดเมนูแอดมิน">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h12"/></svg>
+          </button>
+          <div class="adm-topbar__title-wrap">
+            <h1 id="admCurrentSectionTitle">ภาพรวมระบบ (Dashboard Overview)</h1>
+            <p id="admCurrentSectionSub">จัดการข้อมูล รูปภาพ ราคา โปรโมชั่น และระบบ AI ของ PROTEX GROUP แบบเรียลไทม์</p>
+          </div>
+        </div>
+
+        <div class="adm-topbar__actions">
+          <button type="button" class="adm-btn adm-btn--glass adm-btn--sm" id="admReloadAllBtn" title="ดึงข้อมูลล่าสุดจากเซิร์ฟเวอร์">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>รีเฟรชข้อมูล</span>
+          </button>
+          <a href="index.html" target="_blank" rel="noopener noreferrer" class="adm-btn adm-btn--glass adm-btn--sm">
+            <span>ดูหน้าเว็บจริง ↗</span>
+          </a>
+          <button type="button" class="adm-btn adm-btn--danger adm-btn--sm" id="admTopLogoutBtn">
+            <span>ออกจากระบบ</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic View Container -->
+      <main id="admViewContainer"></main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       REUSABLE GLASS EDITOR MODAL (Add / Edit Item)
+       ========================================================================= -->
+  <div class="adm-modal" id="admEditorModal" role="dialog" aria-modal="true" aria-labelledby="admEditorModalTitle" hidden>
+    <div class="adm-modal__dialog adm-glass adm-glass--strong">
+      <div class="adm-modal__head" id="admEditorModalHead">
+        <div class="adm-modal__title-wrap" id="admEditorModalTitleWrap">
+          <h2 id="admEditorModalTitle">แก้ไขข้อมูล</h2>
+        </div>
+        <button type="button" class="adm-btn adm-btn--glass adm-btn--sm" id="admEditorCloseBtn">✕ ปิด</button>
+      </div>
+      <form id="admEditorForm" novalidate>
+        <div id="admEditorBody" style="display:grid;gap:14px;"></div>
+        <div class="adm-modal__foot" style="margin-top:18px;">
+          <button type="button" class="adm-btn adm-btn--glass" id="admEditorCancelBtn">ยกเลิก</button>
+          <button type="submit" class="adm-btn adm-btn--red" id="admEditorSaveBtn">บันทึกข้อมูล</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       GLASS CONFIRM DELETE DIALOG
+       ========================================================================= -->
+  <div class="adm-modal" id="admConfirmModal" role="dialog" aria-modal="true" aria-labelledby="admConfirmTitle" hidden>
+    <div class="adm-modal__dialog adm-glass adm-glass--strong" style="max-width:420px;text-align:center;">
+      <h2 id="admConfirmTitle" style="margin:0;font-size:1.18rem;">ยืนยันการลบรายการ?</h2>
+      <p id="admConfirmMessage" style="margin:6px 0 0;font-size:0.88rem;color:#475569;">เมื่อลบแล้วข้อมูลจะถูกนำออกจากหน้าเว็บไซต์ทันที</p>
+      <div class="adm-modal__foot" style="justify-content:center;border-top:none;padding-top:8px;">
+        <button type="button" class="adm-btn adm-btn--glass" id="admConfirmCancelBtn">ยกเลิก</button>
+        <button type="button" class="adm-btn adm-btn--red" id="admConfirmOkBtn">ยืนยันการลบ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/quotation-template.js?v=20261126d" defer></script>
+  <script src="assets/js/admin-dashboard.js?v=20261126d" defer></script>
+</body>
+
+</html>

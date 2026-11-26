@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th" data-page="service-plants">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ผลงานติดตั้ง &amp; แผนที่จุดปักหมุดทั่วประเทศ — PROTEX GROUP</title>
+  <meta name="description"
+    content="ค้นหาพิกัดผลงานติดตั้งแพล้นท์ยางมะตอยเครือข่าย Protex Group ทั่วประเทศไทย พร้อมข้อมูลรุ่นเครื่องจักร กำลังการผลิต เบอร์ติดต่อ และนำทาง Google Maps">
+  <meta name="theme-color" content="#F6F7F9">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/protex-logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo/protex-logo.png">
+  <link rel="preload" as="image" href="assets/logo/protex-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/glass-system.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/css/protex-chatbot.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var replay = /[?&]intro=1\b/.test(location.search);
+        if (replay) sessionStorage.removeItem('ptx_intro_seen');
+        if (!sessionStorage.getItem('ptx_intro_seen')) d.classList.add('intro-active');
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body class="page--service-plants">
+  <a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="orb orb--4"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__veil"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="header-pill glass">
+        <a href="index.html" class="brand" id="headerBrand" aria-label="PROTEX GROUP หน้าหลัก">
+          <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo" width="96" height="34"
+            loading="eager" decoding="async">
+        </a>
+
+        <nav class="main-nav" id="mainNav" aria-label="เมนูหลัก">
+          <span class="nav-indicator nav-notch" id="navIndicator" data-nav-notch aria-hidden="true"><span
+              class="nav-notch__bar"></span></span>
+          <a href="index.html" data-nav="home">หน้าหลัก</a>
+          <a href="design-plant.html" data-nav="design">ออกแบบแพล้นท์</a>
+          <a href="spare-parts.html" data-nav="parts">อะไหล่</a>
+          <a href="promotions.html" data-nav="promotions">โปรโมชั่น</a>
+          <a href="contact.html" data-nav="contact">ติดต่อสอบถาม</a>
+          <a href="service-plants.html" data-nav="service-plants" aria-current="page">ผลงานติดตั้ง</a>
+          <a href="after-sales.html" data-nav="after-sales">บริการหลังการขาย</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search" id="searchBox" role="search">
+            <button type="button" class="search__btn" id="searchBtn" aria-label="ค้นหาแพล้นท์ อะไหล่ และโปรโมชั่น"
+              aria-expanded="false" aria-controls="searchPanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+            <input type="search" class="search__input" id="searchInput" placeholder="ค้นหาแพล้นท์, อะไหล่, โปรโมชั่น…"
+              autocomplete="off" aria-label="คำค้นหา">
+            <button type="button" class="search__clear" id="searchClear" aria-label="ล้างคำค้นหา">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false"
+            aria-controls="mobileSheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h11" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel glass glass--strong" id="searchPanel"></div>
+
+      <div class="mobile-sheet glass glass--strong" id="mobileSheet">
+        <nav aria-label="เมนูหลักมือถือ">
+          <a href="index.html"><span>หน้าหลัก</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="design-plant.html"><span>ออกแบบแพล้นท์</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="spare-parts.html"><span>อะไหล่</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="promotions.html"><span>โปรโมชั่น</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="contact.html"><span>ติดต่อสอบถาม</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="service-plants.html" aria-current="page"><span>ผลงานติดตั้ง</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+          <a href="after-sales.html"><span>บริการหลังการขาย</span><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m9 6 6 6-6 6" />
+            </svg></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <div class="page-hero__grid">
+        <div>
+          <h1 class="display display--flagship">
+            <span class="display__line display__line--dark">SERVICE</span>
+            <span class="display__line display__line--accent">
+              <span class="display__gradient">PLANTS MAP</span>
+            </span>
+          </h1>
+          <p class="display-th display-th--accent">ผลงานติดตั้งแพล้นท์ยางมะตอยและศูนย์โชว์เคสทั่วประเทศ</p>
+        </div>
+        <div>
+          <p class="lead">ค้นหาผลงานติดตั้งใกล้โครงการของคุณ หรือเข้าชมการทำงานจริงของเครื่องจักรรุ่นเรือธง <strong>MODEL PT-1510RAP</strong> และ <strong>PTX-240 Titan</strong> ได้ครบทุกภูมิภาค</p>
+          <div class="page-hero__meta">
+            <span class="chip chip--red">ผลงานติดตั้งทั่วประเทศ</span>
+            <span class="chip">มาตรฐานกรมทางหลวง &amp; ทช.</span>
+            <span class="chip">Interactive Map Sync</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SECTION 1: VERIFIED CLIENT INSTALLATION SHOWCASE
+         ================================================================ -->
+    <section class="section container" id="installations" aria-labelledby="installationsHeading">
+      <header class="section-head reveal">
+        <div class="section-title">
+          <span class="chip chip--red" style="margin-bottom: 8px;">VERIFIED CLIENT SHOWCASE</span>
+          <h2 class="h1" id="installationsHeading">ผลงานติดตั้งจริงที่ได้รับความไว้วางใจ</h2>
+          <p class="display-th">ผลงานส่งมอบและติดตั้งแพล้นท์ยางมะตอยจริงทั่วประเทศ พร้อมพิกัดนำทาง Google Maps</p>
+        </div>
+      </header>
+
+      <div class="install-grid reveal" id="installationsGrid" aria-live="polite">
+        <div class="skeleton" style="min-height: 380px;"></div>
+        <div class="skeleton" style="min-height: 380px;"></div>
+        <div class="skeleton" style="min-height: 380px;"></div>
+        <div class="skeleton" style="min-height: 380px;"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         INTERACTIVE PLANT MAP & DIRECTORY (SPLIT VIEW)
+         ================================================================ -->
+    <section class="section--tight container" id="plantMapSection" aria-labelledby="directoryHeading">
+      <div class="plant-directory-toolbar glass reveal">
+        <div class="plant-directory-toolbar__search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input type="search" class="input" id="plantLocationSearch"
+            placeholder="ค้นหาชื่อบริษัท, จังหวัด, รุ่นแพล้นท์ (เช่น ชุมพร, PT-2010RAP, สุรินทร์)…"
+            aria-label="ค้นหาผลงานติดตั้งจริง">
+        </div>
+        <div class="filter-chips" id="plantRegionFilters" role="toolbar" aria-label="กรองผลงานติดตั้งจริงตามภูมิภาค"></div>
+      </div>
+
+      <div class="plant-split-layout reveal">
+        <!-- Left Column: Installation Cards Directory -->
+        <div class="plant-directory-col">
+          <div class="plant-directory-head">
+            <h2 class="h3" id="directoryHeading">รายการผลงานติดตั้งจริง</h2>
+            <span class="chip chip--soft" id="plantCountBadge">4 แห่ง</span>
+          </div>
+          <div class="plant-directory-list" id="servicePlantsList" role="tablist"
+            aria-label="รายการผลงานติดตั้งจริงทั่วประเทศ"></div>
+        </div>
+
+        <!-- Right Column: Large Interactive Leaflet Map -->
+        <div class="plant-map-col">
+          <div class="map-frame map-frame--tall glass">
+            <div class="map-top-bar">
+              <span class="chip chip--red">Verified Installations Network</span>
+              <button type="button" class="btn btn--sm btn--glass" id="fitAllPlantsBtn">ดูภาพรวมทั่วประเทศ</button>
+            </div>
+            <div class="map-canvas" id="servicePlantsMapCanvas" role="region"
+              aria-label="แผนที่จุดปักหมุดผลงานติดตั้งจริง Protex Group"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+      <footer class="site-footer">
+    <div class="footer-glass glass--red">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand--footer" aria-label="PROTEX GROUP">
+            <div class="footer-brand__badge">
+              <img src="assets/logo/protex-logo.png" alt="PROTEX GROUP" class="brand__logo brand__logo--footer"
+                width="108" height="38" loading="lazy" decoding="async">
+            </div>
+          </a>
+          <p class="footer-statement">วิศวกรรมแพล้นท์ยางมะตอยครบวงจร</p>
+          <p>ออกแบบ ผลิต ติดตั้ง และดูแลหลังการขายโดยทีมวิศวกรมืออาชีพทั่วประเทศ</p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Navigation</h3>
+          <ul class="footer-nav-list footer-nav-list--2col">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="design-plant.html">ออกแบบแพล้นท์</a></li>
+            <li><a href="spare-parts.html">อะไหล่</a></li>
+            <li><a href="promotions.html">โปรโมชั่น</a></li>
+            <li><a href="contact.html">ติดต่อสอบถาม</a></li>
+            <li><a href="service-plants.html">ผลงานติดตั้ง</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Plant Series</h3>
+          <ul class="footer-nav-list">
+            <li><a href="index.html#fully-hot">Fully Hot In Plant (PT-1510RAP)</a></li>
+            <li><a href="index.html#hot-re">Hot Re In Plant (RAP Recycle)</a></li>
+            <li><a href="design-plant.html#accessoriesSection">อุปกรณ์เสริม &amp; ระบบ PLC</a></li>
+            <li><a href="after-sales.html">บริการหลังการขาย 24/7</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+6620000000">โทร&nbsp;02&#8209;000&#8209;0000</a></li>
+            <li><a href="mailto:sales@protexgroup.co.th">sales@protexgroup.co.th</a></li>
+            <li><a href="contact.html#office-map">บางพลี · สมุทรปราการ</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/PROTEXGroup2002" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M13.5 21v-7.5h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 4v2.2H8v3h2.5V21h3Z" />
+              </svg></a>
+            <a href="https://line.me/ti/p/~protex00" target="_blank" rel="noopener noreferrer" aria-label="LINE"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19.6 10.6c0-3.8-3.8-6.9-8.5-6.9S2.6 6.8 2.6 10.6c0 3.4 3 6.3 7.1 6.8.3.1.7.2.8.5.1.2.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.3-3.1 7.2-5.4c1.3-1.4 1.2-2.8 1.2-4.1Z" />
+              </svg></a>
+            <a href="https://www.tiktok.com/@protexgroup" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16.6 5.8A4.3 4.3 0 0 1 15 2h-3.1v13.2a2.6 2.6 0 1 1-1.8-2.5V9.5a5.7 5.7 0 1 0 4.9 5.6V8.8a7.4 7.4 0 0 0 4.3 1.4V7.1c-.9 0-1.9-.5-2.7-1.3Z" />
+              </svg></a>
+            <a href="https://www.instagram.com/protex.group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PROTEX GROUP. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="assets/js/promo-popup.js" defer></script>
+  <script src="assets/js/protex-chatbot.js" defer></script>
+</body>
+
+</html>
