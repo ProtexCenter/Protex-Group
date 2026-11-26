@@ -898,13 +898,9 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span>กำลังส่งคำขอให้บริษัทตรวจสอบใบเสนอราคา…</span>';
 
-      const saveLocalFallbackQuotation = (qObj) => {
+      const triggerAdminSyncPing = () => {
         try {
-          const raw = localStorage.getItem('ptx_cms_override_quotations');
-          const parsed = raw ? JSON.parse(raw) : { items: [] };
-          const list = Array.isArray(parsed.items) ? parsed.items : [];
-          list.unshift(qObj);
-          localStorage.setItem('ptx_cms_override_quotations', JSON.stringify({ items: list }));
+          localStorage.setItem('ptx_cms_ping', String(Date.now()));
         } catch (err) {}
       };
 
@@ -929,7 +925,7 @@
         if (badge) badge.textContent = currentDraftRef;
         renderLiveA4QuotationPreview();
 
-        if (data.quotation) saveLocalFallbackQuotation(data.quotation);
+        triggerAdminSyncPing();
 
         document.getElementById('quoteRefCode').textContent = currentDraftRef;
         const mailMsgEl = document.getElementById('quoteEmailStatusMsg');
@@ -978,7 +974,7 @@
           emailRecipients: [contact.email],
           emailStatusNote: 'รอแอดมินตรวจสอบและกดส่งใบเสนอราคาฉบับทางการกลับไปยังอีเมลลูกค้า',
         };
-        saveLocalFallbackQuotation(fallbackRecord);
+        triggerAdminSyncPing();
         document.getElementById('quoteRefCode').textContent = currentDraftRef;
         const mailMsgEl = document.getElementById('quoteEmailStatusMsg');
         if (mailMsgEl) {
@@ -995,7 +991,7 @@
   }
 
   /* ------------------------------ Multi-Source Data Loader (100% Resilient + Admin Sync) ------------------------------ */
-  async function loadCollectionWithFallback(apiPath, jsonPath, storageKey, defaultData) {
+  async function loadCollectionWithFallback(apiPath, jsonPath, defaultData) {
     let data = null;
     try {
       const res = await fetch(`${apiPath}?_t=${Date.now()}`, { cache: 'no-store' });
@@ -1009,22 +1005,14 @@
       } catch (e2) {}
     }
 
-    try {
-      const overrideRaw = localStorage.getItem(storageKey);
-      if (overrideRaw) {
-        const parsed = JSON.parse(overrideRaw);
-        if (parsed && typeof parsed === 'object') data = parsed;
-      }
-    } catch (e3) {}
-
     return data || defaultData;
   }
 
   async function init() {
     const [plantsData, accData, siteSettingsData] = await Promise.all([
-      loadCollectionWithFallback('/api/plants', '../backend/data/plants.json', 'ptx_cms_override_plants', { models: DEFAULT_MODELS }),
-      loadCollectionWithFallback('/api/accessories', '../backend/data/accessories.json', 'ptx_cms_override_accessories', DEFAULT_ACC),
-      loadCollectionWithFallback('/api/site-settings', '../backend/data/site-settings.json', 'ptx_cms_override_site-settings', {}),
+      loadCollectionWithFallback('/api/plants', '../backend/data/plants.json', { models: DEFAULT_MODELS }),
+      loadCollectionWithFallback('/api/accessories', '../backend/data/accessories.json', DEFAULT_ACC),
+      loadCollectionWithFallback('/api/site-settings', '../backend/data/site-settings.json', {}),
     ]);
 
     state.siteSettings = siteSettingsData && typeof siteSettingsData === 'object' ? siteSettingsData : {};

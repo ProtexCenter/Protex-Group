@@ -61,12 +61,6 @@
       } catch (e2) {}
     }
 
-    // Check localStorage override if admin tested in static mode
-    try {
-      const localOverride = localStorage.getItem('ptx_cms_override_popup');
-      if (localOverride) popup = JSON.parse(localOverride);
-    } catch (e) {}
-
     if (!popup || !popup.enabled) return;
 
     const slides = normalizePopupSlides(popup);

@@ -9,6 +9,15 @@
 (function () {
   'use strict';
 
+  // Purge any legacy client mock overrides to ensure 100% Single Source of Truth
+  try {
+    Object.keys(localStorage).forEach((k) => {
+      if (k.startsWith('ptx_cms_override_')) {
+        localStorage.removeItem(k);
+      }
+    });
+  } catch (e) {}
+
   const ADMIN_SESSION_MS = 5 * 60 * 60 * 1000; // 5 hours in milliseconds (18,000,000 ms)
 
   const state = {
@@ -208,7 +217,7 @@
       payload._updatedAt = Date.now();
     }
     try {
-      localStorage.setItem(`ptx_cms_override_${name}`, JSON.stringify(payload));
+      localStorage.setItem('ptx_cms_ping', String(Date.now()));
     } catch (e) {}
     try {
       const res = await fetch(`/api/admin/collection/${name}`, {
@@ -226,6 +235,7 @@
         throw new Error(out.message || 'ไม่สามารถบันทึกข้อมูลได้');
       }
       showToast(out.message || 'บันทึกข้อมูลสำเร็จ');
+      state.data[name] = payload;
       updateSidebarBadges();
       return true;
     } catch (err) {
@@ -304,37 +314,8 @@
     state.data.locations = locations && locations.installations ? locations : { headquarters: {}, regions: [], serviceCenters: [], installations: [] };
     state.data.accessories = accessories && accessories.items ? accessories : { currency: 'THB', vatNote: '', structureColors: [], items: [] };
     state.data.popup = popup && typeof popup === 'object' ? popup : { enabled: false };
-
-    let quoteItems = Array.isArray(quotations?.items) ? quotations.items : [];
-    try {
-      const localQ = localStorage.getItem('ptx_cms_override_quotations');
-      if (localQ) {
-        const parsedQ = JSON.parse(localQ);
-        if (Array.isArray(parsedQ?.items)) {
-          const existingRefs = new Set(quoteItems.map((q) => q.ref));
-          parsedQ.items.forEach((lq) => {
-            if (!existingRefs.has(lq.ref)) quoteItems.unshift(lq);
-          });
-        }
-      }
-    } catch (e) {}
-    state.data.quotations = { items: quoteItems };
-
-    let orderItems = Array.isArray(orders?.items) ? orders.items : [];
-    try {
-      const localOrd = localStorage.getItem('ptx_cms_override_orders');
-      if (localOrd) {
-        const parsedOrd = JSON.parse(localOrd);
-        if (Array.isArray(parsedOrd?.items)) {
-          const existingOrdRefs = new Set(orderItems.map((o) => o.ref));
-          parsedOrd.items.forEach((lo) => {
-            if (!existingOrdRefs.has(lo.ref)) orderItems.unshift(lo);
-          });
-        }
-      }
-    } catch (e) {}
-    state.data.orders = { items: orderItems };
-
+    state.data.quotations = { items: Array.isArray(quotations?.items) ? quotations.items : [] };
+    state.data.orders = { items: Array.isArray(orders?.items) ? orders.items : [] };
     state.data.siteSettings = siteSettings && typeof siteSettings === 'object' ? siteSettings : {};
     state.data.chatbotKnowledge = chatbotKnowledge && typeof chatbotKnowledge === 'object' ? chatbotKnowledge : {};
 
@@ -617,7 +598,7 @@
 
     // Cross-tab immediate sync via storage events
     window.addEventListener('storage', (e) => {
-      if (e.key === 'ptx_cms_override_quotations' || e.key === 'ptx_cms_override_orders') {
+      if (e.key === 'ptx_cms_ping' || e.key === 'ptx_cms_override_quotations' || e.key === 'ptx_cms_override_orders') {
         syncLiveOrdersAndQuotes();
       }
     });
@@ -1528,7 +1509,7 @@
           });
         } catch (e) {}
         try {
-          localStorage.setItem('ptx_cms_override_orders', JSON.stringify({ items: orders }));
+          localStorage.setItem('ptx_cms_ping', String(Date.now()));
         } catch (e) {}
         showToast('อัปเดตสถานะการจัดส่งอะไหล่เรียบร้อยแล้ว');
         renderSparePartsModule(container);
@@ -1573,7 +1554,7 @@
             });
           } catch (e) {}
           try {
-            localStorage.setItem('ptx_cms_override_orders', JSON.stringify(state.data.orders));
+            localStorage.setItem('ptx_cms_ping', String(Date.now()));
           } catch (e) {}
           showToast('ลบรายการคำสั่งซื้ออะไหล่เรียบร้อยแล้ว');
           renderSparePartsModule(container);
@@ -2199,7 +2180,7 @@
         }
 
         try {
-          localStorage.setItem('ptx_cms_override_orders', JSON.stringify({ items: list }));
+          localStorage.setItem('ptx_cms_ping', String(Date.now()));
         } catch (e) {}
 
         updateSidebarBadges();
@@ -2748,7 +2729,7 @@
             });
           } catch (e) {}
           try {
-            localStorage.setItem('ptx_cms_override_orders', JSON.stringify({ items: orders }));
+            localStorage.setItem('ptx_cms_ping', String(Date.now()));
           } catch (e) {}
           updateSidebarBadges();
           showToast('อัปเดตสถานะคำสั่งซื้อเรียบร้อยแล้ว');
@@ -2768,7 +2749,7 @@
               });
             } catch (e) {}
             try {
-              localStorage.setItem('ptx_cms_override_orders', JSON.stringify(state.data.orders));
+              localStorage.setItem('ptx_cms_ping', String(Date.now()));
             } catch (e) {}
             updateSidebarBadges();
             showToast('ลบรายการคำสั่งซื้ออะไหล่เรียบร้อยแล้ว');
@@ -4668,7 +4649,7 @@
         if (idx !== -1) list[idx] = snap;
       }
       try {
-        localStorage.setItem('ptx_cms_override_quotations', JSON.stringify({ items: list }));
+        localStorage.setItem('ptx_cms_ping', String(Date.now()));
       } catch (e) {}
       updateSidebarBadges();
     };
@@ -4953,7 +4934,7 @@
               const idx = list.findIndex((x) => (x.id || x.ref) === (snap.id || snap.ref));
               if (idx !== -1) list[idx] = snap;
               try {
-                localStorage.setItem('ptx_cms_override_quotations', JSON.stringify({ items: list }));
+                localStorage.setItem('ptx_cms_ping', String(Date.now()));
               } catch (err) {}
             }
             refreshPreview();
@@ -5218,7 +5199,7 @@
           });
         } catch (e) {}
         try {
-          localStorage.setItem('ptx_cms_override_quotations', JSON.stringify(state.data.quotations));
+          localStorage.setItem('ptx_cms_ping', String(Date.now()));
         } catch (e) {}
         updateSidebarBadges();
         showToast('อัปเดตสถานะใบเสนอราคาแล้ว');
@@ -5265,7 +5246,7 @@
           const out = await res.json();
           if (out.item) Object.assign(found, out.item);
           try {
-            localStorage.setItem('ptx_cms_override_quotations', JSON.stringify(state.data.quotations));
+            localStorage.setItem('ptx_cms_ping', String(Date.now()));
           } catch (err) {}
           updateSidebarBadges();
           showToast(out.message || 'ยืนยันและส่งใบเสนอราคาฉบับทางการเข้าอีเมลลูกค้าแล้ว', out.emailStatus === 'failed');
@@ -5293,7 +5274,7 @@
             });
           } catch (e) {}
           try {
-            localStorage.setItem('ptx_cms_override_quotations', JSON.stringify(state.data.quotations));
+            localStorage.setItem('ptx_cms_ping', String(Date.now()));
           } catch (e) {}
           updateSidebarBadges();
           showToast('ลบรายการใบเสนอราคาเรียบร้อยแล้ว');

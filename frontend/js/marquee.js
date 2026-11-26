@@ -24,137 +24,6 @@
 
   const CART_STORAGE_KEY = 'protex_cart_v1';
 
-  const FALLBACK_SPARE_PARTS = [
-    {
-      id: 'sp-nomex-300',
-      sku: 'PTX-FLT-NMX300',
-      name: 'ถุงกรองฝุ่น Baghouse Nomex เกรดทนความร้อนสูง',
-      category: 'ระบบดักฝุ่น',
-      spec: 'ทนอุณหภูมิต่อเนื่อง 200–220 °C · เคลือบ PTFE กันชื้นและกรดกำมะถัน อายุใช้งานยาวนาน',
-      price: 1450,
-      originalPrice: 1950,
-      unit: 'ใบ',
-      discount: '-25%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'filter',
-    },
-    {
-      id: 'sp-burner-nozzle',
-      sku: 'PTX-BRN-AT285',
-      name: 'ชุดหัวฉีดและระบบจุดระเบิดหัวเผา A-TECH / Dual-Fuel',
-      category: 'ระบบหัวเผา',
-      spec: 'รองรับน้ำมันเตา, ดีเซล และ LPG/NG · หัวฉีดสแตนเลสทนความร้อนสูง อะไหล่แท้ OEM',
-      price: 28500,
-      originalPrice: 34800,
-      unit: 'ชุด',
-      discount: '-18%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'flame',
-    },
-    {
-      id: 'sp-mixer-paddle',
-      sku: 'PTX-MIX-NIH42',
-      name: 'ใบพายและแผ่นซับในมิกเซอร์ Ni-Hard เหล็กหล่อเหนียวพิเศษ',
-      category: 'ชุดผสม Mixer',
-      spec: 'ทนการสึกกร่อนสูงระดับ 58–62 HRC สำหรับมิกเซอร์ Twin-Shaft 1,600 – 4,000 กก.',
-      price: 4200,
-      originalPrice: 5400,
-      unit: 'ชิ้น',
-      discount: '-22%',
-      status: 'มีสต็อกครบทุกรุ่น',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'gear',
-    },
-    {
-      id: 'sp-drum-bearing',
-      sku: 'PTX-DRY-SKF360',
-      name: 'ชุดลูกปืนเพลาดรัมและล้อประคอง SKF / FAG Heavy-Duty',
-      category: 'ชุดอบแห้ง Dryer',
-      spec: 'รองรับโหลดหนักและอุณหภูมิสูงต่อเนื่อง พร้อมเสื้อลูกปืนและซีลกันฝุ่นสองชั้น',
-      price: 36000,
-      originalPrice: 42500,
-      unit: 'ชุด',
-      discount: '-15%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'bearing',
-    },
-    {
-      id: 'sp-screen-mesh',
-      sku: 'PTX-SCR-MN89',
-      name: 'ตะแกรงคัดขนาดหินเหล็กแมงกานีสสูง (High-Mn Screen)',
-      category: 'ชุดคัดขนาด',
-      spec: 'เหล็กสปริงทอพิเศษทนแรงกระแทกสูง สั่งตัดตามขนาดชั้นตะแกรง 4–6 ชั้น',
-      price: 8900,
-      originalPrice: 10200,
-      unit: 'แผ่น',
-      discount: '-12%',
-      status: 'สั่งตัดส่งใน 48 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'grid',
-    },
-    {
-      id: 'sp-load-cell',
-      sku: 'PTX-PLC-LC195',
-      name: 'Load Cell ชั่งตวงดิจิทัล Class C3 พร้อมใบรับรองสอบเทียบ',
-      category: 'ระบบชั่ง & PLC',
-      spec: 'ความแม่นยำ ±0.1% กันน้ำและฝุ่นมาตรฐาน IP68 สำหรับชั่งหินร้อน ยางมะตอย และฟิลเลอร์',
-      price: 19500,
-      originalPrice: 22900,
-      unit: 'ตัว',
-      discount: '-15%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'scale',
-    },
-    {
-      id: 'sp-pulse-valve',
-      sku: 'PTX-FLT-PV38',
-      name: 'โซลินอยด์วาล์วเป่าถุงกรองฝุ่น Pulse Jet Diaphragm Valve 1.5"',
-      category: 'ระบบดักฝุ่น',
-      spec: 'คอยล์ทนความร้อน Class H ยิงลมเป่าฝุ่นแรงดันสูง 0.4–0.8 MPa ตอบสนองไว',
-      price: 3850,
-      originalPrice: 4500,
-      unit: 'ตัว',
-      discount: '-14%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'filter',
-    },
-    {
-      id: 'sp-bitumen-pump',
-      sku: 'PTX-MIX-BMP48',
-      name: 'ปั๊มเกียร์สูบจ่ายยางมะตอยหุ้มแจ็คเก็ตน้ำมันร้อน (Thermal Jacket Pump)',
-      category: 'ชุดผสม Mixer',
-      spec: 'อัตราสูบจ่าย 450–600 ลิตร/นาที พร้อมชุดซีลทนความร้อน 250 °C สำหรับแพล้นท์ทุกรุ่น',
-      price: 48000,
-      originalPrice: 53500,
-      unit: 'ชุด',
-      discount: '-10%',
-      status: 'พร้อมส่ง 24 ชม.',
-      orderable: true,
-      inStock: true,
-      image: '',
-      icon: 'pump',
-    },
-  ];
-
   function isOrderablePart(item) {
     return (
       Boolean(item) &&
@@ -195,7 +64,7 @@
 
     if (!grid) return;
 
-    let rawCatalog = FALLBACK_SPARE_PARTS;
+    let rawCatalog = [];
     try {
       const res = await fetch(`/api/spare-parts?_t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
@@ -211,16 +80,6 @@
         }
       } catch (e2) {}
     }
-
-    try {
-      const localOverride = localStorage.getItem('ptx_cms_override_spare-parts');
-      if (localOverride) {
-        const parsed = JSON.parse(localOverride);
-        if (Array.isArray(parsed?.catalog) && parsed.catalog.length) {
-          rawCatalog = parsed.catalog;
-        }
-      }
-    } catch (e) {}
 
     const catalog = rawCatalog.filter(isOrderablePart);
     if (!catalog.length) {
@@ -702,15 +561,9 @@
         };
       }
 
-      // Mirror to localStorage for Admin Dashboard offline/static preview sync (strictly read only inside admin.html)
+      // Trigger lightweight cross-tab sync ping for Admin Dashboard
       try {
-        const rawLocal = localStorage.getItem('ptx_cms_override_orders');
-        const parsedLocal = rawLocal ? JSON.parse(rawLocal) : { items: [] };
-        const arr = Array.isArray(parsedLocal.items) ? parsedLocal.items : [];
-        if (!arr.some((x) => x.ref === orderRecord.ref)) {
-          arr.unshift(orderRecord);
-          localStorage.setItem('ptx_cms_override_orders', JSON.stringify({ items: arr }));
-        }
+        localStorage.setItem('ptx_cms_ping', String(Date.now()));
       } catch (err) {}
 
       // Clear Cart

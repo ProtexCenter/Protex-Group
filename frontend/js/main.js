@@ -846,51 +846,48 @@
       .join('');
   }
 
-  /* ---------------------- Home Page Fallback Data ---------------------- */
-  const FALLBACK_PLANTS = {"categories":{"fully-hot":{"title":"FULLY HOT IN PLANT","titleTh":"แพล้นท์ยางมะตอยเต็มระบบ","summary":"ระบบผลิตแอสฟัลต์คอนกรีตแบบ Batch Mix ครบวงจร ตั้งแต่ป้อนหินเย็น อบแห้ง คัดขนาด ชั่งตวง ผสม จนถึงไซโลจัดเก็บ ควบคุมทุกขั้นตอนด้วย PLC แม่นยำระดับ ±0.5%","process":[{"step":"Cold Feed","th":"ป้อนหินเย็น 4–6 ช่อง"},{"step":"Dryer Drum","th":"อบแห้งที่ 160–180 °C"},{"step":"Screening","th":"คัดขนาด 4–5 ชั้น"},{"step":"Weigh & Mix","th":"ชั่งตวงและผสม Twin-shaft"},{"step":"Hot Storage","th":"ไซโลเก็บร้อนพร้อมจ่าย"}]},"hot-re":{"title":"HOT RE IN PLANT","titleTh":"แพล้นท์รีไซเคิล","summary":"แพล้นท์ที่ออกแบบมาเพื่อนำผิวทางเก่า (RAP) กลับมาใช้ใหม่ ด้วย Parallel Drum ที่อุ่น RAP แยกจากหินใหม่ ลดการใช้ยางมะตอยและหินใหม่ได้อย่างมีนัยสำคัญ โดยไม่ลดคุณภาพส่วนผสม","highlights":[{"value":"50%","label":"สัดส่วน RAP สูงสุดต่อแบตช์"},{"value":"30%","label":"ลดต้นทุนวัตถุดิบโดยเฉลี่ย"},{"value":"25%","label":"ลดการปล่อย CO₂ ต่อตันส่วนผสม"}],"gallery":[{"image":"assets/images/image_877e29.jpg","caption":"ภาพถ่ายจริงแพล้นท์รีไซเคิล MODEL RAP50","zoom":1,"focusX":50,"focusY":50},{"image":"assets/images/image_877e29.jpg","caption":"Parallel RAP Drum & Tower","zoom":2.2,"focusX":35,"focusY":40},{"image":"assets/images/image_877e29.jpg","caption":"Cold Aggregates & Feeding Bins","zoom":2.2,"focusX":75,"focusY":65},{"image":"assets/images/image_877e29.jpg","caption":"Burner RAP & Storage Silo","zoom":2.4,"focusX":50,"focusY":30}]}},"models":[{"id":"ptx-160","category":"fully-hot","series":"INDUSTRIAL BATCH MIX SERIES","badge":"PT-1510RAP","name":"MODEL PT-1510RAP","capacity":"110-130","capacityUnit":"T/H","basePrice":36900000,"tagline":"RAP 10-80% · Mixer 1,600 kg","description":"แพล้นท์ผสมยางมะตอยแบบ Batch Mix ประสิทธิภาพสูง รองรับการผสม RAP สูงสุดถึง 80% พร้อมมิกเซอร์ Twin-shaft 1,600 กก. และระบบควบคุมอัตโนมัติแม่นยำสูง","image":"assets/images/image_plant1.jpg","imageAlt":"ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-1510RAP","specs":[{"icon":"capacity","label":"Total Capacity","value":"110-130 T/H"},{"icon":"virgin","label":"Capacity of Virgin (Maximum)","value":"110-120 T/H"},{"icon":"rap","label":"Capacity of RAP","value":"50-60 T/H"},{"icon":"mixer","label":"Capacity of Mixer","value":"1600 kg"},{"icon":"ratio","label":"RAP Ratio","value":"10-80%"},{"icon":"power","label":"Total power","value":"490 kW"}],"configurator":{"base":"assets/images/configurator/fully-hot-base.svg","mask":"assets/images/configurator/fully-hot-mask.svg"},"process":[{"step":"Cold Feed","th":"ป้อนหินเย็น 4–6 ช่อง ชั่งตวงสายพานต่อเนื่อง"},{"step":"Dryer Drum","th":"อบแห้งที่ 160–180 °C เตาเผา High-Efficiency"},{"step":"Screening","th":"คัดขนาด 4–5 ชั้น ตะแกรงสั่นสะเทือนแบบเฉียง"},{"step":"Weigh & Mix","th":"ชั่งตวงแยกอิสระ ผสม Twin-shaft 1,600 กก."},{"step":"Hot Storage","th":"ไซโลเก็บร้อน 60–100 T พร้อมฉนวนกันความร้อน"}]},{"id":"ptx-2010rap","category":"fully-hot","series":"ADVANCED HIGH-OUTPUT SERIES","badge":"PT-2010RAP","name":"MODEL PT-2010RAP","capacity":"180-200","capacityUnit":"T/H","basePrice":48500000,"tagline":"RAP 10-80% · Mixer 2,500 kg","description":"แพล้นท์ผสมยางมะตอย Batch Mix กำลังผลิตสูง 180-200 ตัน/ชม. มิกเซอร์ 2,500 กก. ควบคุมความแม่นยำด้วยระบบ SCADA Real-time พร้อมชุดรีไซเคิล RAP ประสิทธิภาพสูง","image":"assets/images/image_79d043.jpg","imageAlt":"ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-2010RAP","specs":[{"icon":"capacity","label":"Total Capacity","value":"180-200 T/H"},{"icon":"virgin","label":"Capacity of Virgin (Maximum)","value":"140-160 T/H"},{"icon":"rap","label":"Capacity of RAP","value":"70-80 T/H"},{"icon":"mixer","label":"Capacity of Mixer","value":"2500 kg"},{"icon":"ratio","label":"RAP Ratio","value":"10-80%"},{"icon":"power","label":"Total power","value":"780 kW"}],"process":[{"step":"Cold Feed","th":"ป้อนหินเย็น 5–6 ช่อง ควบคุมความเร็วอินเวอร์เตอร์"},{"step":"Dryer Drum","th":"อบแห้งที่ 165–185 °C พร้อมระบบ Eco-Burner"},{"step":"Screening","th":"คัดขนาด 5 ชั้น แม่นยำสูง ดักฝุ่น Baghouse 99.9%"},{"step":"Weigh & Mix","th":"ชั่งตวงดิจิทัล 3 จุด ผสม Twin-shaft 2,500 กก."},{"step":"Hot Storage","th":"ไซโลเก็บร้อน 120 T รักษาอุณหภูมิ 72 ชั่วโมง"}],"configurator":{"base":"assets/images/configurator/fully-hot-base.svg","mask":"assets/images/configurator/fully-hot-mask.svg"}},{"id":"ptx-3015rap","category":"fully-hot","series":"FLAGSHIP HEAVY INDUSTRIAL SERIES","badge":"PT-3015RAP","name":"MODEL PT-3015RAP","capacity":"300-320","capacityUnit":"T/H","basePrice":58900000,"tagline":"RAP 10-80% · Mixer 4,000 kg","description":"แพล้นท์ระดับเรือธง สำหรับโครงการโครงสร้างพื้นฐานระดับชาติและสนามบิน กำลังการผลิตสูง 300-320 ตัน/ชม. มิกเซอร์ Heavy-Duty 4,000 กก. รองรับสูตรพิเศษ PMA & SMA ควบคุมด้วย SCADA อุตสาหกรรม","image":"assets/images/โรงงาน PROTEX ยามอาทิตย์อัสดง.png","imageAlt":"ภาพถ่ายจริงแพล้นท์ยางมะตอยเต็มระบบ MODEL PT-3015RAP","specs":[{"icon":"capacity","label":"Total Capacity","value":"300-320 T/H"},{"icon":"virgin","label":"Capacity of Virgin (Maximum)","value":"230-240 T/H"},{"icon":"rap","label":"Capacity of RAP","value":"100-120 T/H"},{"icon":"mixer","label":"Capacity of Mixer","value":"4000 kg"},{"icon":"ratio","label":"RAP Ratio","value":"10-80%"},{"icon":"power","label":"Total power","value":"980 kW"}],"process":[{"step":"Cold Feed","th":"ป้อนหินเย็น 6 ช่อง ชั่งตวงน้ำหนักแบบไฮดรอลิก"},{"step":"Dryer Drum","th":"อบแห้ง Ultra-Dry 170–190 °C ฉนวน Rockwool หนาพิเศษ"},{"step":"Screening","th":"คัดแยกอนุภาค 6 ชั้น รองรับส่วนผสมหินเกรดพิเศษ"},{"step":"Weigh & Mix","th":"ชั่งตวงความเร็วสูง ผสม Heavy-Duty 3,000 กก."},{"step":"Hot Storage","th":"ไซโลเก็บร้อนสุญญากาศ 160–200 T ระบบโหลดตรง"}],"configurator":{"base":"assets/images/configurator/fully-hot-base.svg","mask":"assets/images/configurator/fully-hot-mask.svg"}},{"id":"model-rap50","category":"hot-re","series":"RAP RECYCLE SERIES","badge":"RAP50","name":"MODEL RAP50","capacity":"50-60","capacityUnit":"t/h","basePrice":44500000,"tagline":"Recycle Asphalt 50-60 t/h · A-TECH Korea","description":"แพล้นท์รีไซเคิลแอสฟัลต์ประสิทธิภาพสูง Parallel Drum อุ่น RAP แยกอิสระ รักษาคุณภาพยางมะตอยเก่า พร้อมหัวเผา A-TECH South Korea ควบคุมอุณหภูมิ RAP แบบ Closed-loop","image":"assets/images/image_877e29.jpg","imageAlt":"ภาพถ่ายจริงแพล้นท์รีไซเคิล MODEL RAP50","specs":[{"icon":"capacity","label":"Recycle Asphalt Output","value":"50-60 t/h"},{"icon":"fuel","label":"Fuel Type","value":"Diesel / Heavy oil"},{"icon":"power","label":"Total Power","value":"185 kW"},{"icon":"hopper","label":"Cold Aggregates","value":"8 m³"},{"icon":"drum","label":"Drying Drum","value":"Φ1.5x8.0 m."},{"icon":"burner","label":"Burner RAP","value":"A-TECH South Korea"},{"icon":"silo","label":"Storage Silo","value":"6 m³"}],"configurator":{"base":"assets/images/configurator/hot-re-base.svg","mask":"assets/images/configurator/hot-re-mask.svg"}},{"id":"model-rap80","category":"hot-re","series":"RAP RECYCLE SERIES","badge":"RAP80","name":"MODEL RAP80","capacity":"70-80","capacityUnit":"t/h","basePrice":52500000,"tagline":"Recycle Asphalt 70-80 t/h · A-TECH Korea","description":"แพล้นท์รีไซเคิลแอสฟัลต์ประสิทธิภาพสูง Parallel Drum อุ่น RAP แยกอิสระ รักษาคุณภาพยางมะตอยเก่า พร้อมหัวเผา A-TECH South Korea ควบคุมอุณหภูมิ RAP แบบ Closed-loop","image":"assets/images/image_893d02.jpg","imageAlt":"ภาพถ่ายจริงแพล้นท์รีไซเคิล MODEL RAP80","specs":[{"icon":"capacity","label":"Recycle Asphalt Output","value":"70-80 t/h"},{"icon":"fuel","label":"Fuel Type","value":"Diesel / Heavy oil"},{"icon":"power","label":"Total Power","value":"215 kW"},{"icon":"hopper","label":"Cold Aggregates","value":"8 m³"},{"icon":"drum","label":"Drying Drum","value":"Φ1.8x8.5 m."},{"icon":"burner","label":"Burner RAP","value":"A-TECH South Korea"},{"icon":"silo","label":"Storage Silo","value":"10 m³"}],"configurator":{"base":"assets/images/configurator/hot-re-base.svg","mask":"assets/images/configurator/hot-re-mask.svg"}}]};
-  const FALLBACK_HOME_PROMOS = {"banners":[{"id":"year-end","slot":"featured_top_left","badge":"ส่งท้ายปี","title":"จองแพล้นท์ PTX-160 รับส่วนลด 1.2 ล้านบาท","subtitle":"พร้อมติดตั้งและทดสอบเดินเครื่องฟรี","offer":"−1.2M","highlight":"−1.2M","validUntil":"2026-12-31","image":"","displayMode":"image_only","tone":"crimson","link":"design-plant.html"},{"id":"rap-upgrade","slot":"compact_top_right","badge":"อัปเกรด","title":"เปลี่ยนแพล้นท์เดิมเป็นระบบรีไซเคิล","subtitle":"ผ่อน 0% นาน 24 เดือน สำหรับชุด RAP","offer":"0%","highlight":"0%","validUntil":"2027-03-31","image":"","displayMode":"image_only","tone":"pearl","link":"index.html#hot-re"},{"id":"pm-package","slot":"compact_mid_right","badge":"บริการ","title":"แพ็กเกจ PM รายปี","subtitle":"ตรวจเช็ก 4 ครั้ง/ปี พร้อมรายงานสุขภาพเครื่อง","offer":"−20%","highlight":"−20%","validUntil":"2027-01-31","image":"","displayMode":"image_only","tone":"silver","link":"spare-parts.html"},{"id":"baghouse","slot":"wide_bottom_left","badge":"สิ่งแวดล้อม","title":"ถุงกรอง Baghouse ชุดใหม่","subtitle":"ซื้อครบชุด แถมค่าติดตั้ง","offer":"FREE","highlight":"FREE","validUntil":"2027-02-28","image":"","displayMode":"image_only","tone":"deep","link":"spare-parts.html"},{"id":"trade-in","slot":"wide_bottom_right","badge":"เทิร์นแพล้นท์","title":"นำแพล้นท์เก่ามาแลกรุ่นใหม่","subtitle":"ประเมินราคาโดยวิศวกรถึงหน้างาน","offer":"TRADE","highlight":"TRADE","validUntil":"2027-06-30","image":"","displayMode":"image_only","tone":"pearl","link":"promotions.html"}],"campaigns":[{"id":"road-ahead","type":"campaign","featured":true,"tag":"แคมเปญหลัก","title":"The Road Ahead 2027","excerpt":"เปิดตัวแพล้นท์ PTX Titan รุ่นใหม่ ประหยัดเชื้อเพลิงขึ้น 12% พร้อมสิทธิพิเศษสำหรับลูกค้า 50 รายแรก","date":"2026-11-15","readTime":"4 นาที","image":"","tone":"crimson","link":"design-plant.html"},{"id":"rap-guide","type":"article","tag":"บทความ","title":"RAP 50% ทำได้จริงไหม? คู่มือแพล้นท์รีไซเคิลฉบับวิศวกร","excerpt":"ไขข้อสงสัยเรื่องคุณภาพส่วนผสม การควบคุมอุณหภูมิ และจุดคุ้มทุน","date":"2026-11-02","readTime":"7 นาที","image":"","tone":"pearl","link":"index.html#hot-re"},{"id":"fuel-save","type":"article","tag":"บทความ","title":"5 วิธีลดต้นทุนเชื้อเพลิงในแพล้นท์ยางมะตอย","excerpt":"ตั้งค่าหัวเผา ความชื้นหิน และการบำรุงรักษาที่ส่งผลต่อบิลพลังงาน","date":"2026-10-21","readTime":"5 นาที","image":"","tone":"silver","link":"spare-parts.html"},{"id":"deal-silo","type":"deal","tag":"ดีลพิเศษ","title":"ไซโลเก็บร้อน 80 ตัน","excerpt":"เมื่อสั่งพร้อมแพล้นท์ใหม่ทุกรุ่น","price":2900000,"dealPrice":2390000,"date":"2026-11-10","image":"","tone":"deep","link":"design-plant.html"},{"id":"deal-plc","type":"deal","tag":"ดีลพิเศษ","title":"อัปเกรด PLC + SCADA","excerpt":"สำหรับแพล้นท์ที่ใช้งานมากกว่า 5 ปี","price":2250000,"dealPrice":1790000,"date":"2026-11-10","image":"","tone":"crimson","link":"design-plant.html"},{"id":"deal-burner","type":"deal","tag":"ดีลพิเศษ","title":"หัวเผาเชื้อเพลิงคู่","excerpt":"รวมค่าติดตั้งและจูนนิ่งหน้างาน","price":1680000,"dealPrice":1450000,"date":"2026-11-10","image":"","tone":"silver","link":"design-plant.html"}],"videos":[{"id":"v1","platform":"youtube","title":"PTX-240 Titan — Factory Acceptance Test","duration":"3:42","embedId":"","url":"","thumbnail":"","tone":"crimson"},{"id":"v2","platform":"tiktok","title":"60 วินาที ติดตั้งไซโลสูง 22 เมตร","duration":"0:58","embedId":"","url":"","thumbnail":"","tone":"deep"},{"id":"v3","platform":"reels","title":"เบื้องหลังทีมช่าง 24/7 ที่ไซต์งานลำปาง","duration":"0:45","embedId":"","url":"","thumbnail":"","tone":"pearl"},{"id":"v4","platform":"mp4","title":"Hot RE In Plant — ระบบรีไซเคิลทำงานอย่างไร","duration":"2:15","embedId":"","url":"assets/videos/hot-re-explainer.mp4","thumbnail":"","tone":"silver"},{"id":"v5","platform":"youtube","title":"รีวิวจากลูกค้า: กรมทางหลวงชนบท","duration":"5:10","embedId":"","url":"","thumbnail":"","tone":"pearl"},{"id":"v6","platform":"tiktok","title":"เปลี่ยนสีโครงแพล้นท์ได้ตามแบรนด์คุณ","duration":"0:32","embedId":"","url":"","thumbnail":"","tone":"crimson"}],"partsMarquee":[{"id":"p1","title":"ถุงกรอง Nomex","detail":"ชุด 300 ใบ ทนร้อน 200 °C","discount":"−25%","icon":"filter","image":"","tone":"crimson"},{"id":"p2","title":"หัวฉีดหัวเผา","detail":"รองรับน้ำมันเตา / LPG","discount":"−18%","icon":"flame","image":"","tone":"pearl"},{"id":"p3","title":"ลูกปืนเพลาดรัม","detail":"SKF / FAG ของแท้","discount":"−15%","icon":"bearing","image":"","tone":"silver"},{"id":"p4","title":"สายพานลำเลียง EP400","detail":"ตัดตามขนาด ส่งใน 48 ชม.","discount":"−20%","icon":"belt","image":"","tone":"deep"},{"id":"p5","title":"ตะแกรงคัดขนาด","detail":"เหล็กแมงกานีสสูง","discount":"−12%","icon":"grid","image":"","tone":"pearl"},{"id":"p6","title":"ใบพายมิกเซอร์","detail":"Ni-hard ทนการสึกกร่อน","discount":"−22%","icon":"gear","image":"","tone":"crimson"},{"id":"p7","title":"ปั๊มยางมะตอย","detail":"Gear pump หุ้มแจ็คเก็ตร้อน","discount":"−10%","icon":"pump","image":"","tone":"silver"},{"id":"p8","title":"Load Cell ชั่งตวง","detail":"Class C3 พร้อมสอบเทียบ","discount":"−15%","icon":"scale","image":"","tone":"deep"}],"social":[{"platform":"facebook","label":"Facebook","handle":"PROTEXGroup2002","url":"https://www.facebook.com/PROTEXGroup2002","icon":"assets/images/image_bc7cf8.png","action":"ติดตามเพจ"},{"platform":"line","label":"LINE Official","handle":"ID: protex00","url":"https://line.me/ti/p/~protex00","icon":"assets/images/image_bc7cd8.png","action":"ทักแชตปรึกษา"},{"platform":"tiktok","label":"TikTok","handle":"@protexgroup","url":"https://www.tiktok.com/@protexgroup","icon":"assets/images/image-Photoroom.png","action":"ชมคลิปผลงาน"},{"platform":"instagram","label":"Instagram","handle":"@protex.group","url":"https://www.instagram.com/protex.group/","icon":"assets/images/image_bc7cb5.png","action":"ดูแกลเลอรี"}]};
+  /* ---------------------- Home Page Data Loader (Single Source of Truth) ---------------------- */
+  // Purge any legacy client mock overrides to ensure 100% Single Source of Truth
+  try {
+    Object.keys(localStorage).forEach((k) => {
+      if (k.startsWith('ptx_cms_override_')) {
+        localStorage.removeItem(k);
+      }
+    });
+  } catch (e) {}
 
   async function loadHomePageData() {
-    let plants = FALLBACK_PLANTS;
-    let promos = FALLBACK_HOME_PROMOS;
+    let plants = { categories: {}, models: [] };
+    let promos = { banners: [], campaigns: [], videos: [], partsMarquee: [], social: [] };
+
     try {
       const pRes = await fetch(`/api/plants?_t=${Date.now()}`, { cache: 'no-store' });
       if (pRes.ok) {
         const pData = await pRes.json();
-        if (pData && pData.models && pData.models.length) plants = pData;
+        if (pData && typeof pData === 'object') plants = pData;
       }
-    } catch (e) {
+    } catch (e) {}
+    if (!plants.models || !plants.models.length) {
       try {
         const localRes = await fetch(`../backend/data/plants.json?_t=${Date.now()}`, { cache: 'no-store' });
         if (localRes.ok) plants = await localRes.json();
       } catch (e2) {}
     }
+
     try {
       const prRes = await fetch(`/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
       if (prRes.ok) {
         const prData = await prRes.json();
-        if (prData && prData.banners && prData.banners.length) promos = prData;
+        if (prData && typeof prData === 'object') promos = prData;
       }
-    } catch (e) {
+    } catch (e) {}
+    if (!promos.banners || !promos.banners.length) {
       try {
         const localPr = await fetch(`../backend/data/promotions.json?_t=${Date.now()}`, { cache: 'no-store' });
         if (localPr.ok) promos = await localPr.json();
       } catch (e2) {}
     }
-    try {
-      const rawOverride = localStorage.getItem('ptx_cms_override_promotions');
-      if (rawOverride) {
-        const parsedOverride = JSON.parse(rawOverride);
-        if (
-          parsedOverride &&
-          Array.isArray(parsedOverride.banners) &&
-          parsedOverride.banners.length &&
-          Number(parsedOverride._updatedAt || 0) >= Number(promos._updatedAt || 0)
-        ) {
-          promos = parsedOverride;
-        }
-      }
-    } catch (e3) {}
+
     return { plants, promos };
   }
 
@@ -1389,7 +1386,7 @@
      ========================================================================= */
   async function initPromotionsPage() {
     try {
-      let data = FALLBACK_HOME_PROMOS;
+      let data = { banners: [], campaigns: [] };
       try {
         const res = await fetch(`/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
         if (res.ok) data = await res.json();
@@ -1399,20 +1396,6 @@
           if (localRes.ok) data = await localRes.json();
         } catch (e2) {}
       }
-      try {
-        const rawOverride = localStorage.getItem('ptx_cms_override_promotions');
-        if (rawOverride) {
-          const parsedOverride = JSON.parse(rawOverride);
-          if (
-            parsedOverride &&
-            Array.isArray(parsedOverride.banners) &&
-            parsedOverride.banners.length &&
-            Number(parsedOverride._updatedAt || 0) >= Number(data._updatedAt || 0)
-          ) {
-            data = parsedOverride;
-          }
-        }
-      } catch (e3) {}
 
       /* Render 5-Card Bento Promotions Grid on promotions.html if mount exists */
       const pagePromoBento = document.getElementById('pagePromoBentoGrid');
@@ -1636,90 +1619,6 @@
   /* =========================================================================
      8. CONTACT, AFTER-SALES & SERVICE PLANTS (Interactive Maps & Directory)
      ========================================================================= */
-  const FALLBACK_LOCATIONS = {
-    headquarters: {
-      id: 'hq-samutprakan',
-      name: 'บริษัท โปรเท็กซ์ กรุ๊ป จำกัด (สำนักงานใหญ่ & โรงงานประกอบหลัก)',
-      province: 'สมุทรปราการ',
-      lat: 13.5991,
-      lng: 100.6968,
-      address: '88/9 หมู่ 12 ถนนบางนา-ตราด กม.15 ตำบลบางพลีใหญ่ อำเภอบางพลี จังหวัดสมุทรปราการ 10540',
-      phone: '085-392-4448',
-      hotline: '085-392-4448',
-      hours: 'จันทร์ – เสาร์ 08:00 – 17:30 น. (สายด่วนวิศวกร 24/7)',
-      statusLabel: 'เปิดทำการ · ทีมวิศวกรพร้อมดูแล 24/7',
-      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=13.5991,100.6968',
-    },
-    regions: [
-      { id: 'all', label: 'ทั้งหมด (6 แห่ง)' },
-      { id: 'central', label: 'ภาคกลาง & ปริมณฑล' },
-      { id: 'east', label: 'ภาคตะวันออก (EEC)' },
-      { id: 'northeast', label: 'ภาคตะวันออกเฉียงเหนือ' },
-      { id: 'north', label: 'ภาคเหนือ' },
-      { id: 'south', label: 'ภาคใต้' },
-    ],
-    serviceCenters: [],
-    servicePlants: [],
-    installations: [
-      {
-        id: "inst-chumphon",
-        company: "บจก.มรกตชุมพรก่อสร้าง",
-        model: "PT-2010RAP",
-        province: "จ.ชุมพร",
-        image: "assets/images/install-chumphon.jpg",
-        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=บจก.มรกตชุมพรก่อสร้าง+จ.ชุมพร",
-        lat: 10.4930,
-        lng: 99.1800,
-        region: "south",
-        regionLabel: "ภาคใต้",
-        address: "ตำบลวังใหม่ อำเภอเมืองชุมพร จังหวัดชุมพร",
-        statusLabel: "ติดตั้งแล้วเสร็จ · ส่งมอบงานเรียบร้อย"
-      },
-      {
-        id: "inst-uthaithani",
-        company: "หจก.ช.ธานีพัฒนา",
-        model: "PT-2000",
-        province: "จ.อุทัยธานี",
-        image: "assets/images/install-uthaithani.jpg",
-        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=หจก.ช.ธานีพัฒนา+จ.อุทัยธานี",
-        lat: 15.3835,
-        lng: 100.0245,
-        region: "central",
-        regionLabel: "ภาคกลาง",
-        address: "ตำบลหนองไผ่แบน อำเภอเมืองอุทัยธานี จังหวัดอุทัยธานี",
-        statusLabel: "ติดตั้งแล้วเสร็จ · ส่งมอบงานเรียบร้อย"
-      },
-      {
-        id: "inst-kamphaengphet",
-        company: "หจก.ส.ศิระก่อสร้าง",
-        model: "PT-1500",
-        province: "จ.กำแพงเพชร",
-        image: "assets/images/install-kamphaengphet.jpg",
-        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=หจก.ส.ศิระก่อสร้าง+จ.กำแพงเพชร",
-        lat: 16.4827,
-        lng: 99.5226,
-        region: "north",
-        regionLabel: "ภาคเหนือ",
-        address: "ตำบลในเมือง อำเภอเมืองกำแพงเพชร จังหวัดกำแพงเพชร",
-        statusLabel: "ติดตั้งแล้วเสร็จ · ส่งมอบงานเรียบร้อย"
-      },
-      {
-        id: "inst-surin",
-        company: "หจก.สุรินทร์อมรวัฒน์ก่อสร้าง",
-        model: "PT-2000",
-        province: "จ.สุรินทร์",
-        image: "assets/images/install-surin.jpg",
-        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=หจก.สุรินทร์อมรวัฒน์ก่อสร้าง+จ.สุรินทร์",
-        lat: 14.8829,
-        lng: 103.4937,
-        region: "northeast",
-        regionLabel: "ภาคตะวันออกเฉียงเหนือ",
-        address: "ตำบลนอกเมือง อำเภอเมืองสุรินทร์ จังหวัดสุรินทร์",
-        statusLabel: "ติดตั้งแล้วเสร็จ · ส่งมอบงานเรียบร้อย"
-      }
-    ],
-  };
-
   async function loadLocationsData() {
     try {
       const res = await fetch(`/api/locations?_t=${Date.now()}`, { cache: 'no-store' });
@@ -1730,7 +1629,7 @@
         const localRes = await fetch(`../backend/data/locations.json?_t=${Date.now()}`, { cache: 'no-store' });
         if (localRes.ok) return await localRes.json();
       } catch (err) { }
-      return FALLBACK_LOCATIONS;
+      return { headquarters: {}, regions: [], serviceCenters: [], servicePlants: [], installations: [] };
     }
   }
 
@@ -1878,7 +1777,7 @@
   async function initContactPage() {
     initCopyButtons();
     const data = await loadLocationsData();
-    const hq = data.headquarters || FALLBACK_LOCATIONS.headquarters;
+    const hq = data.headquarters || {};
     const allPoints = [hq, ...(data.serviceCenters || []).filter((c) => c.id !== 'sc-samutprakan')];
 
     const updateCard = (loc) => {
@@ -1948,7 +1847,7 @@
 
   async function initServicePlantsPage() {
     const data = await loadLocationsData();
-    const installations = data.installations || FALLBACK_LOCATIONS.installations || [];
+    const installations = data.installations || [];
     const listEl = document.getElementById('servicePlantsList');
     const filterEl = document.getElementById('plantRegionFilters');
     const searchEl = document.getElementById('plantLocationSearch');
