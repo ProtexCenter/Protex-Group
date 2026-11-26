@@ -249,6 +249,7 @@
       if (!cartDrawer) return;
       renderDrawerCartList();
       setDrawerStep(step);
+      cartDrawer.hidden = false;
       cartDrawer.classList.add('is-open');
       cartDrawer.setAttribute('aria-hidden', 'false');
       if (cartOpenBtn) cartOpenBtn.setAttribute('aria-expanded', 'true');
@@ -259,6 +260,7 @@
       if (!cartDrawer) return;
       cartDrawer.classList.remove('is-open');
       cartDrawer.setAttribute('aria-hidden', 'true');
+      cartDrawer.hidden = true;
       if (cartOpenBtn) cartOpenBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     };
