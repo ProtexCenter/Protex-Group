@@ -2952,7 +2952,7 @@ select.adm-ord-status-select:focus {
 }
 
 /* ============================================================================
- * MODULE 5: BENTO PROMOTION CARDS ADMIN MANAGER & LIVE PREVIEW
+ * MODULE 5: BENTO PROMOTION CARDS ADMIN MANAGER & CLEAN APPLE-STYLE MODAL
  * ============================================================================ */
 .adm-bento-overview-bar {
   margin: 0 0 18px;
@@ -3062,7 +3062,7 @@ select.adm-ord-status-select:focus {
   gap: 6px;
 }
 
-/* Live Mock Card inside Admin List & Modal */
+/* ------------------------------ Live Mock Card Representation ------------------------------ */
 .adm-bento-preview-stage {
   width: 100%;
   border-radius: 16px;
@@ -3120,12 +3120,15 @@ select.adm-ord-status-select:focus {
 .adm-bento-mock__img {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
   z-index: 0;
   transition: transform 0.45s ease;
+  display: block;
 }
 
 .adm-bento-mock:hover .adm-bento-mock__img {
@@ -3142,6 +3145,7 @@ select.adm-ord-status-select:focus {
     rgba(10, 12, 18, 0.25) 42%,
     rgba(10, 12, 18, 0.8) 100%
   );
+  pointer-events: none;
 }
 
 .adm-bento-mock__svg {
@@ -3176,7 +3180,7 @@ select.adm-ord-status-select:focus {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.82);
   color: #0F172A;
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
@@ -3184,7 +3188,7 @@ select.adm-ord-status-select:focus {
 .adm-bento-mock--crimson .adm-bento-mock__badge,
 .adm-bento-mock--deep .adm-bento-mock__badge,
 .adm-bento-mock.has-bg-image .adm-bento-mock__badge {
-  background: rgba(15, 18, 26, 0.55);
+  background: rgba(15, 18, 26, 0.6);
   color: #FFFFFF;
   border-color: rgba(255, 255, 255, 0.28);
 }
@@ -3261,561 +3265,403 @@ select.adm-ord-status-select:focus {
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
-}
-
-/* Modal 2-Column Editor + Live Preview */
-.adm-bento-editor-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.95fr);
-  gap: 22px;
-  align-items: start;
-}
-
-.adm-bento-size-guide {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 13px 16px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 255, 255, 0.92) 100%);
-  border: 1px solid rgba(37, 99, 235, 0.24);
-}
-
-.adm-bento-size-guide__icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(37, 99, 235, 0.14);
-  color: #1D4ED8;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.adm-bento-size-guide__text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.adm-bento-size-guide__pos {
-  font-size: 12px;
-  font-weight: 700;
-  color: #1E40AF;
-}
-
-.adm-bento-size-guide__spec {
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #0F172A;
-}
-
-.adm-bento-upload-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.adm-bento-dim-badge {
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  background: rgba(15, 23, 42, 0.05);
-  color: #334155;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-.adm-bento-dim-badge.is-ok {
-  background: rgba(5, 150, 105, 0.09);
-  color: #065F46;
-  border-color: rgba(5, 150, 105, 0.25);
-}
-
-.adm-bento-dim-badge.is-warn {
-  background: rgba(217, 119, 6, 0.1);
-  color: #92400E;
-  border-color: rgba(217, 119, 6, 0.3);
-}
-
-.adm-bento-editor-preview {
-  position: sticky;
-  top: 12px;
-}
-
-.adm-bento-live-box {
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  box-shadow: 0 14px 32px -16px rgba(15, 23, 42, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.adm-bento-live-box__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.adm-bento-live-box__eyebrow {
-  font-size: 12px;
-  font-weight: 800;
-  color: #DC2626;
-}
-
-.adm-bento-live-box__title {
-  margin: 2px 0 0;
-  font-size: 15px;
-  font-weight: 800;
-  color: #0F172A;
-}
-
-.adm-bento-live-box__ratio {
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.08);
-  color: #0F172A;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.adm-bento-live-box__notes {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(241, 245, 249, 0.8);
-  font-size: 12px;
-  color: #475569;
-}
-
-.adm-bento-live-box__notes p {
-  margin: 0;
-}
-
-@media (max-width: 960px) {
-  .adm-bento-editor-layout {
-    grid-template-columns: 1fr;
-  }
-  .adm-bento-editor-preview {
-    position: static;
-  }
 }
 
 /* ============================================================================
- * MODULE 5: BENTO PROMOTION CARDS ADMIN MANAGER & LIVE PREVIEW
+ * CLEAN APPLE-STYLE GLASS MODAL FOR BENTO PROMOTIONS (.bento-clean-*)
  * ============================================================================ */
-.adm-bento-overview-bar {
-  margin: 0 0 18px;
-  padding: 14px 18px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.06) 0%, rgba(255, 255, 255, 0.85) 100%);
-  border: 1px solid rgba(220, 38, 38, 0.16);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.adm-bento-overview-bar__info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.adm-bento-overview-bar__info strong {
-  font-size: 14px;
-  color: #0F172A;
-}
-
-.adm-bento-overview-bar__info span {
-  font-size: 12.5px;
-  color: #475569;
-}
-
-.adm-bento-cards-grid {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 18px;
-}
-
-.adm-bento-admin-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-}
-
-.adm-bento-admin-card__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.adm-bento-slot-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.08);
-  color: #0F172A;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.adm-bento-mode-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(100, 116, 139, 0.12);
-  color: #475569;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.adm-bento-mode-pill.is-custom-img {
-  background: rgba(5, 150, 105, 0.12);
-  color: #047857;
-}
-
-.adm-bento-admin-card__preview {
-  cursor: pointer;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.adm-bento-admin-card__preview:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.22);
-}
-
-.adm-bento-size-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 11px;
-  border-radius: 10px;
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: #1D4ED8;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  width: fit-content;
-}
-
-.adm-bento-edit-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Live Mock Card inside Admin List & Modal */
-.adm-bento-preview-stage {
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  background: #F8FAFC;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-.adm-bento-mock {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  color: #0F172A;
-  background: linear-gradient(150deg, #FFFFFF 0%, #F1F5F9 100%);
-}
-
-.adm-bento-mock--crimson {
-  background:
-    radial-gradient(85% 90% at 95% 8%, rgba(255, 130, 145, 0.35), transparent 60%),
-    linear-gradient(140deg, #E31837 0%, #9E0A21 55%, #3B040E 100%);
-  color: #FFFFFF;
-}
-
-.adm-bento-mock--deep {
-  background:
-    radial-gradient(80% 90% at 90% 10%, rgba(227, 24, 55, 0.35), transparent 60%),
-    linear-gradient(150deg, #1E2028 0%, #0D0F14 100%);
-  color: #FFFFFF;
-}
-
-.adm-bento-mock--silver {
-  background:
-    radial-gradient(80% 80% at 90% 15%, rgba(227, 24, 55, 0.14), transparent 60%),
-    linear-gradient(150deg, #FFFFFF 0%, #EEF1F6 100%);
-  color: #0F172A;
-}
-
-.adm-bento-mock--pearl {
-  background:
-    radial-gradient(80% 80% at 90% 15%, rgba(227, 24, 55, 0.16), transparent 60%),
-    linear-gradient(150deg, #FFFFFF 0%, #FFF3F5 100%);
-  color: #0F172A;
-}
-
-.adm-bento-mock.has-bg-image {
-  color: #FFFFFF;
-}
-
-.adm-bento-mock__img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  transition: transform 0.45s ease;
-}
-
-.adm-bento-mock:hover .adm-bento-mock__img {
-  transform: scale(1.045);
-}
-
-.adm-bento-mock__scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 12, 18, 0.45) 0%,
-    rgba(10, 12, 18, 0.25) 42%,
-    rgba(10, 12, 18, 0.8) 100%
-  );
-}
-
-.adm-bento-mock__svg {
-  position: absolute;
-  right: -4px;
-  bottom: -6px;
-  width: 72%;
-  max-width: 240px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.adm-bento-mock__top,
-.adm-bento-mock__body,
-.adm-bento-mock__foot,
-.adm-bento-mock__only-foot {
-  position: relative;
-  z-index: 2;
-}
-
-.adm-bento-mock__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.adm-bento-mock__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.78);
-  color: #0F172A;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-}
-
-.adm-bento-mock--crimson .adm-bento-mock__badge,
-.adm-bento-mock--deep .adm-bento-mock__badge,
-.adm-bento-mock.has-bg-image .adm-bento-mock__badge {
-  background: rgba(15, 18, 26, 0.55);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.28);
-}
-
-.adm-bento-mock__offer {
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.adm-bento-mock.is-featured .adm-bento-mock__offer {
-  font-size: 28px;
-}
-
-.adm-bento-mock__body {
-  margin-top: auto;
-  padding-top: 8px;
-}
-
-.adm-bento-mock__title {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.3;
-}
-
-.adm-bento-mock.is-featured .adm-bento-mock__title {
-  font-size: 18px;
-}
-
-.adm-bento-mock--crimson .adm-bento-mock__title,
-.adm-bento-mock--deep .adm-bento-mock__title,
-.adm-bento-mock.has-bg-image .adm-bento-mock__title {
-  color: #FFFFFF;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-}
-
-.adm-bento-mock__sub {
-  margin: 4px 0 0;
-  font-size: 12.5px;
-  opacity: 0.9;
-  line-height: 1.35;
-}
-
-.adm-bento-mock__foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.adm-bento-mock__valid {
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0.85;
-}
-
-.adm-bento-mock__go {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  color: #DC2626;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 800;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
-}
-
-.adm-bento-mock__only-foot {
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Modal 2-Column Editor + Live Preview */
-.adm-bento-editor-layout {
+.bento-clean-modal-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.95fr);
+  grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.98fr);
   gap: 22px;
   align-items: start;
 }
 
-.adm-bento-size-guide {
+.bento-clean-col-form {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 13px 16px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 255, 255, 0.92) 100%);
-  border: 1px solid rgba(37, 99, 235, 0.24);
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
 }
 
-.adm-bento-size-guide__icon {
+.bento-clean-col-preview {
+  position: sticky;
+  top: 76px;
+  min-width: 0;
+}
+
+.bento-clean-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 18px !important;
+  padding: 20px 22px !important;
+  box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+
+.bento-clean-card.is-dimmed {
+  opacity: 0.72;
+}
+
+.bento-clean-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.bento-clean-card__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bento-clean-card__icon {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba(37, 99, 235, 0.14);
-  color: #1D4ED8;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.adm-bento-size-guide__text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+.bento-clean-card__icon svg {
+  width: 19px;
+  height: 19px;
 }
 
-.adm-bento-size-guide__pos {
-  font-size: 12px;
-  font-weight: 700;
-  color: #1E40AF;
+.bento-clean-card__icon--amber {
+  background: rgba(217, 119, 6, 0.12);
+  color: #B45309;
 }
 
-.adm-bento-size-guide__spec {
-  font-size: 13.5px;
+.bento-clean-card__icon--crimson {
+  background: rgba(220, 38, 38, 0.1);
+  color: #DC2626;
+}
+
+.bento-clean-card__title {
+  margin: 0;
+  font-size: 15px;
   font-weight: 800;
   color: #0F172A;
+  line-height: 1.25;
 }
 
-.adm-bento-upload-actions {
+.bento-clean-card__desc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.35;
+}
+
+/* -------------------- Uploader Box (Strictly Constrained) -------------------- */
+.bento-uploader-frame {
+  width: 100%;
+  height: 168px;
+  min-height: 168px;
+  max-height: 168px;
+  position: relative;
+  overflow: hidden !important;
+  border-radius: 14px;
+  border: 1.5px dashed #CBD5E1;
+  background: #F8FAFC;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.bento-uploader-frame:hover,
+.bento-uploader-frame.is-dragover {
+  border-color: #DC2626;
+  background: #FEF2F2;
+}
+
+.bento-uploader-preview {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden !important;
+}
+
+.bento-uploader-preview img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  border-radius: 12px;
+}
+
+.bento-uploader-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  text-align: center;
+  color: #64748B;
+}
+
+.bento-uploader-placeholder svg {
+  width: 32px;
+  height: 32px;
+  color: #94A3B8;
+}
+
+.bento-uploader-placeholder span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.bento-uploader-placeholder small {
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+/* -------------------- Upload Action Buttons -------------------- */
+.bento-uploader-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bento-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.bento-btn--primary {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.bento-btn--primary:hover {
+  background: #1E293B;
+  transform: translateY(-1px);
+}
+
+.bento-btn--danger-outline {
+  background: rgba(220, 38, 38, 0.04);
+  color: #DC2626;
+  border-color: rgba(220, 38, 38, 0.26);
+}
+
+.bento-btn--danger-outline:hover {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: #DC2626;
+  transform: translateY(-1px);
+}
+
+/* -------------------- 1-Line Status & Dimension Bar -------------------- */
+.bento-img-status-bar {
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  background: #F1F5F9;
+  color: #334155;
+  border: 1px solid #E2E8F0;
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.adm-bento-dim-badge {
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  background: rgba(15, 23, 42, 0.05);
-  color: #334155;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-.adm-bento-dim-badge.is-ok {
-  background: rgba(5, 150, 105, 0.09);
+.bento-img-status-bar.is-ok {
+  background: rgba(5, 150, 105, 0.08);
   color: #065F46;
   border-color: rgba(5, 150, 105, 0.25);
 }
 
-.adm-bento-dim-badge.is-warn {
-  background: rgba(217, 119, 6, 0.1);
+.bento-img-status-bar.is-warn {
+  background: rgba(217, 119, 6, 0.08);
   color: #92400E;
-  border-color: rgba(217, 119, 6, 0.3);
+  border-color: rgba(217, 119, 6, 0.25);
 }
 
-.adm-bento-editor-preview {
-  position: sticky;
-  top: 12px;
+/* -------------------- Display Mode Segmented Radio -------------------- */
+.bento-mode-segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.adm-bento-live-box {
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  box-shadow: 0 14px 32px -16px rgba(15, 23, 42, 0.15);
+.bento-mode-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #CBD5E1;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.bento-mode-option:hover {
+  border-color: #94A3B8;
+}
+
+.bento-mode-option.is-selected {
+  border-color: #DC2626;
+  background: rgba(220, 38, 38, 0.03);
+  box-shadow: 0 0 0 1px #DC2626;
+}
+
+.bento-mode-option input[type="radio"] {
+  margin-top: 3px;
+  accent-color: #DC2626;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.bento-mode-option__content {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 2px;
 }
 
-.adm-bento-live-box__head {
+.bento-mode-option__content strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.bento-mode-option__content span {
+  font-size: 11.5px;
+  color: #64748B;
+  line-height: 1.35;
+}
+
+@media (max-width: 600px) {
+  .bento-mode-segmented {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -------------------- Clean Form Fields -------------------- */
+.bento-clean-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+.bento-clean-field--full {
+  grid-column: 1 / -1;
+}
+
+.bento-clean-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bento-clean-field label {
+  display: block !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  margin: 0 0 6px 0 !important;
+  line-height: 1.35 !important;
+}
+
+.bento-clean-field label::before {
+  display: none !important;
+  content: none !important;
+}
+
+.bento-req-star {
+  color: #DC2626;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.bento-clean-input,
+.bento-clean-select {
+  width: 100%;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.bento-clean-input:focus,
+.bento-clean-select:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.bento-clean-input::placeholder {
+  color: #94A3B8;
+  font-size: 13px;
+}
+
+.bento-clean-dim-notice {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #1D4ED8;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+/* -------------------- Right Preview Sticky Card -------------------- */
+.bento-preview-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: 0 4px 18px -4px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bento-preview-card__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3823,48 +3669,71 @@ select.adm-ord-status-select:focus {
   flex-wrap: wrap;
 }
 
-.adm-bento-live-box__eyebrow {
-  font-size: 12px;
+.bento-preview-card__eyebrow {
+  font-size: 11.5px;
   font-weight: 800;
   color: #DC2626;
+  letter-spacing: 0.05em;
 }
 
-.adm-bento-live-box__title {
+.bento-preview-card__title {
   margin: 2px 0 0;
   font-size: 15px;
   font-weight: 800;
   color: #0F172A;
 }
 
-.adm-bento-live-box__ratio {
+.bento-preview-card__ratio {
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.08);
-  color: #0F172A;
+  background: #F1F5F9;
+  color: #334155;
   font-size: 12px;
   font-weight: 700;
+  border: 1px solid #E2E8F0;
 }
 
-.adm-bento-live-box__notes {
+.bento-preview-stage-wrap {
+  width: 100%;
+}
+
+.bento-preview-notes {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 10px 12px;
+  gap: 6px;
+  padding: 12px 14px;
   border-radius: 12px;
-  background: rgba(241, 245, 249, 0.8);
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   font-size: 12px;
-  color: #475569;
+  color: #64748B;
+  line-height: 1.45;
 }
 
-.adm-bento-live-box__notes p {
+.bento-preview-notes p {
   margin: 0;
 }
 
+/* Sticky Modal Footer for Bento Editor */
+.adm-modal__dialog:has(.bento-clean-modal-layout) .adm-modal__foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  margin: 16px -24px -24px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid #E2E8F0;
+  box-shadow: 0 -8px 24px -10px rgba(15, 23, 42, 0.08);
+}
+
 @media (max-width: 960px) {
-  .adm-bento-editor-layout {
+  .bento-clean-modal-layout {
     grid-template-columns: 1fr;
   }
-  .adm-bento-editor-preview {
+  .bento-clean-col-preview {
     position: static;
   }
 }
+
