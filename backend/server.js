@@ -143,6 +143,7 @@ function createFallbackExpress() {
   app.post = (pattern, ...fns) => routes.push({ type: 'route', method: 'POST', pattern, fn: composeHandlers(fns) });
   app.put = (pattern, ...fns) => routes.push({ type: 'route', method: 'PUT', pattern, fn: composeHandlers(fns) });
   app.patch = (pattern, ...fns) => routes.push({ type: 'route', method: 'PATCH', pattern, fn: composeHandlers(fns) });
+  app.options = (pattern, ...fns) => routes.push({ type: 'route', method: 'OPTIONS', pattern, fn: composeHandlers(fns) });
   app.delete = (pattern, ...fns) => routes.push({ type: 'route', method: 'DELETE', pattern, fn: composeHandlers(fns) });
   app.listen = (port, cb) => http.createServer(app).listen(port, cb);
   return app;
@@ -234,6 +235,18 @@ fs.mkdir(DATA_DIR, { recursive: true }).catch(() => {});
 fs.mkdir(UPLOADS_DIR, { recursive: true }).catch(() => {});
 fs.mkdir(TMP_DATA_DIR, { recursive: true }).catch(() => {});
 
+/* Global CORS & Preflight Handling for Live Server (5500, 3000, 8080, etc.) */
+app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.set('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+  next();
+});
+
 /* Global API No-Cache Security & Real-Time Sync Policy */
 app.use('/api', (req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -244,24 +257,43 @@ app.use('/api', (req, res, next) => {
 });
 
 async function readJSON(name) {
+  const filePath = path.join(DATA_DIR, `${name}.json`);
+  const tmpPath = path.join(TMP_DATA_DIR, `${name}.json`);
   try {
-    const tmpRaw = await fs.readFile(path.join(TMP_DATA_DIR, `${name}.json`), 'utf8');
-    return JSON.parse(tmpRaw);
-  } catch (e) {}
-  const raw = await fs.readFile(path.join(DATA_DIR, `${name}.json`), 'utf8');
-  return JSON.parse(raw);
+    const raw = await fs.readFile(filePath, 'utf8');
+    return JSON.parse(raw);
+  } catch (e1) {
+    try {
+      const tmpRaw = await fs.readFile(tmpPath, 'utf8');
+      return JSON.parse(tmpRaw);
+    } catch (e2) {
+      throw e1;
+    }
+  }
 }
 
 async function writeJSON(name, data) {
   const content = `${JSON.stringify(data, null, 2)}\n`;
   const filePath = path.join(DATA_DIR, `${name}.json`);
+  const tmpPath = path.join(TMP_DATA_DIR, `${name}.json`);
+  
+  // 1. Always attempt atomic write directly to DATA_DIR on local disk
   try {
-    await fs.writeFile(filePath, content, 'utf8');
-    await fs.unlink(path.join(TMP_DATA_DIR, `${name}.json`)).catch(() => {});
-  } catch (err) {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    const tempFile = `${filePath}.tmp.${Date.now()}`;
+    await fs.writeFile(tempFile, content, 'utf8');
+    await fs.rename(tempFile, filePath);
+  } catch (diskErr) {
+    // If running in a read-only serverless environment (e.g. Vercel), fall back to /tmp
     await fs.mkdir(TMP_DATA_DIR, { recursive: true });
-    await fs.writeFile(path.join(TMP_DATA_DIR, `${name}.json`), content, 'utf8');
+    await fs.writeFile(tmpPath, content, 'utf8');
   }
+
+  // 2. Also keep /tmp synced if it was created
+  try {
+    await fs.mkdir(TMP_DATA_DIR, { recursive: true });
+    await fs.writeFile(tmpPath, content, 'utf8');
+  } catch (e) {}
 }
 
 const asyncRoute = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);

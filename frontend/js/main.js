@@ -826,13 +826,14 @@
         const tone = b.tone ? `ph--${esc(b.tone)}` : '';
         const hasImg = Boolean(b.image && String(b.image).trim());
         const plantArt = idx % 2 === 0 ? 'assets/images/renders/plant-fully-hot.svg' : 'assets/images/renders/plant-hot-re.svg';
+        const imgSrc = hasImg ? (b.image.startsWith('data:') ? b.image : `${esc(b.image)}${b.image.includes('?') ? '&' : '?'}v=${b._updatedAt || Date.now()}`) : '';
 
         return `
         <article class="promo-card ${hero ? 'promo-card--hero' : ''} ${span === 6 ? 'is-full' : ''} glass glass-interactive" style="--span:${span}" data-promo-slot="${esc(b.slot || '')}">
           <a class="promo-art ph ${tone} ${hasImg ? 'has-bg-image' : ''} is-image-only" href="${esc(b.link || 'promotions.html')}" aria-label="${esc(b.title || 'โปรโมชั่น PROTEX')}">
             ${
               hasImg
-                ? `<img class="promo-art__img" src="${esc(b.image)}" alt="${esc(b.title || 'โปรโมชั่น PROTEX')}" loading="lazy">`
+                ? `<img class="promo-art__img" src="${imgSrc}" alt="${esc(b.title || 'โปรโมชั่น PROTEX')}" loading="lazy">`
                 : `<img class="promo-art__plant" src="${plantArt}" alt="" loading="lazy">`
             }
             <div class="promo-art__foot">
@@ -847,6 +848,14 @@
   }
 
   /* ---------------------- Home Page Data Loader (Single Source of Truth) ---------------------- */
+  function getApiBase() {
+    const loc = window.location;
+    if (loc.port && loc.port !== '3000' && (loc.hostname === '127.0.0.1' || loc.hostname === 'localhost')) {
+      return `http://${loc.hostname}:3000`;
+    }
+    return '';
+  }
+
   // Purge any legacy client mock overrides to ensure 100% Single Source of Truth
   try {
     Object.keys(localStorage).forEach((k) => {
@@ -859,9 +868,10 @@
   async function loadHomePageData() {
     let plants = { categories: {}, models: [] };
     let promos = { banners: [], campaigns: [], videos: [], partsMarquee: [], social: [] };
+    const apiBase = getApiBase();
 
     try {
-      const pRes = await fetch(`/api/plants?_t=${Date.now()}`, { cache: 'no-store' });
+      const pRes = await fetch(`${apiBase}/api/plants?_t=${Date.now()}`, { cache: 'no-store' });
       if (pRes.ok) {
         const pData = await pRes.json();
         if (pData && typeof pData === 'object') plants = pData;
@@ -875,7 +885,7 @@
     }
 
     try {
-      const prRes = await fetch(`/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
+      const prRes = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
       if (prRes.ok) {
         const prData = await prRes.json();
         if (prData && typeof prData === 'object') promos = prData;
@@ -1387,8 +1397,9 @@
   async function initPromotionsPage() {
     try {
       let data = { banners: [], campaigns: [] };
+      const apiBase = typeof getApiBase === 'function' ? getApiBase() : '';
       try {
-        const res = await fetch(`/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
+        const res = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
         if (res.ok) data = await res.json();
       } catch (e) {
         try {

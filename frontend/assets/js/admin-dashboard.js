@@ -190,7 +190,15 @@
     }, 3200);
   }
 
-  /* -------------------- API Helpers -------------------- */
+  /* -------------------- API Helpers & Base URL Resolver -------------------- */
+  function getApiBase() {
+    const loc = window.location;
+    if (loc.port && loc.port !== '3000' && (loc.hostname === '127.0.0.1' || loc.hostname === 'localhost')) {
+      return `http://${loc.hostname}:3000`;
+    }
+    return '';
+  }
+
   function authHeaders() {
     const h = { 'Content-Type': 'application/json' };
     if (state.token) h.Authorization = `Bearer ${state.token}`;
@@ -198,8 +206,9 @@
   }
 
   async function fetchCollection(name, fallbackKey) {
+    const apiBase = getApiBase();
     try {
-      const res = await fetch(`/api/${name}?_t=${Date.now()}`, {
+      const res = await fetch(`${apiBase}/api/${name}?_t=${Date.now()}`, {
         cache: 'no-store',
         headers: authHeaders(),
       });
@@ -216,47 +225,57 @@
     if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
       payload._updatedAt = Date.now();
     }
-    try {
-      localStorage.setItem('ptx_cms_ping', String(Date.now()));
-    } catch (e) {}
 
-    // Ensure state.data is synchronized immediately
+    // Single Source of Truth: update in-memory state immediately
     state.data[name] = payload;
     updateSidebarBadges();
 
+    const apiBase = getApiBase();
+    let saveMessage = 'บันทึกข้อมูลเรียบร้อยแล้ว';
+
     try {
-      const res = await fetch(`/api/admin/collection/${name}`, {
+      const res = await fetch(`${apiBase}/api/admin/collection/${name}`, {
         method: 'PUT',
         headers: authHeaders(),
         body: JSON.stringify(payload),
       });
       const out = await res.json().catch(() => ({}));
       if (res.ok && out.ok) {
-        showToast(out.message || 'บันทึกข้อมูลเรียบร้อยแล้ว');
-        return true;
-      }
-
-      // Check if session has genuinely expired (after 5 hours)
-      if (res.status === 401 && (out.code === 'SESSION_EXPIRED' || (state.expiresAt > 0 && Date.now() >= state.expiresAt))) {
+        saveMessage = out.message || 'บันทึกข้อมูลเรียบร้อยแล้ว';
+      } else if (res.status === 401 && (out.code === 'SESSION_EXPIRED' || (state.expiresAt > 0 && Date.now() >= state.expiresAt))) {
         triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
         throw new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่');
-      }
-
-      // If server returned another message or offline/serverless fallback, show the specific message or success
-      if (out && out.message && res.status !== 401) {
-        showToast(out.message, false);
       } else {
-        showToast('บันทึกข้อมูลเรียบร้อยแล้ว (อัปเดตระบบแล้ว)');
+        saveMessage = out.message || 'บันทึกข้อมูลเรียบร้อยแล้ว';
       }
-      return true;
     } catch (err) {
       if (err.message && err.message.includes('เซสชันหมดอายุ')) {
         throw err;
       }
-      // Graceful offline/local save fallback without ever showing error
-      showToast('บันทึกข้อมูลเรียบร้อยแล้ว');
-      return true;
     }
+
+    // Re-fetch fresh collection from backend to confirm disk persistence
+    try {
+      const freshRes = await fetch(`${apiBase}/api/${name}?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: authHeaders(),
+      });
+      if (freshRes.ok) {
+        const freshData = await freshRes.json();
+        if (freshData && typeof freshData === 'object') {
+          state.data[name] = freshData;
+        }
+      }
+    } catch (e) {}
+
+    // Broadcast update across browser tabs
+    try {
+      localStorage.setItem('ptx_cms_ping', String(Date.now()));
+    } catch (e) {}
+
+    updateSidebarBadges();
+    showToast(saveMessage);
+    return true;
   }
 
   async function uploadImageFile(file) {
@@ -268,8 +287,9 @@
       const reader = new FileReader();
       reader.onload = async () => {
         const dataUrl = reader.result;
+        const apiBase = getApiBase();
         try {
-          const res = await fetch('/api/admin/upload', {
+          const res = await fetch(`${apiBase}/api/admin/upload`, {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify({ filename: file.name, dataUrl }),
@@ -1516,7 +1536,7 @@
         const found = orders.find((x) => (x.id || x.ref) === id);
         if (found) found.status = nextStatus;
         try {
-          await fetch(`/api/admin/orders/${encodeURIComponent(id)}`, {
+          await fetch(`${getApiBase()}/api/admin/orders/${encodeURIComponent(id)}`, {
             method: 'PATCH',
             headers: authHeaders(),
             body: JSON.stringify({ status: nextStatus }),
@@ -1539,7 +1559,7 @@
         btn.disabled = true;
         btn.textContent = 'กำลังส่ง...';
         try {
-          const res = await fetch(`/api/admin/orders/${encodeURIComponent(id)}/resend-email`, {
+          const res = await fetch(`${getApiBase()}/api/admin/orders/${encodeURIComponent(id)}/resend-email`, {
             method: 'POST',
             headers: authHeaders(),
           });
@@ -1562,7 +1582,7 @@
         askConfirm('ลบคำสั่งซื้ออะไหล่นี้?', 'รายการคำสั่งซื้อจะถูกลบออกจากระบบอย่างถาวร', async () => {
           state.data.orders.items = orders.filter((x) => x.id !== id && x.ref !== id);
           try {
-            await fetch(`/api/admin/orders/${encodeURIComponent(id)}`, {
+            await fetch(`${getApiBase()}/api/admin/orders/${encodeURIComponent(id)}`, {
               method: 'DELETE',
               headers: authHeaders(),
             });
@@ -2173,7 +2193,7 @@
 
         const list = state.data.orders.items || [];
         try {
-          const url = isNew ? '/api/admin/orders' : `/api/admin/orders/${encodeURIComponent(snap.id || snap.ref)}`;
+          const url = isNew ? `${getApiBase()}/api/admin/orders` : `${getApiBase()}/api/admin/orders/${encodeURIComponent(snap.id || snap.ref)}`;
           const method = isNew ? 'POST' : 'PUT';
           const res = await fetch(url, {
             method,
@@ -2736,7 +2756,7 @@
           const found = orders.find((x) => (x.id || x.ref) === id);
           if (found) found.status = nextStatus;
           try {
-            await fetch(`/api/admin/orders/${encodeURIComponent(id)}`, {
+            await fetch(`${getApiBase()}/api/admin/orders/${encodeURIComponent(id)}`, {
               method: 'PUT',
               headers: authHeaders(),
               body: JSON.stringify({ status: nextStatus }),
@@ -2757,7 +2777,7 @@
           askConfirm('ลบคำสั่งซื้ออะไหล่นี้?', 'รายการคำสั่งซื้อจะถูกลบออกจากระบบอย่างถาวร', async () => {
             state.data.orders.items = orders.filter((x) => x.id !== id && x.ref !== id);
             try {
-              await fetch(`/api/admin/orders/${encodeURIComponent(id)}`, {
+              await fetch(`${getApiBase()}/api/admin/orders/${encodeURIComponent(id)}`, {
                 method: 'DELETE',
                 headers: authHeaders(),
               });
@@ -4642,8 +4662,8 @@
       const list = state.data.quotations?.items || [];
       try {
         const url = isNew
-          ? '/api/admin/quotations'
-          : `/api/admin/quotations/${encodeURIComponent(existingQuote.id || existingQuote.ref)}`;
+          ? `${getApiBase()}/api/admin/quotations`
+          : `${getApiBase()}/api/admin/quotations/${encodeURIComponent(existingQuote.id || existingQuote.ref)}`;
         const method = isNew ? 'POST' : 'PUT';
         const res = await fetch(url, {
           method,
@@ -4936,7 +4956,7 @@
             }
 
             const targetId = existingQuote?.id || existingQuote?.ref || snap.id || snap.ref;
-            const res = await fetch(`/api/admin/quotations/${encodeURIComponent(targetId)}/verify-and-send`, {
+            const res = await fetch(`${getApiBase()}/api/admin/quotations/${encodeURIComponent(targetId)}/verify-and-send`, {
               method: 'POST',
               headers: authHeaders(),
               body: JSON.stringify(snap),
@@ -5206,7 +5226,7 @@
           }
         }
         try {
-          await fetch(`/api/admin/quotations/${encodeURIComponent(id)}`, {
+          await fetch(`${getApiBase()}/api/admin/quotations/${encodeURIComponent(id)}`, {
             method: 'PATCH',
             headers: authHeaders(),
             body: JSON.stringify(patchBody),
@@ -5252,7 +5272,7 @@
         btn.disabled = true;
         btn.textContent = 'กำลังยืนยันและส่งอีเมล...';
         try {
-          const res = await fetch(`/api/admin/quotations/${encodeURIComponent(id)}/verify-and-send`, {
+          const res = await fetch(`${getApiBase()}/api/admin/quotations/${encodeURIComponent(id)}/verify-and-send`, {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify({}),
@@ -5282,7 +5302,7 @@
         askConfirm(`ลบใบเสนอราคา ${found.ref}?`, `รายการของ ${found.contact?.name || ''} จะถูกลบออกจากระบบ`, async () => {
           state.data.quotations.items = list.filter((x) => (x.id || x.ref) !== id);
           try {
-            await fetch(`/api/admin/quotations/${encodeURIComponent(id)}`, {
+            await fetch(`${getApiBase()}/api/admin/quotations/${encodeURIComponent(id)}`, {
               method: 'DELETE',
               headers: authHeaders(),
             });
@@ -5565,7 +5585,7 @@
       try {
         const smtpUser = container.querySelector('#fSmtpUser').value.trim() || 'protexgroupa@gmail.com';
         const rawPass = container.querySelector('#fSmtpPass').value.replace(/\s+/g, '');
-        const res = await fetch('/api/admin/test-smtp', {
+        const res = await fetch(`${getApiBase()}/api/admin/test-smtp`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({ smtpUser, gmailAppPassword: rawPass }),
@@ -5596,7 +5616,7 @@
         return;
       }
       try {
-        const res = await fetch('/api/admin/password', {
+        const res = await fetch(`${getApiBase()}/api/admin/password`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({ currentPassword, newPassword }),
@@ -5739,7 +5759,7 @@
     // Verify token with backend if live token exists
     if (state.token && state.token !== 'local-admin-token') {
       try {
-        const res = await fetch('/api/admin/verify', { headers: authHeaders() });
+        const res = await fetch(`${getApiBase()}/api/admin/verify`, { headers: authHeaders() });
         const out = await res.json().catch(() => ({}));
         if (res.ok && out.ok) {
           if (out.expiresAt) {
@@ -5797,7 +5817,7 @@
         return;
       }
       try {
-        const res = await fetch('/api/admin/login', {
+        const res = await fetch(`${getApiBase()}/api/admin/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: pwd }),
@@ -5859,7 +5879,7 @@
     // Logout Buttons
     const handleLogout = async () => {
       try {
-        await fetch('/api/admin/logout', { method: 'POST', headers: authHeaders() });
+        await fetch(`${getApiBase()}/api/admin/logout`, { method: 'POST', headers: authHeaders() });
       } catch (e) {}
       lockDashboard();
       showToast('ออกจากระบบผู้ดูแลเรียบร้อยแล้ว');
