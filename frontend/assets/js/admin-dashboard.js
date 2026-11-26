@@ -9,8 +9,13 @@
 (function () {
   'use strict';
 
+  const ADMIN_SESSION_MS = 5 * 60 * 60 * 1000; // 5 hours in milliseconds (18,000,000 ms)
+
   const state = {
     token: sessionStorage.getItem('ptx_admin_token') || '',
+    expiresAt: Number(sessionStorage.getItem('ptx_admin_expires_at') || 0),
+    sessionTimerId: null,
+    hasWarned5Min: false,
     activeTab: 'overview',
     plantsSubTab: 'fully-hot',
     partsSubTab: 'catalog',
@@ -45,6 +50,101 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  /* -------------------- 5-Hour Session Timer & Auto-Logout -------------------- */
+  function formatRemainingTime(ms) {
+    const totalSec = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function triggerSessionExpired(customMessage) {
+    if (state.sessionTimerId) {
+      clearInterval(state.sessionTimerId);
+      state.sessionTimerId = null;
+    }
+
+    state.token = '';
+    state.expiresAt = 0;
+    state.hasWarned5Min = false;
+    try {
+      sessionStorage.removeItem('ptx_admin_token');
+      sessionStorage.removeItem('ptx_admin_expires_at');
+      sessionStorage.removeItem('ptx_admin_auth');
+    } catch (e) {}
+
+    // Close any open modals
+    const editorModal = document.getElementById('admEditorModal');
+    if (editorModal) editorModal.hidden = true;
+    const confirmModal = document.getElementById('admConfirmModal');
+    if (confirmModal) confirmModal.hidden = true;
+
+    // Hide app shell & show Auth Gate
+    const appShell = document.getElementById('admAppShell');
+    if (appShell) appShell.hidden = true;
+    const authGate = document.getElementById('admAuthGate');
+    if (authGate) authGate.hidden = false;
+
+    // Show explicit expiration notice in Auth Gate
+    const msg = customMessage || 'ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง';
+    const noticeEl = document.getElementById('admSessionExpiredNotice');
+    if (noticeEl) {
+      const textEl = document.getElementById('admSessionExpiredText');
+      if (textEl) textEl.innerHTML = msg.replace('adminprotex', '<strong>adminprotex</strong>');
+      noticeEl.style.display = 'flex';
+    }
+    const gateErr = document.getElementById('admGateError');
+    if (gateErr) gateErr.textContent = '';
+
+    showToast(msg, true);
+    document.getElementById('admGatePass')?.focus();
+  }
+
+  function startSessionWatcher() {
+    if (state.sessionTimerId) {
+      clearInterval(state.sessionTimerId);
+      state.sessionTimerId = null;
+    }
+
+    const timerEl = document.getElementById('admSessionTimer');
+    const countEl = document.getElementById('admSessionCountdown');
+
+    function tick() {
+      const now = Date.now();
+      const exp = Number(state.expiresAt || sessionStorage.getItem('ptx_admin_expires_at') || 0);
+
+      if (!exp || now >= exp) {
+        triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+        return;
+      }
+
+      const remaining = exp - now;
+      if (countEl) {
+        countEl.textContent = formatRemainingTime(remaining);
+      }
+
+      if (timerEl) {
+        if (remaining <= 5 * 60 * 1000) {
+          timerEl.classList.add('is-critical');
+          timerEl.classList.remove('is-warning');
+          if (!state.hasWarned5Min) {
+            state.hasWarned5Min = true;
+            showToast('⚠️ เซสชันผู้ดูแลระบบจะหมดอายุในอีก 5 นาที กรุณาบันทึกข้อมูล', true);
+          }
+        } else if (remaining <= 15 * 60 * 1000) {
+          timerEl.classList.add('is-warning');
+          timerEl.classList.remove('is-critical');
+        } else {
+          timerEl.classList.remove('is-warning', 'is-critical');
+        }
+      }
+    }
+
+    tick();
+    state.sessionTimerId = setInterval(tick, 1000);
   }
 
   /* -------------------- Glass Toast Notification -------------------- */
@@ -98,7 +198,7 @@
       const out = await res.json();
       if (!res.ok || !out.ok) {
         if (res.status === 401) {
-          lockDashboard();
+          triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
           throw new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่');
         }
         throw new Error(out.message || 'ไม่สามารถบันทึกข้อมูลได้');
@@ -128,6 +228,11 @@
             headers: authHeaders(),
             body: JSON.stringify({ filename: file.name, dataUrl }),
           });
+          if (res.status === 401) {
+            triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+            reject(new Error('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่'));
+            return;
+          }
           const out = await res.json();
           if (res.ok && out.ok && out.url) {
             showToast(`อัปโหลดรูปภาพ ${out.filename} สำเร็จ`);
@@ -5171,12 +5276,22 @@
         });
         const out = await res.json();
         if (!res.ok || !out.ok) {
+          if (res.status === 401) {
+            triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+            return;
+          }
           showToast(out.message || 'เปลี่ยนรหัสผ่านไม่สำเร็จ', true);
           return;
         }
         state.token = out.token;
+        if (out.expiresAt) {
+          state.expiresAt = Number(out.expiresAt);
+        }
         try {
           sessionStorage.setItem('ptx_admin_token', out.token);
+          if (state.expiresAt) {
+            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
+          }
           localStorage.setItem('ptx_cms_custom_pass', newPassword);
         } catch (err) {}
         container.querySelector('#admPasswordForm').reset();
@@ -5237,15 +5352,25 @@
 
   /* -------------------- Auth Gate & Boot Lifecycle -------------------- */
   function unlockDashboard() {
+    const noticeEl = document.getElementById('admSessionExpiredNotice');
+    if (noticeEl) noticeEl.style.display = 'none';
     document.getElementById('admAuthGate').hidden = true;
     document.getElementById('admAppShell').hidden = false;
+    startSessionWatcher();
     loadAllData();
   }
 
   function lockDashboard() {
+    if (state.sessionTimerId) {
+      clearInterval(state.sessionTimerId);
+      state.sessionTimerId = null;
+    }
     state.token = '';
+    state.expiresAt = 0;
+    state.hasWarned5Min = false;
     try {
       sessionStorage.removeItem('ptx_admin_token');
+      sessionStorage.removeItem('ptx_admin_expires_at');
       sessionStorage.removeItem('ptx_admin_auth');
     } catch (e) {}
     document.getElementById('admAppShell').hidden = true;
@@ -5254,16 +5379,42 @@
   }
 
   async function verifySessionAndBoot() {
+    const savedExp = Number(sessionStorage.getItem('ptx_admin_expires_at') || 0);
+    if (savedExp && Date.now() >= savedExp) {
+      triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
+      return;
+    }
+
     if (state.token || sessionStorage.getItem('ptx_admin_auth') === '1') {
       try {
         const res = await fetch('/api/admin/verify', { headers: authHeaders() });
-        if (res.ok) {
+        const out = await res.json().catch(() => ({}));
+        if (res.ok && out.ok) {
+          if (out.expiresAt) {
+            state.expiresAt = Number(out.expiresAt);
+            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
+          } else if (!savedExp) {
+            state.expiresAt = Date.now() + ADMIN_SESSION_MS;
+            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
+          } else {
+            state.expiresAt = savedExp;
+          }
           unlockDashboard();
+          return;
+        }
+        if (res.status === 401 && out.code === 'SESSION_EXPIRED') {
+          triggerSessionExpired('ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ adminprotex ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง');
           return;
         }
       } catch (e) {
         // Offline / static preview mode with valid session flag
         if (sessionStorage.getItem('ptx_admin_auth') === '1') {
+          if (!savedExp) {
+            state.expiresAt = Date.now() + ADMIN_SESSION_MS;
+            sessionStorage.setItem('ptx_admin_expires_at', String(state.expiresAt));
+          } else {
+            state.expiresAt = savedExp;
+          }
           unlockDashboard();
           return;
         }
@@ -5313,24 +5464,32 @@
           gateErr.textContent = out.message || 'รหัสผ่านผู้ดูแลระบบไม่ถูกต้อง';
           return;
         }
+        const expiresAt = Number(out.expiresAt) || (Date.now() + ADMIN_SESSION_MS);
         state.token = out.token;
+        state.expiresAt = expiresAt;
+        state.hasWarned5Min = false;
         try {
           sessionStorage.setItem('ptx_admin_token', out.token);
+          sessionStorage.setItem('ptx_admin_expires_at', String(expiresAt));
           sessionStorage.setItem('ptx_admin_auth', '1');
         } catch (err) {}
         gatePass.value = '';
-        showToast('ยินดีต้อนรับสู่ PROTEX Admin Dashboard');
+        showToast('ยินดีต้อนรับสู่ PROTEX Admin Dashboard (เซสชัน 5 ชั่วโมง)');
         unlockDashboard();
       } catch (netErr) {
         const savedPass = localStorage.getItem('ptx_cms_custom_pass') || 'Protex@2026';
         if (pwd === savedPass) {
+          const expiresAt = Date.now() + ADMIN_SESSION_MS;
           state.token = 'local-admin-token';
+          state.expiresAt = expiresAt;
+          state.hasWarned5Min = false;
           try {
             sessionStorage.setItem('ptx_admin_token', state.token);
+            sessionStorage.setItem('ptx_admin_expires_at', String(expiresAt));
             sessionStorage.setItem('ptx_admin_auth', '1');
           } catch (err) {}
           gatePass.value = '';
-          showToast('ยินดีต้อนรับสู่ PROTEX Admin Dashboard');
+          showToast('ยินดีต้อนรับสู่ PROTEX Admin Dashboard (เซสชัน 5 ชั่วโมง)');
           unlockDashboard();
         } else {
           gateErr.textContent = 'รหัสผ่านผู้ดูแลระบบไม่ถูกต้อง';

@@ -39,6 +39,18 @@
       <h1 class="adm-auth-card__title" id="admGateTitle">เข้าสู่ระบบผู้ดูแลเว็บไซต์</h1>
       <p class="adm-auth-card__sub">ระบบจัดการเนื้อหาเต็มรูปแบบ (Full CMS) สไตล์ iOS 27 Liquid Glass กรุณายืนยันรหัสผ่านผู้ดูแลระบบ</p>
 
+      <!-- แถบแจ้งเตือนเมื่อเซสชันครบกำหนด 5 ชั่วโมง -->
+      <div id="admSessionExpiredNotice" class="adm-session-expired-banner" style="display:none;" role="alert">
+        <div class="adm-session-expired-banner__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="adm-session-expired-banner__text" id="admSessionExpiredText">
+          ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว ระบบได้ทำการออกจากระบบอัตโนมัติเพื่อความปลอดภัย กรุณาพิมพ์ <strong>adminprotex</strong> ที่ช่องค้นหาเพื่อเข้าสู่ระบบใหม่อีกครั้ง
+        </div>
+      </div>
+
       <form class="adm-auth-form" id="admGateForm" novalidate>
         <div class="adm-pass-wrap">
           <input
@@ -167,6 +179,13 @@
         </div>
 
         <div class="adm-topbar__actions">
+          <!-- กล่องตัวนับถอยหลังเซสชัน 5 ชั่วโมง (Auto-Logout Watcher) -->
+          <div class="adm-session-timer" id="admSessionTimer" title="เซสชันจะหมดอายุและออกจากระบบอัตโนมัติเมื่อครบ 5 ชั่วโมง">
+            <span class="adm-session-timer__dot" aria-hidden="true"></span>
+            <span class="adm-session-timer__label">เซสชันเหลือ</span>
+            <span class="adm-session-timer__val tnum" id="admSessionCountdown">05:00:00</span>
+          </div>
+
           <button type="button" class="adm-btn adm-btn--glass adm-btn--sm" id="admReloadAllBtn" title="ดึงข้อมูลล่าสุดจากเซิร์ฟเวอร์">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             <span>รีเฟรชข้อมูล</span>

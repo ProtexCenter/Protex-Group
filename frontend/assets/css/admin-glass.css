@@ -249,6 +249,151 @@ body {
   justify-content: center;
 }
 
+/* ------------------------------ 5-Hour Session Timer & Auto-Logout ------------------------------ */
+.adm-session-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1E293B;
+  transition: all 0.3s var(--adm-ease);
+  user-select: none;
+}
+
+.adm-session-timer__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.22);
+  display: inline-block;
+  animation: admPulseDot 2s infinite ease-in-out;
+}
+
+@keyframes admPulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.65;
+  }
+}
+
+.adm-session-timer__label {
+  color: #64748B;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.adm-session-timer__val {
+  font-family: var(--adm-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* Warning (< 15 mins) */
+.adm-session-timer.is-warning {
+  background: rgba(254, 243, 199, 0.85);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #B45309;
+}
+.adm-session-timer.is-warning .adm-session-timer__dot {
+  background: #F59E0B;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
+}
+.adm-session-timer.is-warning .adm-session-timer__label {
+  color: #B45309;
+}
+.adm-session-timer.is-warning .adm-session-timer__val {
+  color: #92400E;
+}
+
+/* Critical (< 5 mins) */
+.adm-session-timer.is-critical {
+  background: rgba(254, 226, 226, 0.92);
+  border-color: rgba(239, 68, 68, 0.55);
+  color: #DC2626;
+  animation: admTimerShake 0.45s ease-in-out infinite alternate;
+}
+.adm-session-timer.is-critical .adm-session-timer__dot {
+  background: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+}
+.adm-session-timer.is-critical .adm-session-timer__label {
+  color: #DC2626;
+}
+.adm-session-timer.is-critical .adm-session-timer__val {
+  color: #B91C1C;
+}
+
+@keyframes admTimerShake {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.025); }
+}
+
+/* Session Expired Notice in Auth Gate */
+.adm-session-expired-banner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(254, 242, 242, 0.95), rgba(254, 226, 226, 0.85));
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  box-shadow: 0 8px 24px -4px rgba(220, 38, 38, 0.18);
+  margin-bottom: 6px;
+  text-align: left;
+  animation: admFadeInDown 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.adm-session-expired-banner__icon {
+  color: #DC2626;
+  flex-shrink: 0;
+  display: inline-flex;
+  margin-top: 2px;
+}
+
+.adm-session-expired-banner__text {
+  font-size: 0.85rem;
+  line-height: 1.48;
+  color: #991B1B;
+  font-weight: 600;
+}
+
+.adm-session-expired-banner__text strong {
+  color: #7F1D1D;
+  background: rgba(220, 38, 38, 0.1);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-family: var(--adm-font-mono, monospace);
+  letter-spacing: 0.03em;
+}
+
+@keyframes admFadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .adm-pass-toggle:hover {
   color: var(--adm-red);
 }

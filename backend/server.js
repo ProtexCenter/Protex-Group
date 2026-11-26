@@ -213,7 +213,8 @@ const COLLECTIONS = [
 ];
 
 const ADMIN_SECRET = process.env.PROTEX_ADMIN_SECRET || 'ptx-liquid-glass-cms-2026-key';
-const activeTokens = new Set();
+const ADMIN_SESSION_DURATION_MS = 5 * 60 * 60 * 1000; // 5 hours in milliseconds (18,000,000 ms)
+const activeTokens = new Map(); // token -> expiresAt (timestamp)
 
 app.disable('x-powered-by');
 app.use(express.json({ limit: '20mb' }));
@@ -245,14 +246,16 @@ const asyncRoute = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next
 
 /* ---------------------------- Admin Token Helpers ---------------------------- */
 function generateAdminToken(password) {
-  const payload = `admin:${Date.now()}`;
+  const issuedAt = Date.now();
+  const expiresAt = issuedAt + ADMIN_SESSION_DURATION_MS;
+  const payload = `admin:${issuedAt}:${expiresAt}`;
   const sig = crypto
     .createHmac('sha256', `${ADMIN_SECRET}:${password}`)
     .update(payload)
     .digest('hex');
   const token = Buffer.from(`${payload}:${sig}`).toString('base64url');
-  activeTokens.add(token);
-  return token;
+  activeTokens.set(token, expiresAt);
+  return { token, issuedAt, expiresAt };
 }
 
 function parseCookies(req) {
@@ -274,29 +277,83 @@ async function verifyAdminRequest(req) {
   const bearer = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
   const cookies = parseCookies(req);
   const token = bearer || cookies.ptx_admin_token || '';
-  if (!token) return false;
-  if (activeTokens.has(token)) return true;
+  if (!token) {
+    return { ok: false, code: 'UNAUTHORIZED', message: 'กรุณาเข้าสู่ระบบผู้ดูแล (Unauthorized)' };
+  }
+
+  // Check active tokens cache
+  const cachedExpiry = activeTokens.get(token);
+  if (cachedExpiry) {
+    if (Date.now() > cachedExpiry) {
+      activeTokens.delete(token);
+      return {
+        ok: false,
+        code: 'SESSION_EXPIRED',
+        message: 'ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่',
+      };
+    }
+    return { ok: true, expiresAt: cachedExpiry };
+  }
 
   try {
     const decoded = Buffer.from(token, 'base64url').toString('utf8');
-    const [role, tsStr, sig] = decoded.split(':');
-    if (role !== 'admin' || !tsStr || !sig) return false;
+    const parts = decoded.split(':');
+    let role, issuedAtStr, expiresAtStr, sig;
+
+    if (parts.length === 4) {
+      [role, issuedAtStr, expiresAtStr, sig] = parts;
+    } else if (parts.length === 3) {
+      [role, issuedAtStr, sig] = parts;
+      expiresAtStr = String(Number(issuedAtStr) + ADMIN_SESSION_DURATION_MS);
+    } else {
+      return { ok: false, code: 'INVALID_TOKEN', message: 'โทเค็นไม่ถูกต้อง' };
+    }
+
+    if (role !== 'admin' || !issuedAtStr || !sig) {
+      return { ok: false, code: 'INVALID_TOKEN', message: 'โทเค็นไม่ถูกต้อง' };
+    }
+
+    const issuedAt = Number(issuedAtStr) || 0;
+    const expiresAt = Number(expiresAtStr) || (issuedAt + ADMIN_SESSION_DURATION_MS);
+
+    // Strict 5-hour session timeout verification
+    if (Date.now() > expiresAt) {
+      activeTokens.delete(token);
+      return {
+        ok: false,
+        code: 'SESSION_EXPIRED',
+        message: 'ครบกำหนดเวลาใช้งาน 5 ชั่วโมงแล้ว เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่',
+      };
+    }
+
+    const payload = parts.length === 4 ? `admin:${issuedAtStr}:${expiresAtStr}` : `admin:${issuedAtStr}`;
     const settings = await readJSON('site-settings').catch(() => ({ adminPassword: 'Protex@2026' }));
     const expected = crypto
       .createHmac('sha256', `${ADMIN_SECRET}:${settings.adminPassword || 'Protex@2026'}`)
-      .update(`admin:${tsStr}`)
+      .update(payload)
       .digest('hex');
-    return sig === expected;
+
+    if (sig !== expected) {
+      return { ok: false, code: 'INVALID_TOKEN', message: 'โทเค็นไม่ถูกต้อง' };
+    }
+
+    activeTokens.set(token, expiresAt);
+    return { ok: true, expiresAt };
   } catch (e) {
-    return false;
+    return { ok: false, code: 'INVALID_TOKEN', message: 'โทเค็นไม่ถูกต้อง' };
   }
 }
 
 async function requireAdmin(req, res, next) {
-  const ok = await verifyAdminRequest(req);
-  if (!ok) {
-    return res.status(401).json({ ok: false, message: 'กรุณาเข้าสู่ระบบผู้ดูแล (Unauthorized)' });
+  const result = await verifyAdminRequest(req);
+  if (!result.ok) {
+    return res.status(401).json({
+      ok: false,
+      code: result.code || 'UNAUTHORIZED',
+      message: result.message || 'กรุณาเข้าสู่ระบบผู้ดูแล (Unauthorized)',
+    });
   }
+  req.adminExpiresAt = result.expiresAt;
   return next();
 }
 
@@ -310,21 +367,42 @@ app.post('/api/admin/login', asyncRoute(async (req, res) => {
     return res.status(401).json({ ok: false, message: 'รหัสผ่านผู้ดูแลระบบไม่ถูกต้อง' });
   }
 
-  const token = generateAdminToken(actualPassword);
-  res.set('Set-Cookie', `ptx_admin_token=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`);
-  res.json({ ok: true, token, message: 'เข้าสู่ระบบ PROTEX Admin สำเร็จ' });
+  const { token, issuedAt, expiresAt } = generateAdminToken(actualPassword);
+  const maxAgeSec = Math.floor(ADMIN_SESSION_DURATION_MS / 1000); // 18,000s = 5 hours
+  res.set('Set-Cookie', `ptx_admin_token=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAgeSec}`);
+  res.json({
+    ok: true,
+    token,
+    issuedAt,
+    expiresAt,
+    expiresIn: ADMIN_SESSION_DURATION_MS,
+    message: 'เข้าสู่ระบบ PROTEX Admin สำเร็จ (เซสชัน 5 ชั่วโมง)',
+  });
 }));
 
 app.get('/api/admin/verify', asyncRoute(async (req, res) => {
-  const ok = await verifyAdminRequest(req);
-  if (!ok) return res.status(401).json({ ok: false });
-  res.json({ ok: true });
+  const result = await verifyAdminRequest(req);
+  if (!result.ok) {
+    return res.status(401).json({
+      ok: false,
+      code: result.code || 'UNAUTHORIZED',
+      message: result.message || 'กรุณาเข้าสู่ระบบผู้ดูแล (Unauthorized)',
+    });
+  }
+  const remainingMs = Math.max(0, (result.expiresAt || 0) - Date.now());
+  res.json({
+    ok: true,
+    expiresAt: result.expiresAt,
+    remainingMs,
+  });
 }));
 
 app.post('/api/admin/logout', (req, res) => {
   const authHeader = (req.headers && req.headers.authorization) || '';
   const bearer = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
-  if (bearer) activeTokens.delete(bearer);
+  const cookies = parseCookies(req);
+  const token = bearer || cookies.ptx_admin_token || '';
+  if (token) activeTokens.delete(token);
   res.set('Set-Cookie', 'ptx_admin_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
   res.json({ ok: true });
 });
@@ -346,9 +424,17 @@ app.post('/api/admin/password', requireAdmin, asyncRoute(async (req, res) => {
   await writeJSON('site-settings', settings);
 
   activeTokens.clear();
-  const token = generateAdminToken(settings.adminPassword);
-  res.set('Set-Cookie', `ptx_admin_token=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`);
-  res.json({ ok: true, token, message: 'เปลี่ยนรหัสผ่านแอดมินเรียบร้อยแล้ว' });
+  const { token, issuedAt, expiresAt } = generateAdminToken(settings.adminPassword);
+  const maxAgeSec = Math.floor(ADMIN_SESSION_DURATION_MS / 1000);
+  res.set('Set-Cookie', `ptx_admin_token=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAgeSec}`);
+  res.json({
+    ok: true,
+    token,
+    issuedAt,
+    expiresAt,
+    expiresIn: ADMIN_SESSION_DURATION_MS,
+    message: 'เปลี่ยนรหัสผ่านแอดมินเรียบร้อยแล้ว',
+  });
 }));
 
 /* ---------------------------- Admin Image Upload API ---------------------------- */

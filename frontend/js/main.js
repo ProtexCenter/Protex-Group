@@ -644,12 +644,15 @@
             errEl.textContent = data.message || 'รหัสผ่านผู้ดูแลระบบไม่ถูกต้อง';
             return;
           }
+          const sessionDurationMs = 5 * 60 * 60 * 1000;
+          const expiresAt = Number(data.expiresAt) || (Date.now() + sessionDurationMs);
           try {
             sessionStorage.setItem('ptx_admin_token', data.token);
+            sessionStorage.setItem('ptx_admin_expires_at', String(expiresAt));
             sessionStorage.setItem('ptx_admin_auth', '1');
           } catch (err) {}
           closeModal(modal);
-          showToast('ยืนยันสิทธิ์สำเร็จ กำลังเข้าสู่ PROTEX Admin Dashboard…');
+          showToast('ยืนยันสิทธิ์สำเร็จ กำลังเข้าสู่ PROTEX Admin Dashboard… (เซสชัน 5 ชั่วโมง)');
           setTimeout(() => {
             window.location.href = 'admin.html';
           }, 320);
@@ -657,8 +660,11 @@
           // Offline / Static preview fallback
           const savedCustomPass = localStorage.getItem('ptx_cms_custom_pass') || 'Protex@2026';
           if (pwd === savedCustomPass) {
+            const sessionDurationMs = 5 * 60 * 60 * 1000;
+            const expiresAt = Date.now() + sessionDurationMs;
             try {
               sessionStorage.setItem('ptx_admin_token', 'local-admin-token');
+              sessionStorage.setItem('ptx_admin_expires_at', String(expiresAt));
               sessionStorage.setItem('ptx_admin_auth', '1');
             } catch (err) {}
             closeModal(modal);
