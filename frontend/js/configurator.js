@@ -991,7 +991,19 @@
   }
 
   /* ------------------------------ Multi-Source Data Loader (100% Resilient + Admin Sync) ------------------------------ */
+  const STORAGE_KEY_PREFIX = 'ptx_cms_collection_';
+
   async function loadCollectionWithFallback(apiPath, jsonPath, defaultData) {
+    const colName = apiPath.replace('/api/', '').trim();
+    // 1. Check client localStorage first (works without running backend)
+    try {
+      const storedRaw = localStorage.getItem(STORAGE_KEY_PREFIX + colName);
+      if (storedRaw) {
+        const parsed = JSON.parse(storedRaw);
+        if (parsed && typeof parsed === 'object') return parsed;
+      }
+    } catch (e) {}
+
     let data = null;
     try {
       const res = await fetch(`${apiPath}?_t=${Date.now()}`, { cache: 'no-store' });

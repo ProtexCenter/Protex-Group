@@ -65,20 +65,31 @@
     if (!grid) return;
 
     let rawCatalog = [];
+    const STORAGE_KEY_PREFIX = 'ptx_cms_collection_';
     try {
-      const res = await fetch(`/api/spare-parts?_t=${Date.now()}`, { cache: 'no-store' });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data.catalog)) rawCatalog = data.catalog;
+      const stored = localStorage.getItem(STORAGE_KEY_PREFIX + 'spare-parts');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed.catalog)) rawCatalog = parsed.catalog;
       }
-    } catch (e) {
+    } catch (e) {}
+
+    if (!rawCatalog.length) {
       try {
-        const localRes = await fetch(`../backend/data/spare-parts.json?_t=${Date.now()}`, { cache: 'no-store' });
-        if (localRes.ok) {
-          const data = await localRes.json();
+        const res = await fetch(`/api/spare-parts?_t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
           if (Array.isArray(data.catalog)) rawCatalog = data.catalog;
         }
-      } catch (e2) {}
+      } catch (e) {
+        try {
+          const localRes = await fetch(`../backend/data/spare-parts.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localRes.ok) {
+            const data = await localRes.json();
+            if (Array.isArray(data.catalog)) rawCatalog = data.catalog;
+          }
+        } catch (e2) {}
+      }
     }
 
     const catalog = rawCatalog.filter(isOrderablePart);
@@ -625,10 +636,23 @@
 
     let reviews = [];
     try {
-      const res = await fetch(`/api/reviews?_t=${Date.now()}`, { cache: 'no-store' });
-      reviews = await res.json();
-    } catch (e) {
-      console.error('Reviews load error:', e);
+      const stored = localStorage.getItem('ptx_cms_collection_reviews');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length) reviews = parsed;
+      }
+    } catch (e) {}
+
+    if (!reviews.length) {
+      try {
+        const res = await fetch(`/api/reviews?_t=${Date.now()}`, { cache: 'no-store' });
+        reviews = await res.json();
+      } catch (e) {
+        try {
+          const localRes = await fetch(`../backend/data/reviews.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localRes.ok) reviews = await localRes.json();
+        } catch (e2) {}
+      }
     }
 
     if (!reviews.length) {

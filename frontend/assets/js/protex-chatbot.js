@@ -804,6 +804,17 @@
   /* -------------------- Load Knowledge Base JSON -------------------- */
   async function loadKnowledgeBase() {
     try {
+      const stored = localStorage.getItem('ptx_cms_collection_chatbot-knowledge');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === 'object') {
+          knowledgeData = parsed;
+          return knowledgeData;
+        }
+      }
+    } catch (e) {}
+
+    try {
       const apiRes = await fetch(`/api/chatbot-knowledge?_t=${Date.now()}`, { cache: 'no-store' });
       if (apiRes.ok) {
         knowledgeData = await apiRes.json();

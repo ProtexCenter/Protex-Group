@@ -848,6 +848,19 @@
   }
 
   /* ---------------------- Home Page Data Loader (Single Source of Truth) ---------------------- */
+  const STORAGE_KEY_PREFIX = 'ptx_cms_collection_';
+
+  function getStoredCollection(name) {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_PREFIX + name);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') return parsed;
+      }
+    } catch (e) {}
+    return null;
+  }
+
   function getApiBase() {
     const loc = window.location;
     if (loc.port && loc.port !== '3000' && (loc.hostname === '127.0.0.1' || loc.hostname === 'localhost')) {
@@ -856,46 +869,41 @@
     return '';
   }
 
-  // Purge any legacy client mock overrides to ensure 100% Single Source of Truth
-  try {
-    Object.keys(localStorage).forEach((k) => {
-      if (k.startsWith('ptx_cms_override_')) {
-        localStorage.removeItem(k);
-      }
-    });
-  } catch (e) {}
-
   async function loadHomePageData() {
-    let plants = { categories: {}, models: [] };
-    let promos = { banners: [], campaigns: [], videos: [], partsMarquee: [], social: [] };
+    let plants = getStoredCollection('plants') || { categories: {}, models: [] };
+    let promos = getStoredCollection('promotions') || { banners: [], campaigns: [], videos: [], partsMarquee: [], social: [] };
     const apiBase = getApiBase();
 
-    try {
-      const pRes = await fetch(`${apiBase}/api/plants?_t=${Date.now()}`, { cache: 'no-store' });
-      if (pRes.ok) {
-        const pData = await pRes.json();
-        if (pData && typeof pData === 'object') plants = pData;
-      }
-    } catch (e) {}
     if (!plants.models || !plants.models.length) {
       try {
-        const localRes = await fetch(`../backend/data/plants.json?_t=${Date.now()}`, { cache: 'no-store' });
-        if (localRes.ok) plants = await localRes.json();
-      } catch (e2) {}
+        const pRes = await fetch(`${apiBase}/api/plants?_t=${Date.now()}`, { cache: 'no-store' });
+        if (pRes.ok) {
+          const pData = await pRes.json();
+          if (pData && typeof pData === 'object') plants = pData;
+        }
+      } catch (e) {}
+      if (!plants.models || !plants.models.length) {
+        try {
+          const localRes = await fetch(`../backend/data/plants.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localRes.ok) plants = await localRes.json();
+        } catch (e2) {}
+      }
     }
 
-    try {
-      const prRes = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
-      if (prRes.ok) {
-        const prData = await prRes.json();
-        if (prData && typeof prData === 'object') promos = prData;
-      }
-    } catch (e) {}
     if (!promos.banners || !promos.banners.length) {
       try {
-        const localPr = await fetch(`../backend/data/promotions.json?_t=${Date.now()}`, { cache: 'no-store' });
-        if (localPr.ok) promos = await localPr.json();
-      } catch (e2) {}
+        const prRes = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
+        if (prRes.ok) {
+          const prData = await prRes.json();
+          if (prData && typeof prData === 'object') promos = prData;
+        }
+      } catch (e) {}
+      if (!promos.banners || !promos.banners.length) {
+        try {
+          const localPr = await fetch(`../backend/data/promotions.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localPr.ok) promos = await localPr.json();
+        } catch (e2) {}
+      }
     }
 
     return { plants, promos };
@@ -1396,16 +1404,18 @@
      ========================================================================= */
   async function initPromotionsPage() {
     try {
-      let data = { banners: [], campaigns: [] };
+      let data = getStoredCollection('promotions') || { banners: [], campaigns: [] };
       const apiBase = typeof getApiBase === 'function' ? getApiBase() : '';
-      try {
-        const res = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
-        if (res.ok) data = await res.json();
-      } catch (e) {
+      if (!data.banners || !data.banners.length) {
         try {
-          const localRes = await fetch(`../backend/data/promotions.json?_t=${Date.now()}`, { cache: 'no-store' });
-          if (localRes.ok) data = await localRes.json();
-        } catch (e2) {}
+          const res = await fetch(`${apiBase}/api/promotions?_t=${Date.now()}`, { cache: 'no-store' });
+          if (res.ok) data = await res.json();
+        } catch (e) {
+          try {
+            const localRes = await fetch(`../backend/data/promotions.json?_t=${Date.now()}`, { cache: 'no-store' });
+            if (localRes.ok) data = await localRes.json();
+          } catch (e2) {}
+        }
       }
 
       /* Render 5-Card Bento Promotions Grid on promotions.html if mount exists */
@@ -1631,8 +1641,11 @@
      8. CONTACT, AFTER-SALES & SERVICE PLANTS (Interactive Maps & Directory)
      ========================================================================= */
   async function loadLocationsData() {
+    const stored = getStoredCollection('locations');
+    if (stored && stored.installations) return stored;
     try {
-      const res = await fetch(`/api/locations?_t=${Date.now()}`, { cache: 'no-store' });
+      const apiBase = typeof getApiBase === 'function' ? getApiBase() : '';
+      const res = await fetch(`${apiBase}/api/locations?_t=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) throw new Error('api locations');
       return await res.json();
     } catch (e) {
@@ -2089,6 +2102,15 @@
   if (page === 'contact') initContactPage();
   if (page === 'after-sales') initAfterSalesPage();
   if (page === 'service-plants') initServicePlantsPage();
+
+  // Instant Cross-Tab Live Sync (Without Backend Server)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'ptx_cms_ping' || (e.key && e.key.startsWith('ptx_cms_collection_'))) {
+      if (page === 'home') initHomePage();
+      if (page === 'promotions') initPromotionsPage();
+      if (page === 'service-plants') initServicePlantsPage();
+    }
+  });
 
   window.PTX = { ICONS, esc, formatTHB, showToast, openModal, closeModal, observeReveals };
 })();

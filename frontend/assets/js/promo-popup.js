@@ -52,13 +52,23 @@
 
     let popup = null;
     try {
-      const res = await fetch(`/api/popup?_t=${Date.now()}`, { cache: 'no-store' });
-      if (res.ok) popup = await res.json();
-    } catch (e) {
+      const stored = localStorage.getItem('ptx_cms_collection_popup');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === 'object') popup = parsed;
+      }
+    } catch (e) {}
+
+    if (!popup) {
       try {
-        const localRes = await fetch(`../backend/data/popup.json?_t=${Date.now()}`, { cache: 'no-store' });
-        if (localRes.ok) popup = await localRes.json();
-      } catch (e2) {}
+        const res = await fetch(`/api/popup?_t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) popup = await res.json();
+      } catch (e) {
+        try {
+          const localRes = await fetch(`../backend/data/popup.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localRes.ok) popup = await localRes.json();
+        } catch (e2) {}
+      }
     }
 
     if (!popup || !popup.enabled) return;
@@ -663,13 +673,23 @@
   async function syncSiteSettings() {
     let settings = null;
     try {
-      const res = await fetch(`/api/site-settings?_t=${Date.now()}`, { cache: 'no-store' });
-      if (res.ok) settings = await res.json();
-    } catch (e) {
+      const stored = localStorage.getItem('ptx_cms_collection_site-settings');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === 'object') settings = parsed;
+      }
+    } catch (e) {}
+
+    if (!settings) {
       try {
-        const localRes = await fetch(`../backend/data/site-settings.json?_t=${Date.now()}`, { cache: 'no-store' });
-        if (localRes.ok) settings = await localRes.json();
-      } catch (e2) {}
+        const res = await fetch(`/api/site-settings?_t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) settings = await res.json();
+      } catch (e) {
+        try {
+          const localRes = await fetch(`../backend/data/site-settings.json?_t=${Date.now()}`, { cache: 'no-store' });
+          if (localRes.ok) settings = await localRes.json();
+        } catch (e2) {}
+      }
     }
 
     if (!settings) return;
